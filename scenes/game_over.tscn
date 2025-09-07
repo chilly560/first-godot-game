@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcip2raht2ynm"]
+
+[ext_resource type="Script" uid="uid://c4i3tjgdvti7j" path="res://scenes/Restart.cs" id="1_wqhvx"]
+[ext_resource type="Script" uid="uid://bt37104qnwoom" path="res://scenes/Quit.cs" id="2_tbwuq"]
+
+[node name="GameOver" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -49.0
+offset_top = -32.0
+offset_right = 61.0
+offset_bottom = 2.0
+text = "Game Over..."
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="Restart" type="Button" parent="."]
+offset_left = -74.0
+offset_top = 6.0
+offset_right = -9.0
+offset_bottom = 37.0
+text = "Restart"
+script = ExtResource("1_wqhvx")
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 9.0
+offset_top = 6.0
+offset_right = 74.0
+offset_bottom = 37.0
+text = "Quit"
+script = ExtResource("2_tbwuq")
+
+[connection signal="pressed" from="Restart" to="Restart" method="OnButtonPressedRestart"]
+[connection signal="pressed" from="Quit" to="Quit" method="OnButtonPressedQuit"]

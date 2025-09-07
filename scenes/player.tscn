@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7rqggkyxpph4"]
+
+[ext_resource type="Texture2D" uid="uid://s3tj76v46ls3" path="res://assets/1 Main Character/1 Character/Walk1.png" id="1_3vyb7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2brh"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dn4c7"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vejd"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ws0vm"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rhr3r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2brh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dn4c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vejd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ws0vm")
+}],
+"loop": true,
+"name": &"PlayerWalk1",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t53lx"]
+size = Vector2(24, 18)
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 5
+collision_layer = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 56)
+sprite_frames = SubResource("SpriteFrames_rhr3r")
+animation = &"PlayerWalk1"
+autoplay = "PlayerWalk1"
+frame_progress = 0.882947
+
+[node name="BulletSpawnPosition" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(0, -1)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 56)
+shape = SubResource("RectangleShape2D_t53lx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="HUD" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1.0
+offset_top = -5.0
+offset_right = 39.0
+offset_bottom = 35.0
+
+[node name="HPValue" type="Label" parent="Camera2D/HUD"]
+layout_mode = 0
+offset_left = -115.0
+offset_top = -79.0
+offset_right = -75.0
+offset_bottom = -56.0
+text = "100"
+
+[node name="HPLabel" type="Label" parent="Camera2D/HUD"]
+layout_mode = 0
+offset_left = -142.0
+offset_top = -80.0
+offset_right = -102.0
+offset_bottom = -57.0
+text = "HP:"

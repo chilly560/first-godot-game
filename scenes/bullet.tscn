@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c16cmeql35v60"]
+
+[ext_resource type="Texture2D" uid="uid://33h4umjeebly" path="res://assets/whitesprite.png" id="1_mkf8s"]
+[ext_resource type="Script" uid="uid://dmna2auwv31r" path="res://scenes/Bullet.cs" id="1_y25gk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mkf8s"]
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_y25gk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 4.71239
+scale = Vector2(0.1, 0.1)
+shape = SubResource("RectangleShape2D_mkf8s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_mkf8s")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEnteredBullet"]
