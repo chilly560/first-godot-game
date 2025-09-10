@@ -54,10 +54,9 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7p1mj"]
-size = Vector2(8, 12)
+size = Vector2(17, 20)
 
 [node name="Enemy" type="Area2D"]
-collision_mask = 2
 script = ExtResource("1_md0e3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -69,4 +68,4 @@ frame_progress = 0.784359
 position = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_7p1mj")
 
-[connection signal="body_entered" from="." to="." method="OnArea2DBodyEntered"]
+[connection signal="body_entered" from="." to="." method="OnBodyEnteredEnemy"]

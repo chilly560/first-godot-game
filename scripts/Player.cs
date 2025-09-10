@@ -18,7 +18,8 @@ public partial class Player : CharacterBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.bulletScene = (PackedScene)ResourceLoader.Load("res://scenes/Bullet.tscn");
+		//this.bulletScene = (PackedScene)ResourceLoader.Load("res://scenes/Bullet.tscn");
+		this.bulletScene = (PackedScene)GD.Load("res://scenes/Bullet_old.tscn");
 		this.bulletSpawnPosition = GetNode<Marker2D>("AnimatedSprite2D/BulletSpawnPosition");
 		this.gameData = GetNode<GameData>("%GameData");
 		this.hp = GetNode<Label>("Camera2D/HUD/HPValue");
@@ -27,6 +28,10 @@ public partial class Player : CharacterBody2D
 		GD.Print(gameData.ToString());
 	}
 
+	/** Spawns a bullet at the bullet spawn position and adds it to the scene tree.
+
+	Position applied based on BulletSpawnPosition (Marker2D node) in player scene.
+	*/
 	private void Shoot()
 	{
 		Node2D bullet = (Node2D)bulletScene.Instantiate();
@@ -34,8 +39,10 @@ public partial class Player : CharacterBody2D
 		GetParent().AddChild(bullet);
 	}
 
+	/** Handles input from the player.
+	*/
 	public void GetInput()
-	{	
+	{
 		if (Input.IsActionJustPressed("click"))
 			Shoot();
 		else
@@ -51,10 +58,15 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
+	/** Applies damage to the player and checks if they are still alive.
+	 * If the player dies, it changes the scene to the game over screen.
+
+	 @param damage The amount of damage to apply to the player.
+	 */
 	public void TakeDamage(int damage)
 	{
 		isAlive = gameData.CauseDamage(damage);
-		this.hp.Text = gameData.GetHP().ToString(); 
+		this.hp.Text = gameData.GetHP().ToString();
 		GD.Print(isAlive);
 		int hp = gameData.GetHP();
 		GD.Print(hp);

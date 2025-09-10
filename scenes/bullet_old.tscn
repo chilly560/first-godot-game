@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://brgbccp1fvfd4"]
+[gd_scene load_steps=4 format=3 uid="uid://c16cmeql35v60"]
 
 [ext_resource type="Texture2D" uid="uid://33h4umjeebly" path="res://assets/whitesprite.png" id="1_mkf8s"]
+[ext_resource type="Script" uid="uid://dmna2auwv31r" path="res://scripts/Bullet.cs" id="1_y25gk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkf8s"]
 size = Vector2(40, 40)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_y25gk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.19209e-07, -1.19209e-07)
@@ -18,11 +20,4 @@ one_way_collision_margin = 0.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_mkf8s")
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(1.19209e-07, -1.19209e-07)
-rotation = -1.5708
-scale = Vector2(0.1, 0.1)
-shape = SubResource("RectangleShape2D_mkf8s")
-one_way_collision_margin = 0.0
+[connection signal="area_entered" from="." to="." method="OnAreaEnteredBullet"]
