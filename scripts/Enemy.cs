@@ -15,6 +15,7 @@ public partial class Enemy : Area2D
 		this.gameData = GetNode<GameData>("%GameData");
 		this.enemyid = this.gameData.GetNumberOfEnemies();
 		this.gameData.AddEnemy(this);
+		this.hp = 100;
 		GD.Print(this.gameData.GetNumberOfEnemies());
 		GD.Print("[LOG] Spawned Enemy");
 	}

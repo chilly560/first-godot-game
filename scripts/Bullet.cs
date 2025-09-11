@@ -4,13 +4,12 @@ using System;
 //public partial class Bullet : RigidBody2D
 public partial class Bullet : Area2D
 {
-	private int speed = 750;
+	private int speed { get; set;  } = 750;
 
-	public int Damage { get; set; } = 50;
+	public int Damage { get; set; } = 20;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	
 	{
 	}
 

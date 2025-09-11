@@ -3,7 +3,9 @@ using Godot;
 public partial class Player : CharacterBody2D
 {
 	[Export]
-	public int Speed { get; set; } = 400;
+	private int Speed { get; set; } = 400;
+
+	private Weapon PlayerWeapon { get; set; }
 
 	private GameData gameData;
 
@@ -15,11 +17,12 @@ public partial class Player : CharacterBody2D
 
 	private Marker2D bulletSpawnPosition;
 
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		//this.bulletScene = (PackedScene)ResourceLoader.Load("res://scenes/Bullet.tscn");
-		this.bulletScene = (PackedScene)GD.Load("res://scenes/Bullet_old.tscn");
+		this.bulletScene = (PackedScene)GD.Load("res://scenes/Bullet.tscn");
 		this.bulletSpawnPosition = GetNode<Marker2D>("AnimatedSprite2D/BulletSpawnPosition");
 		this.gameData = GetNode<GameData>("%GameData");
 		this.hp = GetNode<Label>("Camera2D/HUD/HPValue");
