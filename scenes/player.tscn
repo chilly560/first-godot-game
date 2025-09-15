@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7rqggkyxpph4"]
+[gd_scene load_steps=9 format=3 uid="uid://c7rqggkyxpph4"]
 
 [ext_resource type="Texture2D" uid="uid://s3tj76v46ls3" path="res://assets/1 Main Character/1 Character/Walk1.png" id="1_3vyb7"]
+[ext_resource type="PackedScene" uid="uid://c4i3m8rk703u2" path="res://scenes/WeaponScene.tscn" id="2_g2els"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2brh"]
 atlas = ExtResource("1_3vyb7")
@@ -52,9 +53,8 @@ animation = &"PlayerWalk1"
 autoplay = "PlayerWalk1"
 frame_progress = 0.882947
 
-[node name="BulletSpawnPosition" type="Marker2D" parent="AnimatedSprite2D"]
-position = Vector2(0, -14)
-rotation = -1.5708
+[node name="WeaponScene" parent="AnimatedSprite2D" instance=ExtResource("2_g2els")]
+position = Vector2(0, -13)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 56)

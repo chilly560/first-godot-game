@@ -42,7 +42,5 @@ public partial class Bullet : Area2D
 		}
 		else if (body is Player)
 			GD.Print("Bug");
-
-		GD.Print("Miss");
 	}
 }

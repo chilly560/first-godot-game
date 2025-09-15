@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c16cmeql35v60"]
+[gd_scene load_steps=4 format=3 uid="uid://brgbccp1fvfd4"]
 
 [ext_resource type="Texture2D" uid="uid://33h4umjeebly" path="res://assets/whitesprite.png" id="1_mkf8s"]
 [ext_resource type="Script" uid="uid://dmna2auwv31r" path="res://scripts/Bullet.cs" id="1_y25gk"]

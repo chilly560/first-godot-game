@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4i3m8rk703u2"]
+
+[ext_resource type="Script" uid="uid://dlsrklx30hhc3" path="res://scripts/WeaponScene.cs" id="1_gcb5k"]
+
+[node name="WeaponScene" type="Marker2D"]
+script = ExtResource("1_gcb5k")
