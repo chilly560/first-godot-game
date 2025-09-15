@@ -1,6 +1,7 @@
 using Godot;
 using System;
-using Game.Weapons;
+using System.Timers;
+using System.Collections.Generic;
 
 namespace Game.Weapons
 {
@@ -8,15 +9,15 @@ namespace Game.Weapons
     public static class WeaponFactory
     {
 
-        private const float DEG_30_IN_RAD = 0.523598776f; // 30 degrees in radians
+        private const float DEG_30_IN_RAD = 0.523598776f; 
 
-        private static Player player1 = null; // Temporary, will be passed in properly later
+        private static Player player1 = null; 
 
         private class Pistol : Weapon
         {
             public Pistol(Player player) : base(player)
             {
-                BulletType = Bullet.Standard;
+                BulletType = BulletClassification.Standard;
                 Damage = 10;
                 Speed = 700;
                 Ammo = -1; // Infinite ammo
@@ -39,9 +40,10 @@ namespace Game.Weapons
 
         private class Shotgun : Weapon
         {
+
             public Shotgun(Player player) : base(player)
             {
-                BulletType = Bullet.Heavy;
+                BulletType = BulletClassification.Heavy;
                 Damage = 15;
                 Speed = 500;
                 Ammo = -1; // Infinite ammo
@@ -56,10 +58,10 @@ namespace Game.Weapons
 
             public override void Shoot(Vector2 weaponPosition)
             {
-                Node2D bullet = (Node2D)bulletScene.Instantiate();
-                Node2D bullet2 = (Node2D)bulletScene.Instantiate();
-                Node2D bullet3 = (Node2D)bulletScene.Instantiate();
-                bullet2.Rotate(DEG_30_IN_RAD); // 30 degrees in radians
+                Bullet bullet = (Bullet)bulletScene.Instantiate();
+                Bullet bullet2 = (Bullet)bulletScene.Instantiate();
+                Bullet bullet3 = (Bullet)bulletScene.Instantiate();
+                bullet2.Rotate(DEG_30_IN_RAD);
                 bullet3.Rotate(-DEG_30_IN_RAD);
                 bullet.GlobalPosition = weaponPosition;
                 bullet2.GlobalPosition = weaponPosition;
@@ -67,6 +69,9 @@ namespace Game.Weapons
                 root.AddChild(bullet);
                 root.AddChild(bullet2);
                 root.AddChild(bullet3);
+                bullet.SetTimer(.01f);
+                bullet2.SetTimer(.01f);
+                bullet3.SetTimer(.01f);      
             }
         }
         public static IWeapon CreateWeapon(WeaponType weaponType)
@@ -89,7 +94,7 @@ namespace Game.Weapons
         {
             player1 = player;
             if (player == null)
-                throw new ArgumentNullException("ERROR: PLAYER OBJ NULL");    //?? throw new ArgumentNullException("Player reference is null. Cannot create weapon without player context.");
+                throw new ArgumentNullException("ERROR: PLAYER OBJ NULL");    
             return CreateWeapon(weaponType);
         }
 

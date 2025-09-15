@@ -5,7 +5,7 @@ namespace Game.Weapons
 {
     public abstract class Weapon : IWeapon
     {
-        protected enum Bullet
+        protected enum BulletClassification
         {
             Standard,
             Heavy,
@@ -16,7 +16,7 @@ namespace Game.Weapons
         }
         protected int Damage, Speed, Ammo, MaxAmmo;
 
-        protected Bullet BulletType;
+        protected BulletClassification BulletType;
 
         protected PackedScene bulletScene;
 
