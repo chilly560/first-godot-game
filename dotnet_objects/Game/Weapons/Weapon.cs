@@ -10,7 +10,9 @@ namespace Game.Weapons
             Standard,
             Heavy,
             FiftyCal,
-            RayGun
+            RayGun,
+
+            Explosive
         }
         protected int Damage, Speed, Ammo, MaxAmmo;
 

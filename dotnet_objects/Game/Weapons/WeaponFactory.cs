@@ -8,6 +8,8 @@ namespace Game.Weapons
     public static class WeaponFactory
     {
 
+        private const float DEG_30_IN_RAD = 0.523598776f; // 30 degrees in radians
+
         private static Player player1 = null; // Temporary, will be passed in properly later
 
         private class Pistol : Weapon
@@ -34,6 +36,39 @@ namespace Game.Weapons
                 root.AddChild(bullet);
             }
         }
+
+        private class Shotgun : Weapon
+        {
+            public Shotgun(Player player) : base(player)
+            {
+                BulletType = Bullet.Heavy;
+                Damage = 15;
+                Speed = 500;
+                Ammo = -1; // Infinite ammo
+                MaxAmmo = -1; // Infinite ammo
+            }
+
+            public override void Reload()
+            {
+                // Pistol does not need to reload
+                GD.Print("[TEMP] Pistol does not need to reload.");
+            }
+
+            public override void Shoot(Vector2 weaponPosition)
+            {
+                Node2D bullet = (Node2D)bulletScene.Instantiate();
+                Node2D bullet2 = (Node2D)bulletScene.Instantiate();
+                Node2D bullet3 = (Node2D)bulletScene.Instantiate();
+                bullet2.Rotate(DEG_30_IN_RAD); // 30 degrees in radians
+                bullet3.Rotate(-DEG_30_IN_RAD);
+                bullet.GlobalPosition = weaponPosition;
+                bullet2.GlobalPosition = weaponPosition;
+                bullet3.GlobalPosition = weaponPosition;
+                root.AddChild(bullet);
+                root.AddChild(bullet2);
+                root.AddChild(bullet3);
+            }
+        }
         public static IWeapon CreateWeapon(WeaponType weaponType)
         {
             if (player1 == null)
@@ -43,6 +78,8 @@ namespace Game.Weapons
             {
                 case WeaponType.Pistol:
                     return new Pistol(player1);
+                case WeaponType.Shotgun:
+                    return new Shotgun(player1);
                 default:
                     throw new ArgumentException($"Weapon type '{weaponType}' is not recognized.");
             }
