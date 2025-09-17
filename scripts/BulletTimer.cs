@@ -16,7 +16,7 @@ public partial class BulletTimer : Timer
 
 	public void OnTimerTimeout()
 	{
-		GD.Print("Timer timeout");
 		GetParent<Bullet>().QueueFree();
+		GD.Print("Timer timeout, bullet freed");
 	}
 }

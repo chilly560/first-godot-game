@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://33h4umjeebly" path="res://assets/whitesprite.png" id="1_mkf8s"]
 [ext_resource type="Script" uid="uid://dmna2auwv31r" path="res://scripts/Bullet.cs" id="1_y25gk"]
-[ext_resource type="Script" uid="uid://667hpsxl7r7e" path="res://scripts/BulletTimer.cs" id="3_l5glv"]
+[ext_resource type="PackedScene" uid="uid://18m13yc5lohx" path="res://scenes/BulletTimer.tscn" id="3_l5glv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkf8s"]
 size = Vector2(40, 40)
@@ -21,8 +21,6 @@ one_way_collision_margin = 0.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_mkf8s")
 
-[node name="BulletTimer" type="Timer" parent="."]
-script = ExtResource("3_l5glv")
+[node name="BulletTimer" parent="." instance=ExtResource("3_l5glv")]
 
 [connection signal="area_entered" from="." to="." method="OnAreaEnteredBullet"]
-[connection signal="timeout" from="BulletTimer" to="." method="OnTimerTimeout"]

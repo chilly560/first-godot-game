@@ -1,19 +1,9 @@
 using System;
 using Godot;
-
 namespace Game.Weapons
 {
     public abstract class Weapon : IWeapon
     {
-        protected enum BulletClassification
-        {
-            Standard,
-            Heavy,
-            FiftyCal,
-            RayGun,
-
-            Explosive
-        }
         protected int Damage, Speed, Ammo, MaxAmmo;
 
         protected BulletClassification BulletType;
@@ -38,6 +28,35 @@ namespace Game.Weapons
         public void AddAmmo(int ammo)
         {
             this.Ammo += ammo;
+        }
+
+        protected void SetBulletType(BulletClassification type)
+        {
+            switch (type)
+            {
+                case BulletClassification.Standard:
+                    this.Damage = 20;
+                    this.Speed = 750;
+                    break;
+                case BulletClassification.Heavy:
+                    this.Damage = 15;
+                    this.Speed = 500;
+                    break;
+                case BulletClassification.FiftyCal:
+                    this.Damage = 50;
+                    this.Speed = 1000;
+                    break;
+                case BulletClassification.RayGun:
+                    this.Damage = 5;
+                    this.Speed = 1500;
+                    break;
+                case BulletClassification.Explosive:
+                    this.Damage = 40;
+                    this.Speed = 400;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid bullet classification");
+            }
         }
 
         public abstract void Shoot(Vector2 weaponPosition);

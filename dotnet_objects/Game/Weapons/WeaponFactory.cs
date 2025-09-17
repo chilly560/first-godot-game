@@ -17,9 +17,7 @@ namespace Game.Weapons
         {
             public Pistol(Player player) : base(player)
             {
-                BulletType = BulletClassification.Standard;
-                Damage = 10;
-                Speed = 700;
+                this.SetBulletType(BulletClassification.Standard);
                 Ammo = -1; // Infinite ammo
                 MaxAmmo = -1; // Infinite ammo
             }
@@ -43,9 +41,7 @@ namespace Game.Weapons
 
             public Shotgun(Player player) : base(player)
             {
-                BulletType = BulletClassification.Heavy;
-                Damage = 15;
-                Speed = 500;
+                this.SetBulletType(BulletClassification.Heavy);
                 Ammo = -1; // Infinite ammo
                 MaxAmmo = -1; // Infinite ammo
             }
@@ -56,22 +52,41 @@ namespace Game.Weapons
                 GD.Print("[TEMP] Pistol does not need to reload.");
             }
 
+            private float RandomSpread()
+            {
+                Random rand = new Random();
+                float baseFloat = (float)rand.NextDouble() * DEG_30_IN_RAD;
+                return rand.NextDouble() < 0.5 ? -baseFloat : baseFloat;
+            }
+
+            private int RandomBulletCount()
+            {
+                Random rand = new Random();
+                return rand.Next(5, 9); 
+            }
+
             public override void Shoot(Vector2 weaponPosition)
             {
-                Bullet bullet = (Bullet)bulletScene.Instantiate();
-                Bullet bullet2 = (Bullet)bulletScene.Instantiate();
-                Bullet bullet3 = (Bullet)bulletScene.Instantiate();
-                bullet2.Rotate(DEG_30_IN_RAD);
-                bullet3.Rotate(-DEG_30_IN_RAD);
-                bullet.GlobalPosition = weaponPosition;
-                bullet2.GlobalPosition = weaponPosition;
-                bullet3.GlobalPosition = weaponPosition;
-                root.AddChild(bullet);
-                root.AddChild(bullet2);
-                root.AddChild(bullet3);
-                bullet.SetTimer(.01f);
-                bullet2.SetTimer(.01f);
-                bullet3.SetTimer(.01f);      
+                List<Bullet> bullets = new List<Bullet>();
+                int i = RandomBulletCount();
+
+                for (; i > 0; i--) 
+                {
+                    Bullet newBullet = (Bullet)bulletScene.Instantiate();
+                    newBullet.SetStats(this.Damage, this.Speed, .75f);
+                    bullets.Add(newBullet);
+                }
+
+                foreach (Bullet b in bullets)
+                {
+                    b.Rotate(RandomSpread());
+                    b.GlobalPosition = weaponPosition;
+                    root.AddChild(b);
+                }
+
+                foreach (Bullet b in bullets)
+                    b.ShootBullet();
+
             }
         }
         public static IWeapon CreateWeapon(WeaponType weaponType)

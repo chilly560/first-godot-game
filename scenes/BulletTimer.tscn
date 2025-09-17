@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://18m13yc5lohx"]
+
+[ext_resource type="Script" uid="uid://cto2aqjp31nm0" path="res://scripts/BulletTimer.cs" id="1_tct75"]
+
+[node name="BulletTimer" type="Timer"]
+script = ExtResource("1_tct75")
+
+[connection signal="timeout" from="." to="." method="OnTimerTimeout"]
