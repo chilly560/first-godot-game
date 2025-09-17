@@ -40,7 +40,7 @@ namespace Game.Weapons
                     break;
                 case BulletClassification.Heavy:
                     this.Damage = 15;
-                    this.Speed = 500;
+                    this.Speed = -1;
                     break;
                 case BulletClassification.FiftyCal:
                     this.Damage = 50;

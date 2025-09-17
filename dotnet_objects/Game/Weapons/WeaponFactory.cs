@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading;
 using System.Timers;
 using System.Collections.Generic;
 
@@ -73,7 +74,10 @@ namespace Game.Weapons
                 for (; i > 0; i--) 
                 {
                     Bullet newBullet = (Bullet)bulletScene.Instantiate();
-                    newBullet.SetStats(this.Damage, this.Speed, .75f);
+
+                    // For variable speed on heavy bullets
+                    Random random = new Random();
+                    newBullet.SetStats(this.Damage, random.Next(400, 600), .5f);
                     bullets.Add(newBullet);
                 }
 
@@ -84,9 +88,12 @@ namespace Game.Weapons
                     root.AddChild(b);
                 }
 
-                foreach (Bullet b in bullets)
+                System.Timers.Timer timer = new System.Timers.Timer();
+                timer.AutoReset = false;
+                foreach (Bullet b in bullets) 
+                {
                     b.ShootBullet();
-
+                }
             }
         }
         public static IWeapon CreateWeapon(WeaponType weaponType)

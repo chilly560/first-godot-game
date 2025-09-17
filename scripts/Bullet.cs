@@ -5,7 +5,7 @@ using Game.Weapons;
 
 public partial class Bullet : Area2D
 {
-	public int speed { get; set; } = 750;
+	public float speed { get; set; } = 750;
 
 	public int Damage { get; set; } = 20;
 
@@ -39,6 +39,7 @@ public partial class Bullet : Area2D
 	public override void _PhysicsProcess(double delta)
 	{
 		Position += -1 * Transform.Y * speed * (float)delta;
+		speed = speed * 0.9525f;
 	}
 
 	public void ShootBullet()
