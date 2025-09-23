@@ -77,7 +77,7 @@ namespace Game.Weapons
 
                     // For variable speed on heavy bullets
                     Random random = new Random();
-                    newBullet.SetStats(this.Damage, random.Next(400, 600), .5f);
+                    newBullet.SetStats(this.Damage, random.Next(400, 600), .3f);
                     bullets.Add(newBullet);
                 }
 

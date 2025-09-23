@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://daecxnevbp0su"]
+
+[ext_resource type="Texture2D" uid="uid://33h4umjeebly" path="res://assets/whitesprite.png" id="1_ks1gq"]
+
+[node name="EnemySpawner" type="Marker2D"]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(6, 0)
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+target_position = Vector2(-7, 0)
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 10)
+scale = Vector2(1, 0.1875)
+texture = ExtResource("1_ks1gq")

@@ -23,6 +23,7 @@ public partial class Enemy : Area2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		Position += Transform.Y * 50 * (float)delta;
 	}
 
 	/** Called when another body enters the enemy's area

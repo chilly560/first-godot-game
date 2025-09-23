@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://coxv56so0e6h8"]
+
+[ext_resource type="Script" uid="uid://bnro2ps0p80d1" path="res://scripts/EnemySpawner2.cs" id="1_o7xk1"]
+[ext_resource type="Texture2D" uid="uid://33h4umjeebly" path="res://assets/whitesprite.png" id="2_ray0u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o7xk1"]
+size = Vector2(32, 32)
+
+[node name="EnemySpawner2" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_o7xk1")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(26, 0)
+target_position = Vector2(10, 0)
+hit_from_inside = true
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2(-27, 0)
+target_position = Vector2(-9, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ray0u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_o7xk1")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-31, 0)
+scale = Vector2(0.28125, 0.28125)
+texture = ExtResource("2_ray0u")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(32, 0)
+scale = Vector2(0.28125, 0.28125)
+texture = ExtResource("2_ray0u")

@@ -65,6 +65,12 @@ public partial class Bullet : Area2D
 			GD.Print("Bug");
 	}
 
+	/**
+	* Sets the stats of the bullet
+	* @param damage The damage the bullet will deal
+	* @param speed The speed of the bullet
+	* @param range Timer time
+	*/
 	public void SetStats(int damage, int speed, float range = 1)
 	{
 		this.Damage = damage;

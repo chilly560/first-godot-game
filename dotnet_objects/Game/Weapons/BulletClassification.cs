@@ -1,5 +1,3 @@
-using Godot;
-
 namespace Game.Weapons
 {
     public enum BulletClassification

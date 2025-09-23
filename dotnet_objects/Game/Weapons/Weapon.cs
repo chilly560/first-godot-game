@@ -29,7 +29,7 @@ namespace Game.Weapons
         {
             this.Ammo += ammo;
         }
-
+  
         protected void SetBulletType(BulletClassification type)
         {
             switch (type)
@@ -40,6 +40,7 @@ namespace Game.Weapons
                     break;
                 case BulletClassification.Heavy:
                     this.Damage = 15;
+                    // Special case: Heavy bullets have variable speed
                     this.Speed = -1;
                     break;
                 case BulletClassification.FiftyCal:
