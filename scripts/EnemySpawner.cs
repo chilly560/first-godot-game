@@ -18,12 +18,13 @@ public partial class EnemySpawner : Marker2D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
+		// For some reason, the raycasts trigger from the base of the arrow?
 		if (this.rightCollisionRay.IsColliding())
-			dir = 1;
-		else if (this.leftCollisionRay.IsColliding())
 			dir = -1;
+		else if (this.leftCollisionRay.IsColliding())
+			dir = 1;
 
 		Position += Transform.X * SPEED * (float)delta * dir;
 	}
