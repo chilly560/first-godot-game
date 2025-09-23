@@ -88,8 +88,6 @@ namespace Game.Weapons
                     root.AddChild(b);
                 }
 
-                System.Timers.Timer timer = new System.Timers.Timer();
-                timer.AutoReset = false;
                 foreach (Bullet b in bullets) 
                 {
                     b.ShootBullet();
