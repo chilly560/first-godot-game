@@ -6,7 +6,7 @@ using Godot;
 
 namespace Game.Enemies
 {
-    
+
     public abstract partial class Enemy : Area2D, IEnemy
     {
         private GameData gameData;
@@ -26,7 +26,7 @@ namespace Game.Enemies
             GD.Print("[LOG] Spawned Enemy");
         }
 
-            public void OnBodyEnteredEnemy(Node body)
+        public void OnBodyEnteredEnemy(Node body)
         {
             GD.Print("Enemy collided with something");
             if (body is Player player)
@@ -55,6 +55,11 @@ namespace Game.Enemies
                 //this.gameData.RemoveEnemy(this.enemyid);
                 this.QueueFree();
             }
+        }
+
+        internal void SetID(int id)
+        {
+            this.enemyid = id;
         }
     }
 }

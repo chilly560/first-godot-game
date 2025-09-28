@@ -42,6 +42,9 @@ public partial class EnemySpawner2 : Area2D
 				this.GlobalPosition
 			)
 		);
+		// testing something:
+		Enemy e = EnemyFactory.CreateEnemy(EnemyClassification.DRONE, this.GlobalPosition);
+		e.SetID(e.GetID());
 		this.spawnTimer.Start();
 	}
 }

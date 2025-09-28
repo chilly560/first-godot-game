@@ -1,15 +1,15 @@
 using Godot;
 using System;
 using Game.Weapons;
-//public partial class Bullet : RigidBody2D
+using Game.Enemies;
 
 public partial class Bullet : Area2D
-{
+{  
 	public float speed { get; set; } = 750;
 
 	public int Damage { get; set; } = 20;
 
-	public float Range {get; set;} = 1;
+	public float Range { get; set; } = 1;
 
 	public BulletTimer BulletTimer;
 
@@ -55,7 +55,7 @@ public partial class Bullet : Area2D
 	public void OnAreaEnteredBullet(Node body)
 	{
 		GD.Print("Bullet collided with something");
-		if (body is Enemy enemy)
+		if (body is Game.Enemies.Enemy enemy)
 		{
 			enemy.TakeDamage(Damage);
 			this.QueueFree();
