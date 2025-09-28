@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Game.Enemies;
 
 public partial class EnemySpawner2 : Area2D
 {
@@ -35,9 +36,12 @@ public partial class EnemySpawner2 : Area2D
 	public void OnSpawnTimerTimeout()
 	{
 		GD.Print("Spawning enemy");
-		Node2D enemy = (Node2D)enemyScene.Instantiate();
-		enemy.GlobalPosition = this.GlobalPosition;
-		GetParent().AddChild(enemy);
+		GetParent().AddChild(
+			EnemyFactory.CreateEnemy(
+				EnemyClassification.DRONE,
+				this.GlobalPosition
+			)
+		);
 		this.spawnTimer.Start();
 	}
 }

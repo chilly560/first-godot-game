@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://chjkhfsdsws7j"]
+[gd_scene load_steps=6 format=3 uid="uid://chjkhfsdsws7j"]
 
 [ext_resource type="Script" uid="uid://bej06gxouydca" path="res://scripts/GameData.cs" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://c7rqggkyxpph4" path="res://scenes/player.tscn" id="2_iywne"]
 [ext_resource type="Script" uid="uid://dn7x2ktm4vckw" path="res://scripts/Player.cs" id="3_p57ef"]
-[ext_resource type="PackedScene" uid="uid://dtchwb1c21tjr" path="res://scenes/enemy.tscn" id="4_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://dw2s1kdlqxre3" path="res://scenes/tile_map_layer.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://coxv56so0e6h8" path="res://scenes/enemy_spawner_2.tscn" id="6_p57ef"]
 
@@ -16,12 +15,6 @@ script = ExtResource("1_lbhrr")
 [node name="Player" parent="." instance=ExtResource("2_iywne")]
 position = Vector2(3, 21)
 script = ExtResource("3_p57ef")
-
-[node name="Enemy" parent="." instance=ExtResource("4_u5sy4")]
-position = Vector2(-53, -33)
-
-[node name="Enemy2" parent="." instance=ExtResource("4_u5sy4")]
-position = Vector2(30, -33)
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_iywne")]
 position = Vector2(2, -72)

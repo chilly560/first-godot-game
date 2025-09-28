@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Game.Enemies;
 
 public partial class GameData : Node
 {
