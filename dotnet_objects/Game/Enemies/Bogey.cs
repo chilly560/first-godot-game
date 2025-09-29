@@ -15,7 +15,9 @@ namespace Game.Enemies
 
         private bool reposition;
 
-        private Vector2 targetPosition;
+        private float targetPosition;
+
+        private WeaponScene weaponScene;
 
         public override void _Ready()
         {
@@ -25,6 +27,7 @@ namespace Game.Enemies
             // This will be done with a godot timer node.
             reposition = true;
             gameData = GetNode<GameData>("%GameData");
+            weaponScene = GetNode<WeaponScene>("./WeaponScene");
             bogeyTimer = GetNode<Godot.Timer>("./BogeyTimer");
             bogeyTimer.WaitTime = 2f;
             bogeyTimer.Start();
@@ -35,16 +38,11 @@ namespace Game.Enemies
             if (reposition)
             {
                 Position += Transform.X * 100 * (float)delta;
-                if (Position.X == targetPosition.X)
+                if (Position.X == targetPosition)
                 {
                     reposition = false;
                     GD.Print("Bogey reached target position, shooting");
-                    // Shoot
-                }
-                else
-                {
-                    float direction = targetPosition.X > Position.X ? 1 : -1;
-                    Position += Transform.X * 100 * (float)delta * direction;
+                    
                 }
             }
         }
@@ -57,6 +55,7 @@ namespace Game.Enemies
                 targetPosition = gameData.GetPlayerX();
                 reposition = true;
             }
+            bogeyTimer.Start();
         }
     }
 }

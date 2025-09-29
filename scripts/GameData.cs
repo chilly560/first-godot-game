@@ -7,7 +7,9 @@ public partial class GameData : Node
 {
 	
 	private int HP;
-	
+
+	private Player player;
+
 	private Dictionary<int, Enemy> enemies;
 
 	// Called when the node enters the scene tree for the first time.
@@ -15,6 +17,7 @@ public partial class GameData : Node
 	{
 		this.HP = 100;
 		this.enemies = new Dictionary<int, Enemy>();
+		this.player = GetNode<Player>("./Player");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,6 +45,21 @@ public partial class GameData : Node
 		return this.HP;	
 	}
 	
+	public Vector2 GetPlayerXY()
+	{
+		return player.Position;
+	}
+
+	public float GetPlayerX()
+	{
+		return player.Position.X;
+	}
+
+	public float GetPlayerY()
+	{
+		return player.Position.Y;
+	}
+
 	/** Returns true if player dies */
 	public bool CauseDamage(int amount)
 	{
