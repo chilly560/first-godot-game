@@ -18,6 +18,6 @@ public partial class Quit : Button
 	 */
 	public void OnButtonPressedQuit()
 	{
-		GetTree().Quit();
+		GetTree().Quit(0);
 	}
 }

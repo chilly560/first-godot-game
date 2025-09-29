@@ -18,6 +18,7 @@ namespace Game.Enemies
                 case EnemyClassification.DRONE:
                     Drone enemy = (Drone)droneScene.Instantiate();
                     enemy.SetID(nextId++);
+                    enemy.Position = position;
                     return enemy;
                 default:
                     throw new ArgumentException("Unknown enemy type");
