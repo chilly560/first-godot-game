@@ -9,7 +9,7 @@ namespace Game.Enemies
     {
         private static int nextId = 1; // Static counter for unique IDs
 
-        private static PackedScene droneScene = GD.Load<PackedScene>("res://dotnet_objects/Game/Enemies/Drone.tscn");
+        private static PackedScene droneScene = GD.Load<PackedScene>("res://scenes/Drone.tscn");
 
         public static Enemy CreateEnemy(EnemyClassification enemyType, Vector2 position)
         {

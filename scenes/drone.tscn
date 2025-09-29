@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://ti5vqdeovlqr"]
 
-[ext_resource type="Script" uid="uid://blpx0iv01idtq" path="res://scripts/Enemy.cs" id="1_knnud"]
+[ext_resource type="Script" uid="uid://d0qdt1le6007d" path="res://dotnet_objects/Game/Enemies/Drone.cs" id="1_knnud"]
 [ext_resource type="Texture2D" uid="uid://bkdtima234u40" path="res://assets/3 Enemies/1/RunSD.png" id="2_1r4ts"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7p1mj"]
@@ -56,7 +56,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7p1mj"]
 size = Vector2(17, 20)
 
-[node name="Enemy" type="Area2D"]
+[node name="Drone" type="Area2D"]
 script = ExtResource("1_knnud")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

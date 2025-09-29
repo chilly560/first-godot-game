@@ -55,6 +55,10 @@ public partial class Bullet : Area2D
 	public void OnAreaEnteredBullet(Node body)
 	{
 		GD.Print("Bullet collided with something");
+
+		// Makes no sense but I have to fully qualify the Enemy class name here
+		// or it doesn't recognize it.
+		// I'm sure there's a reason but I don't know what it is yet.
 		if (body is Game.Enemies.Enemy enemy)
 		{
 			enemy.TakeDamage(Damage);
