@@ -61,6 +61,5 @@ namespace Game.Weapons
         }
 
         public abstract void Shoot(Vector2 weaponPosition);
-
     }
 }

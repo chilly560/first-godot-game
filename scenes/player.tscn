@@ -44,24 +44,25 @@ size = Vector2(24, 18)
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
-position = Vector2(0, -2)
+position = Vector2(-1, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, 56)
+position = Vector2(-1, 433)
 sprite_frames = SubResource("SpriteFrames_rhr3r")
 animation = &"PlayerWalk1"
 autoplay = "PlayerWalk1"
 frame_progress = 0.882947
 
 [node name="WeaponScene" parent="AnimatedSprite2D" instance=ExtResource("2_g2els")]
-position = Vector2(0, -13)
+position = Vector2(1, -44)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 56)
+position = Vector2(0, 433)
 shape = SubResource("RectangleShape2D_t53lx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
+position = Vector2(0, 232)
+zoom = Vector2(2, 2)
 
 [node name="HUD" type="Control" parent="Camera2D"]
 layout_mode = 3
@@ -73,16 +74,16 @@ offset_bottom = 35.0
 
 [node name="HPValue" type="Label" parent="Camera2D/HUD"]
 layout_mode = 0
-offset_left = -115.0
-offset_top = -79.0
-offset_right = -75.0
-offset_bottom = -56.0
+offset_left = -120.0
+offset_top = -272.0
+offset_right = -80.0
+offset_bottom = -249.0
 text = "100"
 
 [node name="HPLabel" type="Label" parent="Camera2D/HUD"]
 layout_mode = 0
-offset_left = -142.0
-offset_top = -80.0
-offset_right = -102.0
-offset_bottom = -57.0
+offset_left = -152.0
+offset_top = -272.0
+offset_right = -112.0
+offset_bottom = -249.0
 text = "HP:"

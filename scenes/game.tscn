@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://coxv56so0e6h8" path="res://scenes/enemy_spawner_2.tscn" id="6_p57ef"]
 
 [node name="Game" type="Node2D"]
+position = Vector2(1, 32)
 
 [node name="GameData" type="Node" parent="."]
 unique_name_in_owner = true
@@ -17,7 +18,7 @@ position = Vector2(3, 21)
 script = ExtResource("3_p57ef")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(2, -72)
+position = Vector2(5, 375)
 
 [node name="EnemySpawner2" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(-3, -33)
+position = Vector2(11, 194)
