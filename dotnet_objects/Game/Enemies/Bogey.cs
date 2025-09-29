@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Game.Weapons;
 using Godot;
 
 namespace Game.Enemies
@@ -28,6 +29,9 @@ namespace Game.Enemies
             reposition = true;
             gameData = GetNode<GameData>("%GameData");
             weaponScene = GetNode<WeaponScene>("./WeaponScene");
+            weaponScene.SetWeapon(
+                WeaponFactory.CreateWeapon(WeaponType.Pistol)
+            );
             bogeyTimer = GetNode<Godot.Timer>("./BogeyTimer");
             bogeyTimer.WaitTime = 2f;
             bogeyTimer.Start();
@@ -42,7 +46,8 @@ namespace Game.Enemies
                 {
                     reposition = false;
                     GD.Print("Bogey reached target position, shooting");
-                    
+                    weaponScene.Shoot();
+                    OnBogeyTimerTimeout();
                 }
             }
         }

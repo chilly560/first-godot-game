@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bj2103ws4vfg3"]
+[gd_scene load_steps=13 format=3 uid="uid://bj2103ws4vfg3"]
 
 [ext_resource type="Script" uid="uid://f6y43g25nfpk" path="res://dotnet_objects/Game/Enemies/Bogey.cs" id="1_h5uv4"]
 [ext_resource type="Texture2D" uid="uid://bkdtima234u40" path="res://assets/3 Enemies/1/RunSD.png" id="2_n6wbt"]
+[ext_resource type="Script" uid="uid://dxwoqhljegj02" path="res://scripts/BogeyTimer.cs" id="3_7k7q8"]
+[ext_resource type="PackedScene" uid="uid://c4i3m8rk703u2" path="res://scenes/WeaponScene.tscn" id="4_u2nkw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7k7q8"]
 atlas = ExtResource("2_n6wbt")
@@ -53,8 +55,21 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Bogey" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6acpg"]
+size = Vector2(13, 17)
+
+[node name="Bogey" type="Area2D"]
 script = ExtResource("1_h5uv4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gdow1")
+
+[node name="BogeyTimer" type="Timer" parent="."]
+script = ExtResource("3_7k7q8")
+
+[node name="WeaponScene" parent="." instance=ExtResource("4_u2nkw")]
+position = Vector2(2, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, -1.5)
+shape = SubResource("RectangleShape2D_6acpg")
