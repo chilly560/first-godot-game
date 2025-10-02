@@ -21,25 +21,12 @@ public partial class Player : CharacterBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		//this.bulletScene = (PackedScene)ResourceLoader.Lad("res://scenes/Bullet.tscn");
-		WeaponFactory.SetPlayer(this);
 		this.playerWeapon = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
 		this.gameData = GetNode<GameData>("%GameData");
 		this.hp = GetNode<Label>("Camera2D/HUD/HPValue");
 		this.isAlive = true;
 		GD.Print("[LOG] Spawned Player");
 		GD.Print(gameData.ToString());
-	}
-
-	/** Spawns a bullet at the bullet spawn position and adds it to the scene tree.
-
-	Position applied based on BulletSpawnPosition (Marker2D node) in player scene.
-	*/
-	private void Shoot()
-	{
-		//Node2D bullet = (Node2D)bulletScene.Instantiate();
-		//bullet.GlobalPosition = WeaponPosition.GlobalPosition;
-		//GetParent().AddChild(bullet);
 	}
 
 	/** Handles input from the player.

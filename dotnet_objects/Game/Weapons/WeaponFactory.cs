@@ -13,8 +13,6 @@ namespace Game.Weapons
 
         private const float DEG_30_IN_RAD = 0.523598776f; 
 
-        private static Node2D parent = null; 
-
         private class Pistol : Weapon
         {
             public Pistol(Node2D parent) : base(parent)
@@ -32,9 +30,12 @@ namespace Game.Weapons
 
             public override void Shoot(Vector2 weaponPosition)
             {
-                Node2D bullet = (Node2D)bulletScene.Instantiate();
+                Bullet bullet = (Bullet)bulletScene.Instantiate();
                 bullet.GlobalPosition = weaponPosition;
+                // TODO: Overhaul the Timer system used in Bullet.ShootBullet
+                // to be universal to all bullet types. 
                 root.AddChild(bullet);
+                this.SetBulletPhysics(bullet, parent is Player);
             }
         }
 
@@ -89,17 +90,20 @@ namespace Game.Weapons
                     root.AddChild(b);
                 }
 
-                foreach (Bullet b in bullets) 
+                bool isPlayer = parent is Player;
+
+                foreach (Bullet b in bullets)
                 {
-                    b.SetPhysics(this.BulletMod.DefaultShotgunMod);
+                    this.SetBulletPhysics(b, isPlayer);
+                    b.SetPhysicsModifier(BulletMod.DefaultShotgunMod);
                     b.ShootBullet();
                 }
             }
         }
-        public static IWeapon CreateWeapon(WeaponType weaponType)
+        public static IWeapon CreateWeapon(WeaponType weaponType, Node2D parent)
         {
-            if (parent == null)
-                throw new ArgumentNullException("Player reference is null. Cannot create weapon without player context.");
+            if (parent == null || (parent is not Player && parent is not Enemy))
+                throw new ArgumentException("ERROR: PLAYER OBJ NOT OF TYPE PLAYER OR ENEMY");
 
             switch (weaponType)
             {
@@ -110,21 +114,6 @@ namespace Game.Weapons
                 default:
                     throw new ArgumentException($"Weapon type '{weaponType}' is not recognized.");
             }
-        }
-
-        public static IWeapon CreateWeapon(WeaponType weaponType, Node2D parent)
-        {
-            if (parent == null || (parent is not Player && parent is not Enemy))
-                throw new ArgumentException("ERROR: PLAYER OBJ NOT OF TYPE PLAYER OR ENEMY");
-
-            WeaponFactory.parent = parent;
-
-            return CreateWeapon(weaponType);
-        }
-
-        public static void SetPlayer(Player player)
-        {
-            parent = player;
         }
     }
 }

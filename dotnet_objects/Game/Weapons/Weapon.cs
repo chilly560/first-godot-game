@@ -31,9 +31,13 @@ namespace Game.Weapons
 
         protected Node2D root;
         protected BulletPhysicsModifiers BulletMod;
+        protected BulletPhysicsOverhaulers BulletOverhaul;
+        protected Node2D parent;
         public Weapon(Node2D parent)
         {
             BulletMod = new BulletPhysicsModifiers();
+            BulletOverhaul = new BulletPhysicsOverhaulers();
+            this.parent = parent;
             root = parent.GetTree().Root.GetNode("Game") as Node2D;
             this.bulletScene = (PackedScene)GD.Load("res://scenes/Bullet.tscn");
         }
@@ -50,6 +54,10 @@ namespace Game.Weapons
             this.Ammo += ammo;
         }
 
+        // Bullet Physics Modifiers
+        /// <summary>
+        ///  This class is for adding additional physics modifications to a bullet at runtime
+        /// </summary>
         protected class BulletPhysicsModifiers
         {
             // This method provides the speed falloff for shotgun pellets
@@ -64,33 +72,58 @@ namespace Game.Weapons
             }
         }
 
+        // Bullet Physics Overhaulers
+        /// <summary>
+        ///  This class is for completely overhauling the physics of a bullet at runtime
+        /// </summary>
+        protected class BulletPhysicsOverhaulers
+        {
+            public void DefaultPhysics(Bullet b, double delta)
+            {
+                b.Position += -1 * b.Transform.Y * b.speed * (float)delta;
+            }
+
+            public void EnemyDefaultPhysics(Bullet b, double delta)
+            {
+                b.Position += 1 * b.Transform.Y * b.speed * (float)delta;
+            }
+        }
+
         protected void SetBulletType(BulletClassification type)
         {
             switch (type)
             {
-            case BulletClassification.Standard:
-                this.Damage = STANDARD_DAMAGE;
-                this.Speed = STANDARD_SPEED;
-                break;
-            case BulletClassification.Heavy:
-                this.Damage = HEAVY_DAMAGE;
-                this.Speed = HEAVY_SPEED;
-                break;
-            case BulletClassification.FiftyCal:
-                this.Damage = FIFTY_CAL_DAMAGE;
-                this.Speed = FIFTY_CAL_SPEED;
-                break;
-            case BulletClassification.RayGun:
-                this.Damage = RAY_GUN_DAMAGE;
-                this.Speed = RAY_GUN_SPEED;
-                break;
-            case BulletClassification.Explosive:
-                this.Damage = EXPLOSIVE_DAMAGE;
-                this.Speed = EXPLOSIVE_SPEED;
-                break;
-            default:
-                throw new ArgumentException("Invalid bullet classification");
+                case BulletClassification.Standard:
+                    this.Damage = STANDARD_DAMAGE;
+                    this.Speed = STANDARD_SPEED;
+                    break;
+                case BulletClassification.Heavy:
+                    this.Damage = HEAVY_DAMAGE;
+                    this.Speed = HEAVY_SPEED;
+                    break;
+                case BulletClassification.FiftyCal:
+                    this.Damage = FIFTY_CAL_DAMAGE;
+                    this.Speed = FIFTY_CAL_SPEED;
+                    break;
+                case BulletClassification.RayGun:
+                    this.Damage = RAY_GUN_DAMAGE;
+                    this.Speed = RAY_GUN_SPEED;
+                    break;
+                case BulletClassification.Explosive:
+                    this.Damage = EXPLOSIVE_DAMAGE;
+                    this.Speed = EXPLOSIVE_SPEED;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid bullet classification");
             }
+        }
+
+        protected void SetBulletPhysics(Bullet b, bool isPlayer)
+        {
+            if (isPlayer)
+                b.SetPhysicsOverhauler(BulletOverhaul.DefaultPhysics);
+            else
+                b.SetPhysicsOverhauler(BulletOverhaul.EnemyDefaultPhysics);
         }
 
         public abstract void Shoot(Vector2 weaponPosition);

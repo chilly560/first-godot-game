@@ -17,6 +17,9 @@ public partial class Bullet : Area2D
 
 	private bool freeRotate = false;
 	private Action<Bullet> bulletPhysicsModifier;
+
+	private Action<Bullet, double> bulletPhysicsOverhauler;
+
 	public void AllowFreeRotate()
 	{
 		freeRotate = true;
@@ -26,6 +29,7 @@ public partial class Bullet : Area2D
 	public override void _Ready()
 	{
 		bulletPhysicsModifier = null;
+		bulletPhysicsOverhauler = null;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,12 +45,16 @@ public partial class Bullet : Area2D
 	*/
 	public override void _PhysicsProcess(double delta)
 	{
-		Position += -1 * Transform.Y * speed * (float)delta;
+		if (bulletPhysicsOverhauler == null)
+			Position += -1 * Transform.Y * speed * (float)delta;
+		else
+			bulletPhysicsOverhauler(this, delta);
+
 		if (bulletPhysicsModifier != null)
 			bulletPhysicsModifier(this);
-		//speed = speed * 0.9525f;
 	}
 
+	[Obsolete("ShootBullet is deprecated due to only being compatible with shotgun.")]
 	public void ShootBullet()
 	{
 		this.BulletTimer = GetNode<BulletTimer>("./BulletTimer");
@@ -62,7 +70,7 @@ public partial class Bullet : Area2D
 		GD.Print("Bullet collided with something");
 
 		// Makes no sense but I have to fully qualify the Enemy class name here
-		// or it doesn't recognize it.
+		// or C# doesn't recognize it.
 		// I'm sure there's a reason but I don't know what it is yet.
 		if (body is Game.Enemies.Enemy enemy)
 		{
@@ -93,8 +101,13 @@ public partial class Bullet : Area2D
 	/// </summary>
 	/// <param name="del">A delegate that defines the custom physics behavior for the bullet. 
 	/// The delegate takes a <see cref="Bullet"/> instance as input and returns an object representing the result of the physics modification.</param>
-	public void SetPhysics(Action<Bullet> del)
+	public void SetPhysicsModifier(Action<Bullet> del)
 	{
 		this.bulletPhysicsModifier = del;
+	}
+	
+	public void SetPhysicsOverhauler(Action<Bullet, double> del)
+	{
+		this.bulletPhysicsOverhauler = del;
 	}
 }
