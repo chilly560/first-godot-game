@@ -26,7 +26,7 @@ namespace Game.Enemies
             // Create a timer that ticks down every x seconds
             // when timer ends, the bogey moves to the player's x position and shooots
             // This will be done with a godot timer node.
-            reposition = true;
+            this.reposition = true;
             gameData = GetNode<GameData>("%GameData");
             weaponScene = GetNode<WeaponScene>("./WeaponScene");
             weaponScene.SetWeapon(
@@ -39,12 +39,12 @@ namespace Game.Enemies
 
         public override void _Process(double delta)
         {
-            if (reposition)
+            if (this.reposition)
             {
                 Position += Transform.X * 100 * (float)delta;
                 if (Position.X == targetPosition)
                 {
-                    reposition = false;
+                    this.reposition = false;
                     GD.Print("Bogey reached target position, shooting");
                     weaponScene.Shoot();
                     OnBogeyTimerTimeout();

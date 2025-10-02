@@ -13,7 +13,7 @@ public partial class Quit : Button
 	{
 	}
  
-	/** Called when the quit button is pressed
+	/** Called when the quit button is psressed
 	 * Quits the game
 	 */
 	public void OnButtonPressedQuit()

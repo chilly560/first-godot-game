@@ -12,6 +12,7 @@ public partial class Player : CharacterBody2D
 
 	private Label hp;
 
+	// Remove
 	private PackedScene bulletScene;
 
 	private WeaponScene playerWeapon;

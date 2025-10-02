@@ -38,13 +38,11 @@ public partial class EnemySpawner2 : Area2D
 		GD.Print("Spawning enemy");
 		GetParent().AddChild(
 			EnemyFactory.CreateEnemy(
-				EnemyClassification.DRONE,
+				//EnemyClassification.DRONE,
+				EnemyClassification.BOGEY,
 				this.GlobalPosition
 			)
 		);
-		// testing something:
-		Enemy e = EnemyFactory.CreateEnemy(EnemyClassification.DRONE, this.GlobalPosition);
-		e.SetID(e.GetID());
 		this.spawnTimer.Start();
 	}
 }
