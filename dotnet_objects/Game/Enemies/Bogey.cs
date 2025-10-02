@@ -41,8 +41,13 @@ namespace Game.Enemies
         {
             if (this.reposition)
             {
-                Position += Transform.X * 100 * (float)delta;
-                if (Position.X == targetPosition)
+                if (Position.X < targetPosition)
+                    Position += Transform.X * 100 * (float)delta;
+
+                else if (Position.X > targetPosition)
+                    Position += Transform.X * -100 * (float)delta;
+
+                else
                 {
                     this.reposition = false;
                     GD.Print("Bogey reached target position, shooting");
