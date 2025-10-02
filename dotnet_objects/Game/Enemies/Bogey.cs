@@ -27,8 +27,8 @@ namespace Game.Enemies
             // when timer ends, the bogey moves to the player's x position and shooots
             // This will be done with a godot timer node.
             this.reposition = true;
-            gameData = GetNode<GameData>("%GameData");
-            weaponScene = GetNode<WeaponScene>("./WeaponScene");
+            gameData = GetNode<GameData>("/root/Game/GameData");
+            weaponScene = GetNode<WeaponScene>("./AnimatedSprite2D/WeaponScene");
             weaponScene.SetWeapon(
                 WeaponFactory.CreateWeapon(WeaponType.Pistol)
             );

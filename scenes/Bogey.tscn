@@ -64,11 +64,11 @@ script = ExtResource("1_h5uv4")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gdow1")
 
+[node name="WeaponScene" parent="AnimatedSprite2D" instance=ExtResource("4_u2nkw")]
+position = Vector2(2, 8)
+
 [node name="BogeyTimer" type="Timer" parent="."]
 script = ExtResource("3_7k7q8")
-
-[node name="WeaponScene" parent="." instance=ExtResource("4_u2nkw")]
-position = Vector2(2, 8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.5, -1.5)

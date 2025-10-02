@@ -2,9 +2,11 @@ using Godot;
 using System;
 using Game.Weapons;
 using Game.Enemies;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 public partial class Bullet : Area2D
-{  
+{
 	public float speed { get; set; } = 750;
 
 	public int Damage { get; set; } = 20;
@@ -14,7 +16,7 @@ public partial class Bullet : Area2D
 	public BulletTimer BulletTimer;
 
 	private bool freeRotate = false;
-
+	private Action<Bullet> bulletPhysicsModifier;
 	public void AllowFreeRotate()
 	{
 		freeRotate = true;
@@ -23,6 +25,7 @@ public partial class Bullet : Area2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		bulletPhysicsModifier = null;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,7 +42,9 @@ public partial class Bullet : Area2D
 	public override void _PhysicsProcess(double delta)
 	{
 		Position += -1 * Transform.Y * speed * (float)delta;
-		speed = speed * 0.9525f;
+		if (bulletPhysicsModifier != null)
+			bulletPhysicsModifier(this);
+		//speed = speed * 0.9525f;
 	}
 
 	public void ShootBullet()
@@ -80,5 +85,16 @@ public partial class Bullet : Area2D
 		this.Damage = damage;
 		this.speed = speed;
 		this.Range = range;
+	}
+
+
+	/// <summary>
+	/// Sets a custom physics modifier for the bullet.
+	/// </summary>
+	/// <param name="del">A delegate that defines the custom physics behavior for the bullet. 
+	/// The delegate takes a <see cref="Bullet"/> instance as input and returns an object representing the result of the physics modification.</param>
+	public void SetPhysics(Action<Bullet> del)
+	{
+		this.bulletPhysicsModifier = del;
 	}
 }

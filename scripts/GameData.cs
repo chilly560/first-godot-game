@@ -17,7 +17,7 @@ public partial class GameData : Node
 	{
 		this.HP = 100;
 		this.enemies = new Dictionary<int, Enemy>();
-		this.player = GetNode<Player>("./Player");
+		this.player = GetNode<Player>("../Player");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

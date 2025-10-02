@@ -18,7 +18,7 @@ namespace Game.Enemies
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            this.gameData = GetNode<GameData>("%GameData");
+            this.gameData = GetNode<GameData>("/root/Game/GameData");
             this.enemyid = this.gameData.GetNumberOfEnemies();
             this.gameData.AddEnemy(this);
             this.hp = 100;
