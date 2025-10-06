@@ -14,7 +14,11 @@ namespace Game.Enemies
 
         private Godot.Timer bogeyTimer;
 
+        private Godot.Timer shootTimer;
+
         private bool reposition;
+
+        private bool paused;
 
         private float targetPosition;
 
@@ -26,25 +30,28 @@ namespace Game.Enemies
             // Create a timer that ticks down every x seconds
             // when timer ends, the bogey moves to the player's x position and shooots
             // This will be done with a godot timer node.
-            this.reposition = true;
+            reposition = true;
+            paused = false;
             gameData = GetNode<GameData>("/root/Game/GameData");
             weaponScene = GetNode<WeaponScene>("./AnimatedSprite2D/WeaponScene");
             weaponScene.SetWeapon(
                 WeaponFactory.CreateWeapon(WeaponType.Pistol, this)
             );
             bogeyTimer = GetNode<Godot.Timer>("./BogeyTimer");
+            shootTimer = GetNode<Godot.Timer>("./BogeyAltTimer");
             bogeyTimer.WaitTime = 2f;
+            shootTimer.WaitTime = 2f;
             bogeyTimer.Start();
             targetPosition = gameData.GetPlayerX();
         }
 
         public override void _Process(double delta)
         {
-            if (this.reposition)
+            if (reposition && !paused)
             {
                 if (Position.X == targetPosition || Math.Abs(Position.X - targetPosition) < 1)
                 {
-                    this.reposition = false;
+                    reposition = false;
                     GD.Print("Bogey reached target position, shooting");
                     weaponScene.Shoot();
                     OnBogeyTimerTimeout();
@@ -62,13 +69,20 @@ namespace Game.Enemies
 
         public void OnBogeyTimerTimeout()
         {
-            if (!this.reposition)
+            if (!reposition)
             {
                 GD.Print("Bogey timer timeout");
                 targetPosition = gameData.GetPlayerX();
-                this.reposition = true;
+                reposition = true;
+                paused = true;
+                shootTimer.Start();
             }
             bogeyTimer.Start();
+        }
+
+        public void OnBogeyAltTimerTimeout()
+        {
+            paused = false;
         }
     }
 }
