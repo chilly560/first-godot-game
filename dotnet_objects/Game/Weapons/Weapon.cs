@@ -1,11 +1,13 @@
 using System;
 using System.Runtime.CompilerServices;
+using Game.Enemies;
 using Godot;
 namespace Game.Weapons
 {
     public abstract class Weapon : IWeapon
     {
         private const int STANDARD_DAMAGE = 20;
+
         private const int STANDARD_SPEED = 750;
 
         private const int HEAVY_DAMAGE = 15;
@@ -15,12 +17,15 @@ namespace Game.Weapons
         private const int HEAVY_SPEED = -1; 
 
         private const int FIFTY_CAL_DAMAGE = 50;
+
         private const int FIFTY_CAL_SPEED = 1000;
 
         private const int RAY_GUN_DAMAGE = 5;
+
         private const int RAY_GUN_SPEED = 1500;
 
         private const int EXPLOSIVE_DAMAGE = 40;
+
         private const int EXPLOSIVE_SPEED = 400;
 
         protected int Damage, Speed, Ammo, MaxAmmo;
@@ -30,9 +35,13 @@ namespace Game.Weapons
         protected PackedScene bulletScene;
 
         protected Node2D root;
+
         protected BulletPhysicsModifiers BulletMod;
+
         protected BulletPhysicsOverhaulers BulletOverhaul;
+
         protected Node2D parent;
+
         public Weapon(Node2D parent)
         {
             BulletMod = new BulletPhysicsModifiers();
@@ -78,6 +87,9 @@ namespace Game.Weapons
         /// </summary>
         protected class BulletPhysicsOverhaulers
         {
+
+            private const float BOGEY_BULLET_SPEED_MOD = 0.8f;
+
             public void DefaultPhysics(Bullet b, double delta)
             {
                 b.Position += -1 * b.Transform.Y * b.speed * (float)delta;
@@ -86,6 +98,11 @@ namespace Game.Weapons
             public void EnemyDefaultPhysics(Bullet b, double delta)
             {
                 b.Position += 1 * b.Transform.Y * b.speed * (float)delta;
+            }
+
+            public void BogeyDefaultPhysics(Bullet b, double delta)
+            {
+                b.Position += 1 * b.Transform.Y * (b.speed * BOGEY_BULLET_SPEED_MOD) * (float)delta;
             }
         }
 
@@ -122,8 +139,12 @@ namespace Game.Weapons
         {
             if (isPlayer)
                 b.SetPhysicsOverhauler(BulletOverhaul.DefaultPhysics);
-            else
+            else if (parent is Bogey)
+                b.SetPhysicsOverhauler(BulletOverhaul.BogeyDefaultPhysics);
+            else if (parent is Enemy)
                 b.SetPhysicsOverhauler(BulletOverhaul.EnemyDefaultPhysics);
+            else
+                throw new ArgumentException("Invalid parent type for a weapon (should be Player or Enemy)"); 
         }
 
         public abstract void Shoot(Vector2 weaponPosition);
