@@ -16,6 +16,7 @@ public partial class Bullet : Area2D
 	public BulletTimer BulletTimer;
 
 	private bool freeRotate = false;
+	
 	private Action<Bullet> bulletPhysicsModifier;
 
 	private Action<Bullet, double> bulletPhysicsOverhauler;
@@ -76,10 +77,23 @@ public partial class Bullet : Area2D
 		{
 			enemy.TakeDamage(Damage);
 			this.QueueFree();
-			GD.Print("Hit");
+			GD.Print("Hit Enemy");
 		}
-		else if (body is Player)
-			GD.Print("Bug");
+		else
+			GD.Print("Missed");
+	}
+
+	public void OnBodyEnteredBullet(Node body)
+	{
+		GD.Print("Bullet collided with something");
+		if (body is Player player)
+		{
+			player.TakeDamage(Damage);
+			this.QueueFree();
+			GD.Print("Hit Player");
+		}
+		else
+			GD.Print("Missed");
 	}
 
 	/**

@@ -24,3 +24,4 @@ texture = ExtResource("1_mkf8s")
 [node name="BulletTimer" parent="." instance=ExtResource("3_l5glv")]
 
 [connection signal="area_entered" from="." to="." method="OnAreaEnteredBullet"]
+[connection signal="body_entered" from="." to="." method="OnBodyEnteredBullet"]
