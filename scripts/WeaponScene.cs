@@ -2,9 +2,12 @@ using Game.Enemies;
 using Game.Weapons;
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class WeaponScene : Marker2D
 {
+
+	private List<IWeapon> weaponCollection;
 
 	private IWeapon currentWeapon;
 
@@ -31,6 +34,11 @@ public partial class WeaponScene : Marker2D
 	public void SetWeapon(IWeapon weapon)
 	{
 		this.currentWeapon = weapon;
+	}
+
+	public void AddNewWeapon(IWeapon weapon)
+	{
+		this.weaponCollection.Add(weapon);
 	}
 
 	public void Shoot()

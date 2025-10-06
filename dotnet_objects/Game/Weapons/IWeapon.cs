@@ -23,5 +23,7 @@ namespace Game.Weapons
 		/// Fires the weapon, consuming ammo and creating a bullet.
 		/// </summary>
 		public void Shoot(Vector2 weaponPosition);
+
+		public void SetParent(Node2D parent);
 	}
 }

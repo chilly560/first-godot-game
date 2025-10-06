@@ -2,9 +2,10 @@ using System;
 using System.Runtime.CompilerServices;
 using Game.Enemies;
 using Godot;
+using Game;
 namespace Game.Weapons
 {
-    public abstract class Weapon : IWeapon
+    public abstract class Weapon : IWeapon, ICollectable
     {
         private const int STANDARD_DAMAGE = 20;
 
@@ -14,7 +15,7 @@ namespace Game.Weapons
 
         // Special case: Heavy bullets have variable speed
         // Speed is handled via a bullet modifier
-        private const int HEAVY_SPEED = -1; 
+        private const int HEAVY_SPEED = -1;
 
         private const int FIFTY_CAL_DAMAGE = 50;
 
@@ -46,7 +47,7 @@ namespace Game.Weapons
         {
             BulletMod = new BulletPhysicsModifiers();
             BulletOverhaul = new BulletPhysicsOverhaulers();
-            this.parent = parent;
+            SetParent(parent);
             root = parent.GetTree().Root.GetNode("Game") as Node2D;
             this.bulletScene = (PackedScene)GD.Load("res://scenes/Bullet.tscn");
         }
@@ -144,7 +145,12 @@ namespace Game.Weapons
             else if (parent is Enemy)
                 b.SetPhysicsOverhauler(BulletOverhaul.EnemyDefaultPhysics);
             else
-                throw new ArgumentException("Invalid parent type for a weapon (should be Player or Enemy)"); 
+                throw new ArgumentException("Invalid parent type for a weapon (should be Player or Enemy)");
+        }
+
+        public void SetParent(Node2D parent)
+        {
+            this.parent = parent;
         }
 
         public abstract void Shoot(Vector2 weaponPosition);

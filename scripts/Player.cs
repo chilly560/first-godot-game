@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Weapons;
 using Godot;
 
@@ -16,7 +17,6 @@ public partial class Player : CharacterBody2D
 	private PackedScene bulletScene;
 
 	private WeaponScene playerWeapon;
-
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
