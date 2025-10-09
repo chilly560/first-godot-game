@@ -11,14 +11,29 @@ namespace Game.Drops
 
         private class WeaponDropFactory : AbstractDropFactory
         {
-            protected override IDrop MakeDrop(int type)
+            
+            
+            public override ICollectable MakeDrop(int type)
             {
+                DropType.Weapon weaponDropType; ;
+
                 try
                 {
-                    DropType.Weapon weaponDropType = (DropType.Weapon)type;  
-                } catch (InvalidCastException)
+                    weaponDropType = (DropType.Weapon)type;
+                }
+                catch (InvalidCastException)
                 {
                     throw new ArgumentException("Invalid value for WeaponDropFactory");
+                }
+
+                switch (weaponDropType)
+                {
+                    case DropType.Weapon.Pistol:
+                        throw new NotImplementedException("PistolDrop not implemented yet");
+                    case DropType.Weapon.Shotgun:
+                        throw new NotImplementedException("ShotgunDrop not implemented yet");
+                    default:
+                        throw new ArgumentException("Invalid value for DropType.Weapon in WeaponDropFactory");
                 }
                 throw new NotImplementedException("MakeDrop method not implemented yet");
             }
@@ -26,12 +41,13 @@ namespace Game.Drops
 
         private class StatusModifierDropFactory : AbstractDropFactory
         {
-            protected override IDrop MakeDrop(int type)
+            public override ICollectable MakeDrop(int type)
             {
                 try
                 {
                     DropType.StatusModifier statusModifierDropType = (DropType.StatusModifier)type;  
-                } catch (InvalidCastException)
+                }
+                catch (InvalidCastException)
                 {
                     throw new ArgumentException("Invalid value for StatusModifierDropFactory");
                 }

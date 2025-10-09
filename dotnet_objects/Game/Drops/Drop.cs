@@ -9,9 +9,9 @@ using Game.StatusModifier;
 
 namespace Game.Drops
 {
-    public class Drop : IDrop
+    public abstract class Drop : IDrop
     {
-        public void AddAttribute(Player player, Node2D attribute)
+        public virtual void AddAttribute(Player player, Node2D attribute)
         {
             if (attribute is null)
                 throw new ArgumentException("ERROR: ATTRIBUTE CANNOT BE NULL");

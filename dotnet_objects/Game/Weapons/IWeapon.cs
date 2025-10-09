@@ -6,7 +6,7 @@ namespace Game.Weapons
 	/// <summary>
 	/// Represents a weapon in the game, providing methods for managing damage, speed, ammo, and shooting behavior.
 	/// </summary>
-	public interface IWeapon
+	public interface IWeapon : ICollectable
 	{
 		/// <summary>
 		/// Adds ammo to this weapon.
@@ -23,7 +23,5 @@ namespace Game.Weapons
 		/// Fires the weapon, consuming ammo and creating a bullet.
 		/// </summary>
 		public void Shoot(Vector2 weaponPosition);
-
-		public void SetParent(Node2D parent);
 	}
 }

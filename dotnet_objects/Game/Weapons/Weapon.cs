@@ -5,7 +5,7 @@ using Godot;
 using Game;
 namespace Game.Weapons
 {
-    public abstract class Weapon : IWeapon, ICollectable
+    public abstract class Weapon : IWeapon
     {
         private const int STANDARD_DAMAGE = 20;
 

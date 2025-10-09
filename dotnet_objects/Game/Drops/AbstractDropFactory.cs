@@ -7,6 +7,6 @@ namespace Game.Drops
 {
     public abstract class AbstractDropFactory
     {
-        protected abstract IDrop MakeDrop(Enum type);
+        public abstract IDrop MakeDrop(int type);
     }
 }
