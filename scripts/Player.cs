@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Game;
 using Game.Weapons;
 using Godot;
 
@@ -65,5 +67,10 @@ public partial class Player : CharacterBody2D
 			GD.Print("Player dead!");
 			GetTree().ChangeSceneToFile("res://scenes/game_over.tscn");
 		}
+	}
+
+	public void Collect(ICollectable collectable)
+	{
+		throw new NotImplementedException();
 	}
 }

@@ -7,6 +7,6 @@ namespace Game.Drops
 {
     public abstract class AbstractDropFactory
     {
-        public abstract IDrop MakeDrop(int type);
+        public abstract ICollectable MakeDrop(int type);
     }
 }

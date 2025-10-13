@@ -150,7 +150,8 @@ namespace Game.Weapons
 
         public void SetParent(Node2D parent)
         {
-            this.parent = parent;
+            if (parent != null)
+                this.parent = parent;
         }
 
         public abstract void Shoot(Vector2 weaponPosition);

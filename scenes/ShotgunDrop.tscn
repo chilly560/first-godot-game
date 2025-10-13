@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://b50pigpscwglw"]
+[gd_scene load_steps=4 format=3 uid="uid://b50pigpscwglw"]
 
+[ext_resource type="Script" uid="uid://wrk41y5poq0b" path="res://dotnet_objects/Game/Drops/ShotgunDrop.cs" id="1_h3rw6"]
 [ext_resource type="Texture2D" uid="uid://bn3e38qvd2j5c" path="res://assets/Shotgun.png" id="1_svluu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svluu"]
 size = Vector2(54.5, 50.5)
 
 [node name="ShotgunDrop" type="Node2D"]
+script = ExtResource("1_h3rw6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_svluu")

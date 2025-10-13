@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Game.Drops;
 using Godot;
 
 namespace Game.Enemies
@@ -15,6 +16,12 @@ namespace Game.Enemies
 
         private int hp;
 
+        private ICollectable drop;
+
+        private AbstractDropFactory dropFactory;
+
+        private const float DROP_CHANCE = 0.5f;
+
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -24,6 +31,14 @@ namespace Game.Enemies
             this.hp = 100;
             GD.Print(this.gameData.GetNumberOfEnemies());
             GD.Print("[LOG] Spawned Enemy");
+            List<float> chances = new List<float>() { 1f, 0f };
+
+            dropFactory = DropFactoryFactory.GetFactoryChance(
+                DROP_CHANCE,
+                chances
+            );
+
+            GD.Print(dropFactory.ToString());
         }
 
         public void OnBodyEnteredEnemy(Node body)
@@ -55,7 +70,7 @@ namespace Game.Enemies
                 //this.gameData.RemoveEnemy(this.enemyid);
                 this.QueueFree();
             }
-        }
+        }  
 
         internal void SetID(int id)
         {
