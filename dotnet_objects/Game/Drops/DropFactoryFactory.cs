@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.XPath;
-using NewGameProject.dotnet_objects.Game.Drops;
+using Godot;
+using Game.Drops;
 
 namespace Game.Drops
 {
@@ -14,7 +15,7 @@ namespace Game.Drops
         {
 
 
-            public override ICollectable MakeDrop(int type)
+            public override Drop MakeDrop(int type)
             {
                 DropType.Weapon weaponDropType; ;
 
@@ -32,7 +33,11 @@ namespace Game.Drops
                     case DropType.Weapon.Pistol:
                         throw new NotImplementedException("PistolDrop not implemented yet");
                     case DropType.Weapon.Shotgun:
-                        throw new NotImplementedException("ShotgunDrop not implemented yet");
+                        PackedScene p = GD.Load<PackedScene>("res://scenes/ShotgunDrop.tscn");
+                        ShotgunDrop weaponDrop = p.Instantiate() as ShotgunDrop;
+                        weaponDrop.SetPhysicsOverhauler(DropPhysicsOverhaulers.DefaultPhysics);
+
+                        return weaponDrop;
                     default:
                         throw new ArgumentException("Invalid value for DropType.Weapon in WeaponDropFactory");
                 }
@@ -47,7 +52,7 @@ namespace Game.Drops
 
         private class StatusModifierDropFactory : AbstractDropFactory
         {
-            public override ICollectable MakeDrop(int type)
+            public override Drop MakeDrop(int type)
             {
                 try
                 {

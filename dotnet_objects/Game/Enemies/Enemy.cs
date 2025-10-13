@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Game.Drops;
+using Game.Weapons;
 using Godot;
 
 namespace Game.Enemies
@@ -15,8 +16,6 @@ namespace Game.Enemies
         private int enemyid;
 
         private int hp;
-
-        private ICollectable drop;
 
         private AbstractDropFactory dropFactory;
 
@@ -68,6 +67,8 @@ namespace Game.Enemies
             if (this.hp <= 0)
             {
                 //this.gameData.RemoveEnemy(this.enemyid);
+                Drop drop = dropFactory.MakeDrop((int)WeaponType.Shotgun);
+                GetParent().AddChild(drop);
                 this.QueueFree();
             }
         }  

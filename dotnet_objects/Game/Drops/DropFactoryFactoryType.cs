@@ -1,4 +1,4 @@
-namespace NewGameProject.dotnet_objects.Game.Drops
+namespace Game.Drops
 {
     public enum DropFactoryFactoryType
     {

@@ -4,8 +4,9 @@ using Game.Weapons;
 using Game.Enemies;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using Game;
 
-public partial class Bullet : Area2D
+public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 {
 	public float speed { get; set; } = 750;
 
@@ -108,7 +109,6 @@ public partial class Bullet : Area2D
 		this.speed = speed;
 		this.Range = range;
 	}
-
 
 	/// <summary>
 	/// Sets a custom physics modifier for the bullet.

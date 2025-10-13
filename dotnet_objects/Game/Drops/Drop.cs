@@ -6,12 +6,19 @@ using Game.Enemies;
 using Game.Weapons;
 using Godot;
 using Game.StatusModifier;
+using System.ComponentModel;
 
 namespace Game.Drops
 {
-    public abstract partial class Drop : Node2D, IDrop
+    public abstract partial class Drop : Node2D, IDrop, IDynamic2DPhysicsObject<Drop>
     {
+        protected PackedScene node;
+
         protected ICollectable collectable;
+
+        protected Action<Drop> physicsModifier;
+
+        protected Action<Drop, double> physicsOverhauler;
 
         /// <summary>
         /// Signals the player to pick up this drop
@@ -28,7 +35,7 @@ namespace Game.Drops
                 attribute is not IEnemy ||
                 attribute is not IStatusModifier
             )
-                throw new ArgumentException("ERROR: ATTRIBUTE NOT OF TYPE IWEAPON, IENEMY, OR ISTATUSMODIFIER");
+            throw new ArgumentException("ERROR: ATTRIBUTE NOT OF TYPE IWEAPON, IENEMY, OR ISTATUSMODIFIER");
 
             player.Collect(collectable);
             collectable.SetParent(player);
@@ -45,6 +52,21 @@ namespace Game.Drops
                 AddAttribute(player, (Node2D)collectable);
             }
             QueueFree();
+        }
+
+        public void SetPhysicsModifier(Action<Drop> del)
+        {
+            physicsModifier = del;
+        }
+
+        public void SetPhysicsOverhauler(Action<Drop, double> del)
+        {
+            physicsOverhauler = del;
+        }
+
+        public void SetCollectable(ICollectable c)
+        {
+            collectable = c;
         }
     }
 }
