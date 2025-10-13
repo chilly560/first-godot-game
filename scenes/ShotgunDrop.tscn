@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svluu"]
 size = Vector2(54.5, 50.5)
 
-[node name="ShotgunDrop" type="Node2D"]
+[node name="ShotgunDrop" type="Area2D"]
 script = ExtResource("1_h3rw6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -15,3 +15,5 @@ texture = ExtResource("1_svluu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.75, -1.75)
 shape = SubResource("RectangleShape2D_svluu")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEnteredDrop"]

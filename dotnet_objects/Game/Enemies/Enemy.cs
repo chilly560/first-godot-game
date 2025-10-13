@@ -68,7 +68,9 @@ namespace Game.Enemies
             {
                 //this.gameData.RemoveEnemy(this.enemyid);
                 Drop drop = dropFactory.MakeDrop((int)WeaponType.Shotgun);
+                drop.Position = Position;
                 GetParent().AddChild(drop);
+                
                 this.QueueFree();
             }
         }  

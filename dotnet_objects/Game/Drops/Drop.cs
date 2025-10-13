@@ -47,6 +47,7 @@ namespace Game.Drops
         /// <param name="body"></param>
         public virtual void OnBodyEnteredDrop(CharacterBody2D body)
         {
+            GD.Print("Collision with Drop and Player detected");
             if (body is Player player)
             {
                 AddAttribute(player, (Node2D)collectable);
