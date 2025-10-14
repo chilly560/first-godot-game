@@ -18,14 +18,17 @@ public partial class Player : CharacterBody2D, ICollector
 	// Remove
 	private PackedScene bulletScene;
 
-	private WeaponScene playerWeapon;
+	/// <summary>
+    /// WeaponScene playerWeapon contains a List<IWeapon> weaponCollection
+	/// responsible for storing the player's collection of weapons.
+    /// </summary>
+	private WeaponScene weaponInventory;
 
-	private List<WeaponScene> weaponInventory;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		playerWeapon = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
+		weaponInventory = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
 		gameData = GetNode<GameData>("%GameData");
 		hp = GetNode<Label>("Camera2D/HUD/HPValue");
 		isAlive = true;
@@ -38,7 +41,7 @@ public partial class Player : CharacterBody2D, ICollector
 	public void GetInput()
 	{
 		if (Input.IsActionJustPressed("click"))
-			playerWeapon.Shoot();
+			weaponInventory.Shoot();
 		else
 		{
 			Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
@@ -73,6 +76,9 @@ public partial class Player : CharacterBody2D, ICollector
 
 	public void Collect(ICollectable collectable)
 	{
-		throw new NotImplementedException();
+		if (collectable is IWeapon w)
+			weaponInventory.AddNewWeapon(w);
+
+		else throw new ArgumentException("ERROR: collectable IS NOT WEAPONSCENE");
 	}
 }

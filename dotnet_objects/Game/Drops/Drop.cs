@@ -34,8 +34,7 @@ namespace Game.Drops
                 attribute is not IWeapon &&
                 attribute is not IEnemy &&
                 attribute is not IStatusModifier
-            )
-                throw new ArgumentException("ERROR: ATTRIBUTE NOT OF TYPE IWEAPON, IENEMY, OR ISTATUSMODIFIER");
+            ) throw new ArgumentException("ERROR: ATTRIBUTE NOT OF TYPE IWEAPON, IENEMY, OR ISTATUSMODIFIER");
 
             player.Collect(collectable);
             collectable.SetParent(player);
@@ -52,7 +51,7 @@ namespace Game.Drops
             {
                 AddAttribute(player, collectable);
             }
-            CallDeferred("QueueFree"); //Wrong syntax
+            CallDeferred("queue_free");
         }
 
         public void SetPhysicsModifier(Action<Drop> del)

@@ -17,13 +17,15 @@ public partial class WeaponScene : Marker2D
 		Node2D localRoot = GetParent<Node2D>().GetParent<Node2D>();
 
 		if (localRoot is Player)
-			this.currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Player)localRoot);
+			currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Player)localRoot);
 
 		else if (localRoot is Enemy)
-			this.currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Enemy)localRoot);
+			currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Enemy)localRoot);
 
 		else
 			throw new ArgumentException("ERROR: PLAYER OBJ NOT OF TYPE PLAYER OR ENEMY");
+
+		weaponCollection = [currentWeapon];
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,16 +35,16 @@ public partial class WeaponScene : Marker2D
 
 	public void SetWeapon(IWeapon weapon)
 	{
-		this.currentWeapon = weapon;
+		currentWeapon = weapon;
 	}
 
 	public void AddNewWeapon(IWeapon weapon)
 	{
-		this.weaponCollection.Add(weapon);
+		weaponCollection.Add(weapon);
 	}
 
 	public void Shoot()
 	{
-		this.currentWeapon.Shoot(this.GlobalPosition);
+		currentWeapon.Shoot(this.GlobalPosition);
 	}
 }
