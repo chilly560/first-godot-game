@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Game.Drops
 {
-    public abstract partial class Drop : Node2D, IDrop, IDynamic2DPhysicsObject<Drop>
+    public abstract partial class Drop : Node2D, IDrop, IDynamic2DPhysicsObject<Drop>, ICollector
     {
         protected PackedScene node;
 
@@ -52,7 +52,7 @@ namespace Game.Drops
             {
                 AddAttribute(player, (Node2D)collectable);
             }
-            QueueFree();
+            CallDeferred("QueueFree");
         }
 
         public void SetPhysicsModifier(Action<Drop> del)

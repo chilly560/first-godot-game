@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Game.StatusModifier
 {
-    public interface IStatusModifier
+    public interface IStatusModifier : ICollectable
     {
         public void ApplyModifier(Player player);
     }

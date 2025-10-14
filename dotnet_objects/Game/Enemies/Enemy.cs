@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Game.Drops;
 using Game.Weapons;
 using Godot;
+using Game;
 
 namespace Game.Enemies
 {
 
-    public abstract partial class Enemy : Area2D, IEnemy
+    public abstract partial class Enemy : Area2D, IEnemy, ICollector
     {
-        private GameData gameData;
+        protected GameData gameData;
 
         private int enemyid;
 
@@ -24,11 +25,11 @@ namespace Game.Enemies
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            this.gameData = GetNode<GameData>("/root/Game/GameData");
-            this.enemyid = this.gameData.GetNumberOfEnemies();
-            this.gameData.AddEnemy(this);
-            this.hp = 100;
-            GD.Print(this.gameData.GetNumberOfEnemies());
+            gameData = GetNode<GameData>("/root/GameRoot/GameData");
+            enemyid = gameData.GetNumberOfEnemies();
+            gameData.AddEnemy(this);
+            hp = 100;
+            GD.Print(gameData.GetNumberOfEnemies());
             GD.Print("[LOG] Spawned Enemy");
             List<float> chances = new List<float>() { 1f, 0f };
 
@@ -67,13 +68,20 @@ namespace Game.Enemies
             if (this.hp <= 0)
             {
                 //this.gameData.RemoveEnemy(this.enemyid);
-                Drop drop = dropFactory.MakeDrop((int)WeaponType.Shotgun);
-                drop.Position = Position;
-                GetParent().AddChild(drop);
+                Drop drop = MakeDrop();
+                GetParent().CallDeferred("add_child", drop);
                 
                 this.QueueFree();
             }
-        }  
+        }
+
+        public Drop MakeDrop()
+        {
+            Drop drop = dropFactory.MakeDrop((int)WeaponType.Shotgun);
+            drop.Position = Position;
+
+            return drop;
+        }
 
         internal void SetID(int id)
         {

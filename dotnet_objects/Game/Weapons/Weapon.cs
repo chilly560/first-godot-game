@@ -48,7 +48,7 @@ namespace Game.Weapons
             BulletMod = new BulletPhysicsModifiers();
             BulletOverhaul = new BulletPhysicsOverhaulers();
             SetParent(parent);
-            root = parent.GetTree().Root.GetNode("Game") as Node2D;
+            root = parent.GetTree().Root.GetNode("GameRoot") as Node2D;
             this.bulletScene = (PackedScene)GD.Load("res://scenes/Bullet.tscn");
         }
 
@@ -150,8 +150,7 @@ namespace Game.Weapons
 
         public void SetParent(Node2D parent)
         {
-            if (parent != null)
-                this.parent = parent;
+            this.parent = parent;
         }
 
         public abstract void Shoot(Vector2 weaponPosition);

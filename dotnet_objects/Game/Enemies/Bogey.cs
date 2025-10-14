@@ -10,8 +10,6 @@ namespace Game.Enemies
 {
     public partial class Bogey : Enemy
     {
-        private GameData gameData;
-
         private Godot.Timer bogeyTimer;
 
         private Godot.Timer shootTimer;
@@ -32,7 +30,6 @@ namespace Game.Enemies
             // This will be done with a godot timer node.
             reposition = true;
             paused = false;
-            gameData = GetNode<GameData>("/root/Game/GameData");
             weaponScene = GetNode<WeaponScene>("./AnimatedSprite2D/WeaponScene");
             weaponScene.SetWeapon(
                 WeaponFactory.CreateWeapon(WeaponType.Pistol, this)

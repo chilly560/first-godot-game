@@ -4,7 +4,7 @@ using Game;
 using Game.Weapons;
 using Godot;
 
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, ICollector
 {
 	[Export]
 	private int Speed { get; set; } = 400;
@@ -20,13 +20,15 @@ public partial class Player : CharacterBody2D
 
 	private WeaponScene playerWeapon;
 
+	private List<WeaponScene> weaponInventory;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.playerWeapon = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
-		this.gameData = GetNode<GameData>("%GameData");
-		this.hp = GetNode<Label>("Camera2D/HUD/HPValue");
-		this.isAlive = true;
+		playerWeapon = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
+		gameData = GetNode<GameData>("%GameData");
+		hp = GetNode<Label>("Camera2D/HUD/HPValue");
+		isAlive = true;
 		GD.Print("[LOG] Spawned Player");
 		GD.Print(gameData.ToString());
 	}

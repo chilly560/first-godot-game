@@ -1,13 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://chjkhfsdsws7j"]
+[gd_scene load_steps=7 format=3 uid="uid://chjkhfsdsws7j"]
 
 [ext_resource type="Script" uid="uid://bej06gxouydca" path="res://scripts/GameData.cs" id="1_lbhrr"]
+[ext_resource type="Script" uid="uid://b4vfbl26uu676" path="res://scenes/GameRoot.cs" id="1_p57ef"]
 [ext_resource type="PackedScene" uid="uid://c7rqggkyxpph4" path="res://scenes/player.tscn" id="2_iywne"]
 [ext_resource type="Script" uid="uid://dn7x2ktm4vckw" path="res://scripts/Player.cs" id="3_p57ef"]
 [ext_resource type="PackedScene" uid="uid://dw2s1kdlqxre3" path="res://scenes/tile_map_layer.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://coxv56so0e6h8" path="res://scenes/enemy_spawner_2.tscn" id="6_p57ef"]
 
-[node name="Game" type="Node2D"]
+[node name="GameRoot" type="Node2D"]
 position = Vector2(1, 32)
+script = ExtResource("1_p57ef")
 
 [node name="GameData" type="Node" parent="."]
 unique_name_in_owner = true

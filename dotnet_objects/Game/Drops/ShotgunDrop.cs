@@ -1,4 +1,5 @@
 using Game.Drops;
+using Game.Enemies;
 using Game.Weapons;
 using Godot;
 using System;
@@ -10,7 +11,7 @@ public partial class ShotgunDrop : Drop
 	{
 		collectable = WeaponFactory.CreateWeapon(
 			WeaponType.Shotgun,
-			GetParent<Node2D>()
+			GetParent<GameRoot>()
 		);
 	}
 
