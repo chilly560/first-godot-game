@@ -8,6 +8,6 @@ namespace Game.Drops
 {
     public interface IDrop
     {
-        public void AddAttribute(Player player, Node2D attribute);
+        public void AddAttribute(Player player, ICollectable attribute);
     }
 }

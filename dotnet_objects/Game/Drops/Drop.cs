@@ -26,16 +26,16 @@ namespace Game.Drops
         /// <param name="player"></param>
         /// <param name="attribute"></param>
         /// <exception cref="ArgumentException"></exception>
-        public virtual void AddAttribute(Player player, Node2D attribute)
+        public virtual void AddAttribute(Player player, ICollectable attribute)
         {
             if (attribute is null)
                 throw new ArgumentException("ERROR: ATTRIBUTE CANNOT BE NULL");
             else if (
-                attribute is not IWeapon ||
-                attribute is not IEnemy ||
+                attribute is not IWeapon &&
+                attribute is not IEnemy &&
                 attribute is not IStatusModifier
             )
-            throw new ArgumentException("ERROR: ATTRIBUTE NOT OF TYPE IWEAPON, IENEMY, OR ISTATUSMODIFIER");
+                throw new ArgumentException("ERROR: ATTRIBUTE NOT OF TYPE IWEAPON, IENEMY, OR ISTATUSMODIFIER");
 
             player.Collect(collectable);
             collectable.SetParent(player);
@@ -50,9 +50,9 @@ namespace Game.Drops
             GD.Print("Collision with Drop and Player detected");
             if (body is Player player)
             {
-                AddAttribute(player, (Node2D)collectable);
+                AddAttribute(player, collectable);
             }
-            CallDeferred("QueueFree");
+            CallDeferred("QueueFree"); //Wrong syntax
         }
 
         public void SetPhysicsModifier(Action<Drop> del)
