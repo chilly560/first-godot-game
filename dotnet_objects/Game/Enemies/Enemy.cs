@@ -78,8 +78,10 @@ namespace Game.Enemies
         public Drop MakeDrop()
         {
             Drop drop = dropFactory.MakeDrop((int)WeaponType.Shotgun);
-            drop.Position = Position;
+            if (drop is null)
+                return null;
 
+            drop.Position = Position;
             return drop;
         }
 

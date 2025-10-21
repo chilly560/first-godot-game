@@ -71,6 +71,14 @@ namespace Game.Drops
             }
         }
 
+        private class NullDropFactory : AbstractDropFactory
+        {
+            public override Drop MakeDrop(int type)
+            {
+                return null;
+            }
+        }
+
         public static AbstractDropFactory GetFactory(DropFactoryFactoryType type)
         {
             switch (type)
@@ -79,6 +87,8 @@ namespace Game.Drops
                     return new WeaponDropFactory();
                 case DropFactoryFactoryType.StatusModifier:
                     return new StatusModifierDropFactory();
+                case DropFactoryFactoryType.Null:
+                    return new NullDropFactory();
                 default:
                     throw new ArgumentException("Invalid DropFactoryFactoryType");
             }
@@ -99,7 +109,7 @@ namespace Game.Drops
                 
             Random rand = new Random();
             int baseLine = rand.Next(1, 11);
-            if (baseLine * enemyDropChance > (1 - enemyDropChance))
+            if (baseLine / 10 > 1 - enemyDropChance)
             {
                 float total = 0;
                 foreach (float chance in chances)
@@ -126,7 +136,7 @@ namespace Game.Drops
                 }
             }
 
-            throw new NotImplementedException("GetFactoryChance method not implemented yet");
+            return new NullDropFactory();
         }
     }
 }

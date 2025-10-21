@@ -4,6 +4,7 @@ namespace Game.Drops
     {
         Weapon,
 
-        StatusModifier
+        StatusModifier,
+        Null
     }
 }
