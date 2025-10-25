@@ -11,6 +11,8 @@ public partial class WeaponScene : Marker2D
 
 	private IWeapon currentWeapon;
 
+	private IWeapon secondaryWeapon;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -41,10 +43,18 @@ public partial class WeaponScene : Marker2D
 	public void AddNewWeapon(IWeapon weapon)
 	{
 		weaponCollection.Add(weapon);
+		if (secondaryWeapon is null)
+			secondaryWeapon = weapon;
 	}
 
 	public void Shoot()
 	{
 		currentWeapon.Shoot(this.GlobalPosition);
 	}
+
+	public void AltShoot()
+	{
+		if (secondaryWeapon is not null)
+			secondaryWeapon.Shoot(this.GlobalPosition);
+    }
 }

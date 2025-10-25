@@ -24,16 +24,21 @@ public partial class Player : CharacterBody2D, ICollector
     /// </summary>
 	private WeaponScene weaponInventory;
 
+	private AutofireTimer autofireTimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		weaponInventory = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
 		gameData = GetNode<GameData>("%GameData");
+		autofireTimer = GetNode<AutofireTimer>("./AutofireTimer");
 		hp = GetNode<Label>("Camera2D/HUD/HPValue");
 		isAlive = true;
 		GD.Print("[LOG] Spawned Player");
 		GD.Print(gameData.ToString());
+		autofireTimer.AutofireTimeout += Autofire;
+		GD.Print("[LOG] Starting Autofire Timer");
+		autofireTimer.Start();
 	}
 
 	/** Handles input from the player.
@@ -41,7 +46,7 @@ public partial class Player : CharacterBody2D, ICollector
 	public void GetInput()
 	{
 		if (Input.IsActionJustPressed("click"))
-			weaponInventory.Shoot();
+			weaponInventory.AltShoot();
 		else
 		{
 			Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
@@ -72,6 +77,13 @@ public partial class Player : CharacterBody2D, ICollector
 			GD.Print("Player dead!");
 			GetTree().ChangeSceneToFile("res://scenes/game_over.tscn");
 		}
+	}
+
+	private void Autofire()
+	{
+		GD.Print("Autofire Triggered");
+		weaponInventory.Shoot();
+		autofireTimer.Start();
 	}
 
 	public void Collect(ICollectable collectable)
