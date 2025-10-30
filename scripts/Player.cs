@@ -24,20 +24,20 @@ public partial class Player : CharacterBody2D, ICollector
     /// </summary>
 	private WeaponScene weaponInventory;
 
-	private AutofireTimer autofireTimer;
+	private Timer autofireTimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		weaponInventory = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
 		gameData = GetNode<GameData>("%GameData");
-		autofireTimer = GetNode<AutofireTimer>("./AutofireTimer");
+		autofireTimer = GetNode<Timer>("./AutofireTimer");
 		hp = GetNode<Label>("Camera2D/HUD/HPValue");
 		isAlive = true;
 		GD.Print("[LOG] Spawned Player");
 		GD.Print(gameData.ToString());
-		autofireTimer.AutofireTimeout += Autofire;
 		GD.Print("[LOG] Starting Autofire Timer");
+		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();
 	}
 
@@ -81,7 +81,7 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private void Autofire()
 	{
-		GD.Print("Autofire Triggered");
+		GD.Print("[LOG] Autofire Triggered");
 		weaponInventory.Shoot();
 		autofireTimer.Start();
 	}
@@ -92,5 +92,13 @@ public partial class Player : CharacterBody2D, ICollector
 			weaponInventory.AddNewWeapon(w);
 
 		else throw new ArgumentException("ERROR: collectable IS NOT WEAPONSCENE");
+	}
+
+	public void OnAutofireTimerTimeout()
+	{
+		GD.Print("[LOG] Autofire");
+		Autofire();
+		autofireTimer.WaitTime = 1;
+		autofireTimer.Start();
 	}
 }

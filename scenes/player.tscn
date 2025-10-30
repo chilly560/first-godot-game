@@ -92,4 +92,4 @@ text = "HP:"
 [node name="AutofireTimer" type="Timer" parent="."]
 script = ExtResource("3_qhqgy")
 
-[connection signal="AutofireTimeout" from="AutofireTimer" to="AnimatedSprite2D/WeaponScene" method="OnAutofireTimerTimeout"]
+[connection signal="timeout" from="AutofireTimer" to="." method="OnAutofireTimerTimeout"]
