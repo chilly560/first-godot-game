@@ -49,7 +49,7 @@ namespace Game.Weapons
             BulletOverhaul = new BulletPhysicsOverhaulers();
             SetParent(parent);
             root = parent.GetTree().Root.GetNode("GameRoot") as Node2D;
-            this.bulletScene = (PackedScene)GD.Load("res://scenes/Bullet.tscn");
+            this.bulletScene = (PackedScene)GD.Load("res://scenes/bullet.tscn");
         }
 
         public void addAmmo(int ammo)

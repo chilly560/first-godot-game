@@ -9,7 +9,7 @@ public partial class EnemySpawner2 : Area2D
 	private RayCast2D rightCollisionRay;
 	private Timer spawnTimer;
 	private const int SPEED = 40;
-	private PackedScene enemyScene = (PackedScene)ResourceLoader.Load("res://scenes/Enemy.tscn");
+	private PackedScene enemyScene = (PackedScene)ResourceLoader.Load("res://scenes/enemy.tscn");
 	private int dir = 1;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
