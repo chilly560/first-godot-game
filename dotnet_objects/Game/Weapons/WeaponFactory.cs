@@ -54,7 +54,7 @@ namespace Game.Weapons
                 SPREAD_4 = 5.13127f,
                 SPREAD_5 = 5.55015f;
             
-            private bool randomBulletSpread = false;
+            private bool randomBulletSpread = true;
 
             public Shotgun(Node2D parent) : base(parent)
             {
