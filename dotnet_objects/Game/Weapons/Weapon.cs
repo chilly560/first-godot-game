@@ -78,7 +78,7 @@ namespace Game.Weapons
             /// <param name="b">The bullet to modify.</param>
             public void DefaultShotgunMod(Bullet b)
             {
-                b.speed = b.speed * 0.9525f;
+                b.speed = b.speed * 1.05f;
             }
         }
 

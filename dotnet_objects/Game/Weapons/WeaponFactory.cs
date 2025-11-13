@@ -48,11 +48,29 @@ namespace Game.Weapons
         private class Shotgun : Weapon
         {
 
+            private const float SPREAD_1 = 3.87463f,
+                SPREAD_2 = 4.29351f,
+                SPREAD_3 = 4.71239f,
+                SPREAD_4 = 5.13127f,
+                SPREAD_5 = 5.55015f;
+            
+            private bool randomBulletSpread = false;
+
             public Shotgun(Node2D parent) : base(parent)
             {
                 this.SetBulletType(BulletClassification.Heavy);
                 Ammo = -1; // Infinite ammo
                 MaxAmmo = -1; // Infinite ammo
+            }
+
+            public void EnableRandomSpread()
+            {
+                randomBulletSpread = true;
+            }
+
+            public void DisableRandomSpread()
+            {
+                randomBulletSpread = false;
             }
 
             public override void Reload()
@@ -77,32 +95,58 @@ namespace Game.Weapons
             public override void Shoot(Vector2 weaponPosition)
             {
                 List<Bullet> bullets = new List<Bullet>();
-                int i = RandomBulletCount();
-
-                for (; i > 0; i--)
+                if (randomBulletSpread)
                 {
-                    Bullet newBullet = (Bullet)bulletScene.Instantiate();
+                    int i = RandomBulletCount();
 
-                    // For variable speed on heavy bullets
-                    Random random = new Random();
-                    newBullet.SetStats(this.Damage, random.Next(400, 600), .3f);
-                    bullets.Add(newBullet);
-                }
+                    for (; i > 0; i--)
+                    {
+                        Bullet newBullet = (Bullet)bulletScene.Instantiate();
 
-                foreach (Bullet b in bullets)
+                        // For variable speed on heavy bullets
+                        Random random = new Random();
+                        newBullet.SetStats(this.Damage, random.Next(400, 600), .3f);
+                        bullets.Add(newBullet);
+                    }
+
+                    foreach (Bullet b in bullets)
+                    {
+                        b.Rotate(RandomSpread());
+                        b.GlobalPosition = weaponPosition;
+                        root.AddChild(b);
+                    }
+
+                    bool isPlayer = parent is Player;
+
+                    foreach (Bullet b in bullets)
+                    {
+                        this.SetBulletPhysics(b, isPlayer);
+                        b.SetPhysicsModifier(BulletMod.DefaultShotgunMod);
+                        b.ShootBullet();
+                    }
+                } else
                 {
-                    b.Rotate(RandomSpread());
-                    b.GlobalPosition = weaponPosition;
-                    root.AddChild(b);
-                }
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Bullet newBullet = (Bullet)bulletScene.Instantiate();
+                        newBullet.SetStats(this.Damage, 600);
+                        bullets.Add(newBullet);
+                    }
 
-                bool isPlayer = parent is Player;
+                    bullets[0].Rotate(SPREAD_1);
+                    bullets[1].Rotate(SPREAD_2);
+                    bullets[2].Rotate(SPREAD_3);
+                    bullets[3].Rotate(SPREAD_4);
+                    bullets[4].Rotate(SPREAD_5);
 
-                foreach (Bullet b in bullets)
-                {
-                    this.SetBulletPhysics(b, isPlayer);
-                    b.SetPhysicsModifier(BulletMod.DefaultShotgunMod);
-                    b.ShootBullet();
+                    bool isPlayer = parent is Player;
+
+                    foreach (Bullet b in bullets)
+                    {
+                        SetBulletPhysics(b, isPlayer);
+                        b.SetPhysicsModifier(BulletMod.DefaultShotgunMod);
+                        b.ShootBullet();
+                    }
                 }
             }
         }
