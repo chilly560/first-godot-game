@@ -75,8 +75,16 @@ public partial class Player : CharacterBody2D, ICollector
 		if (!this.isAlive)
 		{
 			GD.Print("Player dead!");
-			GetTree().ChangeSceneToFile("res://scenes/game_over.tscn");
+			CallDeferred(nameof(DeferredToGameOverScene));
 		}
+	}
+
+	/// <summary>
+    /// Required to change scene after player death to avoid undefined/undesired behavior.
+    /// </summary>
+	private void DeferredToGameOverScene()
+	{
+		GetTree().ChangeSceneToFile("res://scenes/game_over.tscn");
 	}
 
 	private void Autofire()

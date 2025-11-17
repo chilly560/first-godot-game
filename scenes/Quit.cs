@@ -13,11 +13,19 @@ public partial class Quit : Button
 	{
 	}
  
-	/** Called when the quit button is psressed
-	 * Quits the game
-	 */
+	/// <summary>
+    /// Handles the quit button press event.
+    /// </summary>
 	public void OnButtonPressedQuit()
 	{
-		GetTree().Quit(0);
+		CallDeferred(nameof(DeferredQuit));
 	}
+
+	/// <summary>
+    /// Necessary to deferr quit code to avoid undefined behavior during shutdown.
+    /// </summary>
+	private void DeferredQuit()
+    {
+        GetTree().Quit(0);
+    }
 }
