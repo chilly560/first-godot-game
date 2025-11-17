@@ -54,7 +54,7 @@ namespace Game.Weapons
                 SPREAD_4 = 5.13127f,
                 SPREAD_5 = 5.55015f;
             
-            private bool randomBulletSpread = true;
+            private bool randomBulletSpread = false;
 
             public Shotgun(Node2D parent) : base(parent)
             {
@@ -134,10 +134,24 @@ namespace Game.Weapons
                     }
 
                     bullets[0].Rotate(SPREAD_1);
+                    bullets[0].GlobalPosition = weaponPosition;
+                    root.AddChild(bullets[0]);
+
                     bullets[1].Rotate(SPREAD_2);
+                    bullets[1].GlobalPosition = weaponPosition;
+                    root.AddChild(bullets[1]);
+
                     bullets[2].Rotate(SPREAD_3);
+                    bullets[2].GlobalPosition = weaponPosition;
+                    root.AddChild(bullets[2]);
+
                     bullets[3].Rotate(SPREAD_4);
+                    bullets[3].GlobalPosition = weaponPosition;
+                    root.AddChild(bullets[3]);
+
                     bullets[4].Rotate(SPREAD_5);
+                    bullets[4].GlobalPosition = weaponPosition;
+                    root.AddChild(bullets[4]);
 
                     bool isPlayer = parent is Player;
 
