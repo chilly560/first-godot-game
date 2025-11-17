@@ -44,7 +44,7 @@ namespace Game.Enemies
 
         public override void _Process(double delta)
         {
-            if (reposition && !paused)
+            if (reposition  && !paused )
             {
                 if (Position.X == targetPosition || Math.Abs(Position.X - targetPosition) < 1)
                 {

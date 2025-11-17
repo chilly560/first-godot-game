@@ -20,7 +20,7 @@ public partial class WeaponScene : Marker2D
 
 		if (localRoot is Player)
 			//currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Player)localRoot);
-			currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Shotgun, (Player)localRoot);
+			currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Player)localRoot);
 
 		else if (localRoot is Enemy)
 			currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Enemy)localRoot);
