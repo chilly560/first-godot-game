@@ -98,7 +98,7 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		GD.Print("[LOG] Autofire");
 		Autofire();
-		autofireTimer.WaitTime = .05;
+		autofireTimer.WaitTime = .25;
 		autofireTimer.Start();
 	}
 }

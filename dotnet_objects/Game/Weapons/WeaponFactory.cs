@@ -47,13 +47,6 @@ namespace Game.Weapons
 
         private class Shotgun : Weapon
         {
-
-            private const float SPREAD_1 = 3.87463f,
-                SPREAD_2 = 4.29351f,
-                SPREAD_3 = 4.71239f,
-                SPREAD_4 = 5.13127f,
-                SPREAD_5 = 5.55015f;
-            
             private bool randomBulletSpread = false;
 
             public Shotgun(Node2D parent) : base(parent)
@@ -129,27 +122,26 @@ namespace Game.Weapons
                     for (int i = 0; i < 5; i++)
                     {
                         Bullet newBullet = (Bullet)bulletScene.Instantiate();
-                        newBullet.SetStats(this.Damage, 600);
+                        newBullet.SetStats(this.Damage, 400);
                         bullets.Add(newBullet);
                     }
 
-                    bullets[0].Rotate(SPREAD_1);
+                    bullets[0].Rotate(DEG_30_IN_RAD * -.5f);
                     bullets[0].GlobalPosition = weaponPosition;
                     root.AddChild(bullets[0]);
 
-                    bullets[1].Rotate(SPREAD_2);
+                    bullets[1].Rotate(DEG_30_IN_RAD * -.25f);
                     bullets[1].GlobalPosition = weaponPosition;
                     root.AddChild(bullets[1]);
 
-                    bullets[2].Rotate(SPREAD_3);
                     bullets[2].GlobalPosition = weaponPosition;
                     root.AddChild(bullets[2]);
 
-                    bullets[3].Rotate(SPREAD_4);
+                    bullets[3].Rotate(DEG_30_IN_RAD * .25f);
                     bullets[3].GlobalPosition = weaponPosition;
                     root.AddChild(bullets[3]);
 
-                    bullets[4].Rotate(SPREAD_5);
+                    bullets[4].Rotate(DEG_30_IN_RAD * .5f);
                     bullets[4].GlobalPosition = weaponPosition;
                     root.AddChild(bullets[4]);
 
