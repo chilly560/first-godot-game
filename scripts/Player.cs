@@ -13,7 +13,7 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private bool isAlive;
 
-	private Label hp;
+	private Label hp, secondaryAmmo;
 
 	// Remove
 	private PackedScene bulletScene;
@@ -33,6 +33,7 @@ public partial class Player : CharacterBody2D, ICollector
 		gameData = GetNode<GameData>("%GameData");
 		autofireTimer = GetNode<Timer>("./AutofireTimer");
 		hp = GetNode<Label>("Camera2D/HUD/HPValue");
+		secondaryAmmo = GetNode<Label>("Camera2D/HUD/AmmoValue");
 		isAlive = true;
 		GD.Print("[LOG] Spawned Player");
 		GD.Print(gameData.ToString());
