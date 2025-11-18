@@ -7,6 +7,8 @@ namespace Game.Weapons
 {
     public abstract class Weapon : IWeapon
     {
+        private const int HAXXOR_DAMAGE = 999;
+
         private const int STANDARD_DAMAGE = 20;
 
         private const int STANDARD_SPEED = 750;
@@ -55,6 +57,8 @@ namespace Game.Weapons
         public void addAmmo(int ammo)
         {
             this.Ammo += ammo;
+            if (Ammo > MaxAmmo)
+                Ammo = MaxAmmo;
         }
 
         public abstract void Reload();
@@ -113,6 +117,7 @@ namespace Game.Weapons
             {
                 case BulletClassification.Standard:
                     this.Damage = STANDARD_DAMAGE;
+                    //this.Damage = HAXXOR_DAMAGE;
                     this.Speed = STANDARD_SPEED;
                     break;
                 case BulletClassification.Heavy:
@@ -151,6 +156,11 @@ namespace Game.Weapons
         public void SetParent(Node2D parent)
         {
             this.parent = parent;
+        }
+
+        public int GetAmmo()
+        {
+            return Ammo;
         }
 
         public abstract void Shoot(Vector2 weaponPosition);

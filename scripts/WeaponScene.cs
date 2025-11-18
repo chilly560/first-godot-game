@@ -44,6 +44,10 @@ public partial class WeaponScene : Marker2D
 		weaponCollection.Add(weapon);
 		if (secondaryWeapon is null)
 			secondaryWeapon = weapon;
+		else
+        {
+			secondaryWeapon.AddAmmo(((Weapon)weapon).GetAmmo());
+        }
 	}
 
 	public void Shoot()

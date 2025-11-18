@@ -40,6 +40,7 @@ namespace Game.Weapons
             {
                 Bullet bullet = (Bullet)bulletScene.Instantiate();
                 bullet.GlobalPosition = weaponPosition;
+                bullet.SetStats(Damage, Speed);
                 // TODO: Overhaul the Timer system used in Bullet.ShootBullet
                 // to be universal to all bullet types. 
                 root.AddChild(bullet);
