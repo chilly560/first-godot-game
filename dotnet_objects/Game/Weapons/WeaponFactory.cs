@@ -19,6 +19,8 @@ namespace Game.Weapons
 
         private const float DEG_30_IN_RAD = 0.523598776f; 
 
+        private const int MAX_SHOTGUN_AMMO = 25;
+
         private class Pistol : Weapon
         {
             public Pistol(Node2D parent) : base(parent)
@@ -56,6 +58,13 @@ namespace Game.Weapons
                 MaxAmmo = -1; // Infinite ammo
             }
 
+            public Shotgun(Node2D parent, int Ammo, int MaxAmmo) : base (parent)
+            {
+                SetBulletType(BulletClassification.Heavy);
+                this.Ammo = Ammo;
+                this.MaxAmmo = MaxAmmo;
+            }
+
             public void EnableRandomSpread()
             {
                 randomBulletSpread = true;
@@ -90,6 +99,9 @@ namespace Game.Weapons
                 List<Bullet> bullets = new List<Bullet>();
                 if (randomBulletSpread)
                 {
+                    if (Ammo != -1)
+                        throw new Exception("ERROR: RANDOM MODE MUST HAVE INFINITE AMMO");
+
                     int i = RandomBulletCount();
 
                     for (; i > 0; i--)
@@ -119,6 +131,12 @@ namespace Game.Weapons
                     }
                 } else
                 {
+                    GD.Print("Ammo:" + Ammo);
+                    if (Ammo < 1)
+                        return;
+
+                    Ammo--;
+
                     for (int i = 0; i < 5; i++)
                     {
                         Bullet newBullet = (Bullet)bulletScene.Instantiate();
@@ -200,7 +218,7 @@ namespace Game.Weapons
                     try
                     {
                         Player concreteParent = (Player)parent;
-                        return new Shotgun(concreteParent);
+                        return new Shotgun(concreteParent, (new Random()).Next(1, MAX_SHOTGUN_AMMO + 1), MAX_SHOTGUN_AMMO);
                     } catch (InvalidCastException) {
                         try
                         {
@@ -211,13 +229,13 @@ namespace Game.Weapons
                             try
                             {
                                 Drop concreteParent = (Drop)parent;
-                                return new Shotgun(concreteParent);
+                                return new Shotgun(concreteParent, (new Random()).Next(1, MAX_SHOTGUN_AMMO + 1), MAX_SHOTGUN_AMMO);
                             } catch (InvalidCastException)
                             {
                                 try
                                 {
                                     GameRoot concreteParent = (GameRoot)parent;
-                                    return new Shotgun(concreteParent);
+                                    return new Shotgun(concreteParent, (new Random()).Next(1, MAX_SHOTGUN_AMMO + 1), MAX_SHOTGUN_AMMO);
                                 }
                                 catch (InvalidCastException)
                                 {

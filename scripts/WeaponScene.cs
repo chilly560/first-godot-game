@@ -19,22 +19,20 @@ public partial class WeaponScene : Marker2D
 		Node2D localRoot = GetParent<Node2D>().GetParent<Node2D>();
 
 		if (localRoot is Player)
-			//currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Player)localRoot);
 			currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Player)localRoot);
 
 		else if (localRoot is Enemy)
 			currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Enemy)localRoot);
 
-		else
-			throw new ArgumentException("ERROR: PLAYER OBJ NOT OF TYPE PLAYER OR ENEMY");
+		else throw new ArgumentException("ERROR: PLAYER OBJ NOT OF TYPE PLAYER OR ENEMY");
 
 		weaponCollection = [currentWeapon];
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
-	{
-	}
+    {
+    }
 
 	public void SetWeapon(IWeapon weapon)
 	{
