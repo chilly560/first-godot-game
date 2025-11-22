@@ -3,12 +3,18 @@ using System;
 using System.Collections.Generic;
 using Game.Enemies;
 
+/// <summary>
+/// Originally meant to store game data about the current scene (hence the name 'GameData'),
+/// This class has been retrofitted to function as the main Event-BUS for the game.
+/// </summary>
 public partial class GameData : Node
 {
 	
 	private int HP;
 
 	private Player player;
+
+	private WeaponScene weaponScene;
 
 	private Dictionary<int, Enemy> enemies;
 
@@ -18,6 +24,8 @@ public partial class GameData : Node
 		this.HP = 100;
 		this.enemies = new Dictionary<int, Enemy>();
 		this.player = GetNode<Player>("../Player");
+		weaponScene = GetNode<WeaponScene>("../Player/AnimatedSprite2D/WeaponScene");
+		weaponScene.ShootSignal += OnShootSignalHandler;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -66,4 +74,18 @@ public partial class GameData : Node
 		this.HP -= amount;
 		return (this.HP > 0);
 	}
+
+	/// <summary>
+    /// Signal for updating the UI counter for ammo. 
+	/// 
+	/// Target: ../scenes/Player/Camera2D/HUD/AmmoValue
+    /// </summary>
+	[Signal]
+	public delegate void UpdateAmmoLabelEventHandler();
+
+	public void OnShootSignalHandler()
+    {
+		GD.Print("UPDATEAMMOSIGNAL RECEIVED");
+        EmitSignal(SignalName.UpdateAmmoLabel);
+    }
 }

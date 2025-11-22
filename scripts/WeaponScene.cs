@@ -13,6 +13,13 @@ public partial class WeaponScene : Marker2D
 
 	private IWeapon secondaryWeapon;
 
+	/// <summary>
+    /// Signals the Event-BUS (GameData.cs) to update the ammo count on the HUD
+    /// </summary>
+    /// <param name="plusMinus">Amount (+ - integer) to add to the display</param>
+	[Signal]
+	public delegate void ShootSignalEventHandler();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -55,9 +62,22 @@ public partial class WeaponScene : Marker2D
 		currentWeapon.Shoot(this.GlobalPosition);
 	}
 
+	public Weapon GetWeapon()
+    {
+        return (Weapon) currentWeapon;
+    }
+
+	public Weapon GetSecondaryWeapon()
+    {
+        return (Weapon) secondaryWeapon;
+    }
+
 	public void AltShoot()
 	{
 		if (secondaryWeapon is not null)
+		{
 			secondaryWeapon.Shoot(this.GlobalPosition);
+			EmitSignal(SignalName.ShootSignal);
+		}
 	}
 }

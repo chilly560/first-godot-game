@@ -31,6 +31,7 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		weaponInventory = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
 		gameData = GetNode<GameData>("%GameData");
+		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;
 		autofireTimer = GetNode<Timer>("./AutofireTimer");
 		hp = GetNode<Label>("Camera2D/HUD/HPValue");
 		secondaryAmmo = GetNode<Label>("Camera2D/HUD/AmmoValue");
@@ -47,7 +48,9 @@ public partial class Player : CharacterBody2D, ICollector
 	public void GetInput()
 	{
 		if (Input.IsActionJustPressed("click"))
+		{
 			weaponInventory.AltShoot();
+		} 
 		else
 		{
 			Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
@@ -110,4 +113,9 @@ public partial class Player : CharacterBody2D, ICollector
 		autofireTimer.WaitTime = .25;
 		autofireTimer.Start();
 	}
+
+	public void OnUpdateAmmoLabel()
+    {
+        secondaryAmmo.Text = weaponInventory.GetSecondaryWeapon().GetAmmo().ToString();
+    }
 }

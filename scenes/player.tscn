@@ -89,6 +89,22 @@ offset_right = -112.0
 offset_bottom = -249.0
 text = "HP:"
 
+[node name="AmmoLabel" type="Label" parent="Camera2D/HUD"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = -269.0
+offset_right = 104.0
+offset_bottom = -246.0
+text = "Ammo:"
+
+[node name="AmmoValue" type="Label" parent="Camera2D/HUD"]
+layout_mode = 0
+offset_left = 115.0
+offset_top = -269.0
+offset_right = 155.0
+offset_bottom = -246.0
+text = "0"
+
 [node name="AutofireTimer" type="Timer" parent="."]
 script = ExtResource("3_qhqgy")
 
