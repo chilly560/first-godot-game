@@ -69,8 +69,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 	*/
 	public void OnAreaEnteredBullet(Node body)
 	{
-		GD.Print("Bullet collided with something");
-
 		// Makes no sense but I have to fully qualify the Enemy class name here
 		// or C# doesn't recognize it.
 		// I'm sure there's a reason but I don't know what it is yet.
@@ -78,23 +76,16 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 		{
 			enemy.TakeDamage(Damage);
 			this.QueueFree();
-			GD.Print("Hit Enemy");
 		}
-		else
-			GD.Print("Missed");
 	}
 
 	public void OnBodyEnteredBullet(Node body)
 	{
-		GD.Print("Bullet collided with something");
 		if (body is Player player)
 		{
 			player.TakeDamage(Damage);
 			this.QueueFree();
-			GD.Print("Hit Player");
 		}
-		else
-			GD.Print("Missed");
 	}
 
 	/**

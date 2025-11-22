@@ -22,23 +22,20 @@ public partial class Player : CharacterBody2D, ICollector
     /// WeaponScene playerWeapon contains a List<IWeapon> weaponCollection
 	/// responsible for storing the player's collection of weapons.
     /// </summary>
-	private WeaponScene weaponInventory;
+	private WeaponScene weaponScene;
 
 	private Timer autofireTimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		weaponInventory = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
+		weaponScene = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
 		gameData = GetNode<GameData>("%GameData");
 		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;
 		autofireTimer = GetNode<Timer>("./AutofireTimer");
 		hp = GetNode<Label>("Camera2D/HUD/HPValue");
 		secondaryAmmo = GetNode<Label>("Camera2D/HUD/AmmoValue");
 		isAlive = true;
-		GD.Print("[LOG] Spawned Player");
-		GD.Print(gameData.ToString());
-		GD.Print("[LOG] Starting Autofire Timer");
 		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();
 	}
@@ -49,7 +46,7 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		if (Input.IsActionJustPressed("click"))
 		{
-			weaponInventory.AltShoot();
+			weaponScene.AltShoot();
 		} 
 		else
 		{
@@ -73,12 +70,9 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		isAlive = gameData.CauseDamage(damage);
 		this.hp.Text = gameData.GetHP().ToString();
-		GD.Print(isAlive);
 		int hp = gameData.GetHP();
-		GD.Print(hp);
 		if (!this.isAlive)
 		{
-			GD.Print("Player dead!");
 			CallDeferred(nameof(DeferredToGameOverScene));
 		}
 	}
@@ -93,22 +87,20 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private void Autofire()
 	{
-		GD.Print("[LOG] Autofire Triggered");
-		weaponInventory.Shoot();
+		weaponScene.Shoot();
 		autofireTimer.Start();
 	}
 
 	public void Collect(ICollectable collectable)
 	{
 		if (collectable is IWeapon w)
-			weaponInventory.AddNewWeapon(w);
+			weaponScene.AddNewWeapon(w);
 
 		else throw new ArgumentException("ERROR: collectable IS NOT WEAPONSCENE");
 	}
 
 	public void OnAutofireTimerTimeout()
 	{
-		GD.Print("[LOG] Autofire");
 		Autofire();
 		autofireTimer.WaitTime = .25;
 		autofireTimer.Start();
@@ -116,8 +108,8 @@ public partial class Player : CharacterBody2D, ICollector
 
 	public void OnUpdateAmmoLabel(int plusMinus)
     {
-		int ammoVal = weaponInventory.GetSecondaryWeapon().GetAmmo();
-		int maxAmmo = weaponInventory.GetSecondaryWeapon().GetMaxAmmo();
+		int ammoVal = weaponScene.GetSecondaryWeapon().GetAmmo();
+		int maxAmmo = weaponScene.GetSecondaryWeapon().GetMaxAmmo();
 		int newTextValue = ammoVal + plusMinus;
 		if (newTextValue > maxAmmo)
         	secondaryAmmo.Text = maxAmmo.ToString();

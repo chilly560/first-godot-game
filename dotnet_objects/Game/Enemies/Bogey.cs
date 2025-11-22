@@ -49,7 +49,6 @@ namespace Game.Enemies
                 if (Position.X == targetPosition || Math.Abs(Position.X - targetPosition) < 1)
                 {
                     reposition = false;
-                    GD.Print("Bogey reached target position, shooting");
                     weaponScene.Shoot();
                     OnBogeyTimerTimeout();
                 }
@@ -68,7 +67,6 @@ namespace Game.Enemies
         {
             if (!reposition)
             {
-                GD.Print("Bogey timer timeout");
                 targetPosition = gameData.GetPlayerX();
                 reposition = true;
                 paused = true;

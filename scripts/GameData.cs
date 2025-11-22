@@ -85,7 +85,6 @@ public partial class GameData : Node
 
 	public void OnUpdateHUDEventHandler(int plusMinus)
     {
-		GD.Print("UPDATEAMMOSIGNAL RECEIVED");
         EmitSignal(SignalName.UpdateAmmoLabel, plusMinus);
     }
 }

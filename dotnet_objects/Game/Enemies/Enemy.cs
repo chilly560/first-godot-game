@@ -29,8 +29,6 @@ namespace Game.Enemies
             enemyid = gameData.GetNumberOfEnemies();
             gameData.AddEnemy(this);
             hp = 100;
-            GD.Print(gameData.GetNumberOfEnemies());
-            GD.Print("[LOG] Spawned Enemy");
             List<float> chances = new List<float>() { 1f, 0f };
 
             dropFactory = DropFactoryFactory.GetFactoryChance(
@@ -43,15 +41,9 @@ namespace Game.Enemies
 
         public void OnBodyEnteredEnemy(Node body)
         {
-            GD.Print("Enemy collided with something");
             if (body is Player player)
             {
-                GD.Print("Player entered body");
                 player.TakeDamage(50);
-            }
-            else if (body is Bullet bullet)
-            {
-                GD.Print("Enemy Hit");
             }
         }
 
@@ -62,17 +54,18 @@ namespace Game.Enemies
 
         public void TakeDamage(int amount)
         {
-            GD.Print("Taking Damage...");
             this.hp -= amount;
-            GD.Print("[LOG] Enemy took " + amount + " damage, remaining HP: " + this.hp);
             if (this.hp <= 0)
             {
-                //this.gameData.RemoveEnemy(this.enemyid);
                 Drop drop = MakeDrop();
-                GetParent().CallDeferred("add_child", drop);
-                
-                this.QueueFree();
+                GetParent().AddChild(drop);
+                CallDeferred(nameof(FreeEnemyDeferred));
             }
+        }
+
+        private void FreeEnemyDeferred()
+        {
+            QueueFree();
         }
 
         public Drop MakeDrop()
