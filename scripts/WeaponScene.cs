@@ -18,7 +18,7 @@ public partial class WeaponScene : Marker2D
     /// </summary>
     /// <param name="plusMinus">Amount (+ - integer) to add to the display</param>
 	[Signal]
-	public delegate void ShootSignalEventHandler();
+	public delegate void UpdateAmmoHUDEventHandler(int plusMinus);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -55,6 +55,8 @@ public partial class WeaponScene : Marker2D
         {
 			secondaryWeapon.AddAmmo(((Weapon)weapon).GetAmmo());
         }
+
+		EmitSignal(SignalName.UpdateAmmoHUD, ( (Weapon) weapon ).GetAmmo());
 	}
 
 	public void Shoot()
@@ -77,7 +79,7 @@ public partial class WeaponScene : Marker2D
 		if (secondaryWeapon is not null)
 		{
 			secondaryWeapon.Shoot(this.GlobalPosition);
-			EmitSignal(SignalName.ShootSignal);
+			EmitSignal(SignalName.UpdateAmmoHUD, -1);
 		}
 	}
 }

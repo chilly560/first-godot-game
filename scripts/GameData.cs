@@ -25,7 +25,7 @@ public partial class GameData : Node
 		this.enemies = new Dictionary<int, Enemy>();
 		this.player = GetNode<Player>("../Player");
 		weaponScene = GetNode<WeaponScene>("../Player/AnimatedSprite2D/WeaponScene");
-		weaponScene.ShootSignal += OnShootSignalHandler;
+		weaponScene.UpdateAmmoHUD += OnUpdateHUDEventHandler;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -81,11 +81,11 @@ public partial class GameData : Node
 	/// Target: ../scenes/Player/Camera2D/HUD/AmmoValue
     /// </summary>
 	[Signal]
-	public delegate void UpdateAmmoLabelEventHandler();
+	public delegate void UpdateAmmoLabelEventHandler(int plusMinus);
 
-	public void OnShootSignalHandler()
+	public void OnUpdateHUDEventHandler(int plusMinus)
     {
 		GD.Print("UPDATEAMMOSIGNAL RECEIVED");
-        EmitSignal(SignalName.UpdateAmmoLabel);
+        EmitSignal(SignalName.UpdateAmmoLabel, plusMinus);
     }
 }

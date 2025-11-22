@@ -114,8 +114,15 @@ public partial class Player : CharacterBody2D, ICollector
 		autofireTimer.Start();
 	}
 
-	public void OnUpdateAmmoLabel()
+	public void OnUpdateAmmoLabel(int plusMinus)
     {
-        secondaryAmmo.Text = weaponInventory.GetSecondaryWeapon().GetAmmo().ToString();
+		int ammoVal = weaponInventory.GetSecondaryWeapon().GetAmmo();
+		int maxAmmo = weaponInventory.GetSecondaryWeapon().GetMaxAmmo();
+		int newTextValue = ammoVal + plusMinus;
+		if (newTextValue > maxAmmo)
+        	secondaryAmmo.Text = maxAmmo.ToString();
+		else if (newTextValue < 0)
+			secondaryAmmo.Text = "0";
+		else secondaryAmmo.Text = newTextValue.ToString();
     }
 }
