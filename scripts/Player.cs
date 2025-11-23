@@ -113,9 +113,9 @@ public partial class Player : CharacterBody2D, ICollector
 			weaponScene.AddNewWeapon(w);
 		else if (collectable is IStatusModifier sm)
         {
-            if (sm is HealthDrop hd)
+            if (sm is HealthModifier hm)
             {
-                Heal(hd.HealAmount);
+                Heal(hm.GetHealAmount());
             }
         }
 		else throw new ArgumentException("ERROR: collectable IS NOT WEAPONSCENE");

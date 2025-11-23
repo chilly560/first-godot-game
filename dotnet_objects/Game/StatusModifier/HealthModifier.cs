@@ -13,14 +13,10 @@ namespace Game.StatusModifier
             this.amount = amount;
         }
 
-        public void ApplyModifier(Player player)
+        public int GetHealAmount()
         {
-            if (player is null)
-                throw new ArgumentNullException(nameof(player));
-
-            player.Heal(amount);
+            return amount;
         }
-
         public void SetParent(Node2D parent)
         {
             this.parent = parent;
