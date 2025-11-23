@@ -6,9 +6,6 @@ using System.Collections.Generic;
 
 public partial class WeaponScene : Marker2D
 {
-
-	private List<IWeapon> weaponCollection;
-
 	private IWeapon currentWeapon;
 
 	private IWeapon secondaryWeapon;
@@ -32,8 +29,6 @@ public partial class WeaponScene : Marker2D
 			currentWeapon = WeaponFactory.CreateWeapon(WeaponType.Pistol, (Enemy)localRoot);
 
 		else throw new ArgumentException("ERROR: PLAYER OBJ NOT OF TYPE PLAYER OR ENEMY");
-
-		weaponCollection = [currentWeapon];
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -48,8 +43,6 @@ public partial class WeaponScene : Marker2D
 
 	public void AddNewWeapon(IWeapon weapon)
 	{
-
-		weaponCollection.Add(weapon);
 		if (secondaryWeapon is null)
         {
     		secondaryWeapon = weapon;   
@@ -60,7 +53,7 @@ public partial class WeaponScene : Marker2D
 			if (weapon.GetAmmo() + secondaryWeapon.GetAmmo() > secondaryWeapon.GetMaxAmmo() )
 				secondaryWeapon.SetAmmoMax();
 			else secondaryWeapon.AddAmmo(weapon.GetAmmo());
-			
+
 			EmitSignal(SignalName.UpdateAmmoHUD, weapon.GetAmmo());
         }
 	}
