@@ -168,6 +168,11 @@ namespace Game.Weapons
             return MaxAmmo;
         }
 
+        public void SetAmmoMax()
+        {
+            Ammo = MaxAmmo;
+        }
+
         public abstract void Shoot(Vector2 weaponPosition);
     }
 }

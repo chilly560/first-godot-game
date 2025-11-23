@@ -57,8 +57,11 @@ public partial class WeaponScene : Marker2D
         }
 		else
         {
-			secondaryWeapon.AddAmmo(((Weapon)weapon).GetAmmo());
-			EmitSignal(SignalName.UpdateAmmoHUD, ( (Weapon) weapon ).GetAmmo());
+			if (weapon.GetAmmo() + secondaryWeapon.GetAmmo() > secondaryWeapon.GetMaxAmmo() )
+				secondaryWeapon.SetAmmoMax();
+			else secondaryWeapon.AddAmmo(weapon.GetAmmo());
+			
+			EmitSignal(SignalName.UpdateAmmoHUD, weapon.GetAmmo());
         }
 	}
 

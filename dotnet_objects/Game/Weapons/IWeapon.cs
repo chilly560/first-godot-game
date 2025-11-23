@@ -14,6 +14,12 @@ namespace Game.Weapons
 		/// <param name="ammo">The amount of ammo to add.</param>
 		public void AddAmmo(int ammo);
 
+
+		public int GetAmmo();
+
+		public int GetMaxAmmo();
+
+		public void SetAmmoMax();
 		/// <summary>
 		/// Reloads the weapon, refilling its ammo or resetting its state as needed.
 		/// </summary>
