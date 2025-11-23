@@ -4,16 +4,16 @@
 [ext_resource type="Script" uid="uid://ghk3g1v3c3a7" path="res://dotnet_objects/Game/Drops/HealthDrop.cs" id="1_s565k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1jst"]
-size = Vector2(150.5, 155.5)
+size = Vector2(42.5, 39.5)
 
 [node name="HealthDrop" type="Area2D"]
 script = ExtResource("1_s565k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.25, -1.75)
+position = Vector2(-1, -2)
 shape = SubResource("RectangleShape2D_q1jst")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0.999985, -1.00001)
-scale = Vector2(0.553922, 0.585784)
+position = Vector2(-0.625003, -1.375)
+scale = Vector2(0.158088, 0.150123)
 texture = ExtResource("1_q1jst")

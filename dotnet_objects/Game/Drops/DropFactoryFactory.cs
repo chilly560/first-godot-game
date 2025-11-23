@@ -131,7 +131,7 @@ namespace Game.Drops
                 
             Random rand = new Random();
             int baseLine = rand.Next(1, 11);
-            if (baseLine / 10 > 1 - enemyDropChance)
+            if (baseLine / 10f > 1 - enemyDropChance)
             {
                 float total = 0;
                 foreach (float chance in chances)
@@ -146,13 +146,13 @@ namespace Game.Drops
 
                 // randomly generate factory based on chances provided
                 baseLine = rand.Next(1, 101);
-                int a = (int)chances[0];
-                int b = (int)chances[1];
+                float a = chances[0];
+                float b = chances[1];
                 if (baseLine <= a * 100)
                 {
                     return GetFactory(DropFactoryFactoryType.Weapon);
                 }
-                else if (baseLine <= (a + b) * 100)
+                else 
                 {
                     return GetFactory(DropFactoryFactoryType.StatusModifier);
                 }
