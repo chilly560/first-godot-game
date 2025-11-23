@@ -17,3 +17,5 @@ shape = SubResource("RectangleShape2D_q1jst")
 position = Vector2(-0.625003, -1.375)
 scale = Vector2(0.158088, 0.150123)
 texture = ExtResource("1_q1jst")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEnteredDrop"]
