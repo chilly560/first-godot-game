@@ -58,7 +58,10 @@ namespace Game.Enemies
             if (this.hp <= 0)
             {
                 Drop drop = MakeDrop();
-                GetParent().AddChild(drop);
+
+                if (drop is not null)
+                    GetParent().AddChild(drop);
+
                 CallDeferred(nameof(FreeEnemyDeferred));
             }
         }
