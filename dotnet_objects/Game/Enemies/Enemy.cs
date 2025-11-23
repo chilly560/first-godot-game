@@ -29,7 +29,7 @@ namespace Game.Enemies
             enemyid = gameData.GetNumberOfEnemies();
             gameData.AddEnemy(this);
             hp = 100;
-            List<float> chances = new List<float>() { 1f, 0f };
+            List<float> chances = new List<float>() { .5f, .5f };
 
             dropFactory = DropFactoryFactory.GetFactoryChance(
                 DROP_CHANCE,
@@ -73,10 +73,18 @@ namespace Game.Enemies
 
         public Drop MakeDrop()
         {
-            Drop drop = dropFactory.MakeDrop((int)WeaponType.Shotgun);
-            if (drop is null)
-                return null;
+            Drop drop;
+            int type = dropFactory.GetFactoryType();
 
+            // quick n dirty implementation because it's late
+            if (type == 0)
+            {
+                drop = dropFactory.MakeDrop((int)WeaponType.Shotgun);
+                if (drop is null)
+                    return null;
+            } else {
+                drop = dropFactory.MakeDrop((int)DropType.StatusModifier.HealthBoost);
+            }
             drop.Position = Position;
             return drop;
         }

@@ -52,6 +52,17 @@ public partial class GameData : Node
 	{
 		return this.HP;	
 	}
+
+	/// <summary>
+	/// Increase player's HP by the given amount. Amount must be positive.
+	/// </summary>
+	public void Heal(int amount)
+	{
+		if (amount <= 0)
+			return;
+
+		this.HP += amount;
+	}
 	
 	public Vector2 GetPlayerXY()
 	{

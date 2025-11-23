@@ -78,6 +78,19 @@ public partial class Player : CharacterBody2D, ICollector
 	}
 
 	/// <summary>
+	/// Heal the player by the specified amount and update HUD.
+	/// </summary>
+	public void Heal(int amount)
+	{
+		if (amount <= 0)
+			return;
+
+		gameData.Heal(amount);
+		this.hp.Text = gameData.GetHP().ToString();
+		this.isAlive = true;
+	}
+
+	/// <summary>
     /// Required to change scene after player death to avoid undefined/undesired behavior.
     /// </summary>
 	private void DeferredToGameOverScene()

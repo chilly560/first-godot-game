@@ -1,12 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Game;
+using Godot;
 
 namespace Game.StatusModifier
 {
     public interface IStatusModifier : ICollectable
     {
-        public void ApplyModifier(Player player);
+        /// <summary>
+        /// Apply this modifier to the provided player (e.g. heal, buff, etc.).
+        /// </summary>
+        /// <param name="player">Target player to modify.</param>
+        void ApplyModifier(Player player);
     }
 }

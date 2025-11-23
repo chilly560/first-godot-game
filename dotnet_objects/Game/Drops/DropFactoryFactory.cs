@@ -13,7 +13,10 @@ namespace Game.Drops
 
         private class WeaponDropFactory : AbstractDropFactory
         {
-
+            public WeaponDropFactory()
+            {
+                factoryType = WEAPON;
+            }
 
             public override Drop MakeDrop(int type)
             {
@@ -52,15 +55,34 @@ namespace Game.Drops
 
         private class StatusModifierDropFactory : AbstractDropFactory
         {
+            public StatusModifierDropFactory()
+            {
+                factoryType = STATUS;
+            }
+
             public override Drop MakeDrop(int type)
             {
+                DropType.StatusModifier statusModifierDropType;
+
                 try
                 {
-                    DropType.StatusModifier statusModifierDropType = (DropType.StatusModifier)type;
+                    statusModifierDropType = (DropType.StatusModifier)type;
                 }
                 catch (InvalidCastException)
                 {
                     throw new ArgumentException("Invalid value for StatusModifierDropFactory");
+                }
+
+                switch (statusModifierDropType)
+                {
+                    case DropType.StatusModifier.HealthBoost:
+                        PackedScene p = GD.Load<PackedScene>("res://scenes/HealthDrop.tscn");
+                        HealthDrop d = p.Instantiate() as HealthDrop;
+                        d.SetPhysicsOverhauler(DropPhysicsOverhaulers.DefaultPhysics);
+
+                        return d;
+                    default:
+                        throw new ArgumentException("Invalid modifier drop type");
                 }
                 throw new NotImplementedException("MakeDrop method not implemented yet");
             }

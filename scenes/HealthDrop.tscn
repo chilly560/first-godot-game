@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bp7f0f84rylcc"]
+
+[ext_resource type="Texture2D" uid="uid://c8kbn0drtyacg" path="res://assets/qiBoRe6LT-removebg-preview.png" id="1_q1jst"]
+[ext_resource type="Script" uid="uid://ghk3g1v3c3a7" path="res://dotnet_objects/Game/Drops/HealthDrop.cs" id="1_s565k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q1jst"]
+size = Vector2(150.5, 155.5)
+
+[node name="HealthDrop" type="Area2D"]
+script = ExtResource("1_s565k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.25, -1.75)
+shape = SubResource("RectangleShape2D_q1jst")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.999985, -1.00001)
+scale = Vector2(0.553922, 0.585784)
+texture = ExtResource("1_q1jst")
