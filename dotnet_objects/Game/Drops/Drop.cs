@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Game.Enemies;
 using Game.Weapons;
+using Game.StatusModifier;
 using Godot;
 using System.ComponentModel;
 
@@ -31,7 +32,8 @@ namespace Game.Drops
                 throw new ArgumentException("ERROR: ATTRIBUTE CANNOT BE NULL");
             else if (
                 attribute is not IWeapon &&
-                attribute is not IEnemy 
+                attribute is not IEnemy &&
+                attribute is not HealthModifier
             ) throw new ArgumentException("ERROR: ATTRIBUTE NOT OF TYPE IWEAPON, IENEMY, OR ISTATUSMODIFIER");
 
             player.Collect(collectable);

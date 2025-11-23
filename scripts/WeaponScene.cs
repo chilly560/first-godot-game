@@ -2,7 +2,6 @@ using Game.Enemies;
 using Game.Weapons;
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class WeaponScene : Marker2D
 {

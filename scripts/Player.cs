@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Game;
+using Game.Drops;
+using Game.StatusModifier;
 using Game.Weapons;
 using Godot;
 
@@ -86,6 +88,7 @@ public partial class Player : CharacterBody2D, ICollector
 			return;
 
 		gameData.Heal(amount);
+
 		this.hp.Text = gameData.GetHP().ToString();
 		this.isAlive = true;
 	}
@@ -108,7 +111,13 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		if (collectable is IWeapon w)
 			weaponScene.AddNewWeapon(w);
-
+		else if (collectable is IStatusModifier sm)
+        {
+            if (sm is HealthDrop hd)
+            {
+                Heal(hd.HealAmount);
+            }
+        }
 		else throw new ArgumentException("ERROR: collectable IS NOT WEAPONSCENE");
 	}
 

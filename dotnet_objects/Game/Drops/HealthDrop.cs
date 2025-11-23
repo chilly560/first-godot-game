@@ -8,14 +8,16 @@ namespace Game.Drops
     public partial class HealthDrop : Drop
     {
         [Export]
-        private int HealAmount { get; set; } = 25;
+        public int HealAmount = 25;
 
         public override void _Ready()
         {
+            // TODO: Eventually refactor to utilize factory if more status 
+            // effects are added
             // initialize the collectable (health modifier) and default physics behavior
             collectable = new Game.StatusModifier.HealthModifier(HealAmount);
             // ensure the collectable knows its parent if necessary
-            collectable.SetParent(this);
+            collectable.SetParent(GetParent<GameRoot>());
         }
 
         public override void _Process(double delta)
@@ -29,16 +31,5 @@ namespace Game.Drops
                 physicsModifier.Invoke(this);
         }
 
-        public override void AddAttribute(Player player, ICollectable attribute)
-        {
-            if (attribute is IStatusModifier sm)
-            {
-                sm.ApplyModifier(player);
-            }
-            else
-            {
-                base.AddAttribute(player, attribute);
-            }
-        }
     }
 }
