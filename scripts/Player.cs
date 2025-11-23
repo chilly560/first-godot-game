@@ -123,7 +123,7 @@ public partial class Player : CharacterBody2D, ICollector
     {
 		int ammoVal = weaponScene.GetSecondaryWeapon().GetAmmo();
 		int maxAmmo = weaponScene.GetSecondaryWeapon().GetMaxAmmo();
-		int newTextValue = ammoVal + plusMinus;
+		int newTextValue = ammoVal;
 		if (newTextValue > maxAmmo)
         	secondaryAmmo.Text = maxAmmo.ToString();
 		else if (newTextValue < 0)

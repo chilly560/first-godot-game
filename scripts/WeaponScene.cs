@@ -48,15 +48,18 @@ public partial class WeaponScene : Marker2D
 
 	public void AddNewWeapon(IWeapon weapon)
 	{
+
 		weaponCollection.Add(weapon);
 		if (secondaryWeapon is null)
-			secondaryWeapon = weapon;
+        {
+    		secondaryWeapon = weapon;   
+			EmitSignal(SignalName.UpdateAmmoHUD, 0);
+        }
 		else
         {
 			secondaryWeapon.AddAmmo(((Weapon)weapon).GetAmmo());
+			EmitSignal(SignalName.UpdateAmmoHUD, ( (Weapon) weapon ).GetAmmo());
         }
-
-		EmitSignal(SignalName.UpdateAmmoHUD, ( (Weapon) weapon ).GetAmmo());
 	}
 
 	public void Shoot()
