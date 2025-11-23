@@ -9,7 +9,8 @@ using Game.Enemies;
 /// </summary>
 public partial class GameData : Node
 {
-	
+	private const int MAX_HP = 100;	
+
 	private int HP;
 
 	private Player player;
@@ -61,7 +62,10 @@ public partial class GameData : Node
 		if (amount <= 0)
 			return;
 
-		this.HP += amount;
+		if (amount + HP > MAX_HP)
+			this.HP = MAX_HP;
+			
+		else this.HP += amount;
 	}
 	
 	public Vector2 GetPlayerXY()

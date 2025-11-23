@@ -86,7 +86,7 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		if (amount <= 0)
 			return;
-
+			
 		gameData.Heal(amount);
 
 		this.hp.Text = gameData.GetHP().ToString();
