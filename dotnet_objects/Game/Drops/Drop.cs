@@ -40,6 +40,17 @@ namespace Game.Drops
             collectable.SetParent(player);
         }
 
+        public override void _Process(double delta)
+        {
+            if (physicsOverhauler is null)
+                throw new NullReferenceException("Instance of ShotgunDrop does not have defined physics");
+
+            physicsOverhauler.Invoke(this, delta);
+            
+            if (physicsModifier is not null)
+                physicsModifier.Invoke(this);
+        }
+
         /// <summary>
         /// Event handler for body entering drop area.
         /// </summary>

@@ -14,16 +14,4 @@ public partial class ShotgunDrop : Drop
 			GetParent<GameRoot>()
 		);
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		if (physicsOverhauler is null)
-			throw new NullReferenceException("Instance of ShotgunDrop does not have defined physics");
-
-		physicsOverhauler.Invoke(this, delta);
-		
-		if (physicsModifier is not null)
-			physicsModifier.Invoke(this);
-    }
 }
