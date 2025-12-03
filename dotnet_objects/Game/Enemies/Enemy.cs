@@ -35,8 +35,7 @@ namespace Game.Enemies
             );
 
             SetWorth();
-
-            
+            EnemyDestroyed += gameData.OnUpdateScoreEventHandler;
         }
 
         public void OnBodyEnteredEnemy(Node body)
