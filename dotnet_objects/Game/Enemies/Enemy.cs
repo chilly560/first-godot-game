@@ -35,6 +35,8 @@ namespace Game.Enemies
             );
 
             SetWorth();
+
+            
         }
 
         public void OnBodyEnteredEnemy(Node body)

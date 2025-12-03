@@ -15,7 +15,7 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private bool isAlive;
 
-	private Label hp, secondaryAmmo;
+	private Label hp, secondaryAmmo, score;
 
 	// Remove
 	private PackedScene bulletScene;
@@ -34,9 +34,11 @@ public partial class Player : CharacterBody2D, ICollector
 		weaponScene = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
 		gameData = GetNode<GameData>("%GameData");
 		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;
+		gameData.UpdateScoreLabel += OnUpdateScoreLabel;
 		autofireTimer = GetNode<Timer>("./AutofireTimer");
 		hp = GetNode<Label>("Camera2D/HUD/HPValue");
 		secondaryAmmo = GetNode<Label>("Camera2D/HUD/AmmoValue");
+		score = GetNode<Label>("Camera2D/HUD/ScoreValue");
 		isAlive = true;
 		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();
@@ -139,4 +141,11 @@ public partial class Player : CharacterBody2D, ICollector
 			secondaryAmmo.Text = "0";
 		else secondaryAmmo.Text = newTextValue.ToString();
     }
+
+	public void OnUpdateScoreLabel(int plusMinus)
+    {
+        int scoreVal = int.Parse(score.Text);
+		scoreVal += plusMinus;
+		score.Text = scoreVal.ToString();
+    }	
 }

@@ -20,7 +20,7 @@ public partial class Quit : Button
 	{
 		CallDeferred(nameof(DeferredQuit));
 	}
-
+  
 	/// <summary>
     /// Necessary to deferr quit code to avoid undefined behavior during shutdown.
     /// </summary>
