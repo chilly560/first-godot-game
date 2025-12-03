@@ -9,5 +9,10 @@ namespace Game.Enemies
 		{
 			Position += Transform.Y * 50 * (float)delta;
 		}
+
+		protected override void SetWorth()
+		{
+			worth = 5;
+		}
 	}
 }

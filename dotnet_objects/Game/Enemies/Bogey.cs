@@ -79,5 +79,11 @@ namespace Game.Enemies
         {
             paused = false;
         }
+
+        protected override void SetWorth()
+        {
+            worth = 25;
+        }
+
     }
 }

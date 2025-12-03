@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Game.Drops;
 using Game.Weapons;
 using Godot;
-using Game;
 
 namespace Game.Enemies
 {
@@ -22,6 +18,8 @@ namespace Game.Enemies
 
         private const float DROP_CHANCE = 0.5f;
 
+        protected int worth;
+
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -36,7 +34,7 @@ namespace Game.Enemies
                 chances
             );
 
-            GD.Print(dropFactory.ToString());
+            SetWorth();
         }
 
         public void OnBodyEnteredEnemy(Node body)
@@ -57,6 +55,8 @@ namespace Game.Enemies
             this.hp -= amount;
             if (this.hp <= 0)
             {
+                EmitSignal(nameof(EnemyDestroyed), worth);
+
                 Drop drop = MakeDrop();
 
                 if (drop is not null)
@@ -93,5 +93,15 @@ namespace Game.Enemies
         {
             this.enemyid = id;
         }
+
+        public int GetWorth()
+        {
+            return worth;
+        }
+
+        protected abstract void SetWorth();
+
+        [Signal]
+        public delegate void EnemyDestroyedEventHandler(int score);
     }
 }
