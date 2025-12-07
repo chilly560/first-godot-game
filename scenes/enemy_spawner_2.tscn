@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://coxv56so0e6h8"]
 
-[ext_resource type="Script" uid="uid://bnro2ps0p80d1" path="res://scripts/EnemySpawner2.cs" id="1_o7xk1"]
+[ext_resource type="Script" uid="uid://bnro2ps0p80d1" path="res://dotnet_objects/Game/Enemies/EnemySpawning/EnemySpawner2.cs" id="1_opqjt"]
 
 [node name="EnemySpawner2" type="Area2D"]
 collision_layer = 3
 collision_mask = 3
-script = ExtResource("1_o7xk1")
+script = ExtResource("1_opqjt")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(11, 0)
