@@ -9,18 +9,22 @@ namespace Game.Enemies.EnemySpawning.SpawnerPhysics
     public class SpawnerPhysicsOverhaulers
     {
         private const int DEFAULT_SPEED = 40;
-        public static void DefaultPhysics(EnemySpawner2 spawner, double delta)
-        {
-            if(spawner.rightCollisionRay.IsColliding())
-            {
-                spawner.dir = -1;
-            }
-            else if(spawner.leftCollisionRay.IsColliding())
-            {
-                spawner.dir = 1;
-            }
 
-            spawner.Position += spawner.Transform.X * DEFAULT_SPEED * (float)delta * spawner.dir;
+        public static void MothershipDefaultPhyysics(Spawner spawner, double delta)
+        {
+            if (spawner is EnemySpawner2 enemySpawner)
+            {
+                if (enemySpawner.rightCollisionRay.IsColliding())
+                {
+                    enemySpawner.dir = -1;
+                }
+                else if (enemySpawner.leftCollisionRay.IsColliding())
+                {
+                    enemySpawner.dir = 1;
+                }
+
+                enemySpawner.Position += enemySpawner.Transform.X * DEFAULT_SPEED * (float)delta * enemySpawner.dir;
+            }
         }
     }
 }

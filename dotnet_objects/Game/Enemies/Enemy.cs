@@ -53,8 +53,8 @@ namespace Game.Enemies
 
         public void TakeDamage(int amount)
         {
-            this.hp -= amount;
-            if (this.hp <= 0)
+            hp -= amount;
+            if (hp <= 0)
             {
                 EmitSignal(nameof(EnemyDestroyed), worth);
 
@@ -92,7 +92,7 @@ namespace Game.Enemies
 
         internal void SetID(int id)
         {
-            this.enemyid = id;
+            enemyid = id;
         }
 
         public int GetWorth()
