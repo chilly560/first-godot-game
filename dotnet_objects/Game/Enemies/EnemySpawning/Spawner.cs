@@ -48,5 +48,19 @@ namespace Game.Enemies.EnemySpawning
         {
             physicsOverhauler = del;
         }
+        /// <summary>
+        /// Spawns a bogey enemy at the specified global position.
+        /// </summary>
+        /// <param name="spawnerGlobalPosition"></param>
+        public void SpawnBogey(Vector2 spawnerGlobalPosition)
+        {
+            GetParent().AddChild(
+                EnemyFactory.CreateEnemy(
+                    //EnemyClassification.DRONE,
+                    EnemyClassification.BOGEY,
+                    spawnerGlobalPosition
+                )
+            );
+        }
     }
 }
