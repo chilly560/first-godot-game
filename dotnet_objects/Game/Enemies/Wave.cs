@@ -1,9 +1,10 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Game.Enemies;
-using NewGameProject.dotnet_objects.Game.Enemies.EnemySpawning;
+using Game.Enemies.EnemySpawning;
 
 namespace Game.Enemies
 {
@@ -59,6 +60,17 @@ namespace Game.Enemies
                     matrix[x, y] = enemy;
                 }
             }  
+            /// <summary>
+            /// Adds each enemy in the matrix as a child node to the provided GameRoot.
+            /// </summary>
+            /// <param name="gameRoot"></param>
+            public void InstiantiateMatrixEntities(GameRoot gameRoot)
+            {
+                for (int i = 0; i < ROWS; i++)
+                    for (int j = 0; j < COLUMNS; j++)
+                        if (matrix[i, j] != null)
+                            gameRoot.AddChild(matrix[i, j]);
+            }
         }
         /// <summary>
         /// Builder class for constructing EnemyMatrix instances with predefined patterns.
@@ -76,19 +88,16 @@ namespace Game.Enemies
             public static EnemyMatrix BuildDefaultMatrix()
             {
                 Enemy[,] defaultMatrix = new Enemy[EnemyMatrix.ROWS, EnemyMatrix.COLUMNS];
+                
                 for (int i = 0; i < EnemyMatrix.ROWS; i++)
                 {
-                    // TODO: Get Parent (Game)
-
                     for (int j = 0; j < EnemyMatrix.COLUMNS; j++)
                     {
                         // TODO: Tweak actual Vector2 positions later
                         defaultMatrix[i, j] = EnemyFactory.CreateEnemy(
                             EnemyClassification.DRONE, 
-                            new Godot.Vector2(i * SPACING, j * SPACING)
+                            new Vector2(i * SPACING, j * SPACING)
                         );
-
-                        // Add defaultMatrix[i, j] to Game as child
                     }
                 }
                 return new EnemyMatrix(defaultMatrix);
@@ -111,5 +120,13 @@ namespace Game.Enemies
                     break;
             }
         }   
+        /// <summary>
+        /// Adds each enemy as a child node to the provided GameRoot.
+        /// </summary>
+        /// <param name="gameRoot"></param>
+        public void InstantiateWaveEntitites(GameRoot gameRoot)
+        {
+            eMatrix.InstiantiateMatrixEntities(gameRoot);
+        }
     }
 }
