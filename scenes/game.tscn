@@ -10,6 +10,7 @@
 
 [node name="GameRoot" type="Node2D"]
 position = Vector2(1, 32)
+scale = Vector2(0.986973, 1.00289)
 script = ExtResource("1_p57ef")
 
 [node name="GameData" type="Node" parent="."]

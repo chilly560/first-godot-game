@@ -17,7 +17,7 @@ namespace Game.Enemies.EnemySpawning
 		{
 			GD.Print("Spawning Wave!");
 			currentWave = new Wave();
-            currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
+			currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
 		}
 	}
 }

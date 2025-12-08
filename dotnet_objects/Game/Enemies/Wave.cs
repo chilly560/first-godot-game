@@ -69,7 +69,7 @@ namespace Game.Enemies
                 for (int i = 0; i < ROWS; i++)
                     for (int j = 0; j < COLUMNS; j++)
                         if (matrix[i, j] != null)
-                            gameRoot.AddChild(matrix[i, j]);
+                            gameRoot.CallDeferred("add_child", matrix[i, j]);
             }
         }
         /// <summary>
