@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Game.Enemies.EnemySpawning
 {
-    public partial class WaveSpawner : Spawner
-    {
-        
-    }
+	public partial class WaveSpawner : Spawner
+	{
+		
+	}
 }
