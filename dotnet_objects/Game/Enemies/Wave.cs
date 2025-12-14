@@ -23,11 +23,11 @@ namespace Game.Enemies
             /// <summary>
             /// Number of rows in the enemy matrix.
             /// </summary>
-            public const int ROWS = 6;
+            public const int ROWS = 8;
             /// <summary>
             /// Number of columns in the enemy matrix.
             /// </summary>
-            public const int COLUMNS = 13;
+            public const int COLUMNS = 4;
             /// <summary>
             /// 2D array representing the enemy formation.
             /// </summary>
@@ -80,7 +80,11 @@ namespace Game.Enemies
             /// <summary>
             /// Spacing between enemies in the matrix.
             /// </summary>
-            private const int SPACING = 10;
+            private const int SPACING = 35;
+            /// <summary>
+            /// Centers the wave.
+            /// </summary>
+            private const int OFFSET = -115;
             /// <summary>
             /// Builds a default enemy matrix formation with all positions filled with Drones.
             /// </summary>
@@ -96,7 +100,7 @@ namespace Game.Enemies
                         // TODO: Tweak actual Vector2 positions later
                         defaultMatrix[i, j] = EnemyFactory.CreateEnemy(
                             EnemyClassification.DRONE, 
-                            new Vector2(i * SPACING, j * SPACING)
+                            new Vector2((i * SPACING) + OFFSET, (j * SPACING) + OFFSET)
                         );
                     }
                 }

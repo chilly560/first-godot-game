@@ -41,10 +41,17 @@ namespace Game.Enemies
             bogeyTimer.Start();
             targetPosition = gameData.GetPlayerX();
         }
-
+        /// <summary>
+        /// Overrides the standard enemy physics. This is to accomodate the prexisting default behavior of the bogey, whilst allowing
+        /// custom physics to be added or to overhaul this behavior.
+        /// </summary>
+        /// <param name="delta"></param>
         public override void _Process(double delta)
         {
-            if (reposition  && !paused )
+            if (physicsOverhauler is not null)
+                physicsOverhauler.Invoke(this, delta);   
+
+            else if (reposition  && !paused )
             {
                 if (Position.X == targetPosition || Math.Abs(Position.X - targetPosition) < 1)
                 {
@@ -61,6 +68,8 @@ namespace Game.Enemies
 
                 targetPosition = gameData.GetPlayerX();
             }
+
+            physicsModifier?.Invoke(this);
         }
 
         public void OnBogeyTimerTimeout()
@@ -84,6 +93,5 @@ namespace Game.Enemies
         {
             worth = 25;
         }
-
     }
 }

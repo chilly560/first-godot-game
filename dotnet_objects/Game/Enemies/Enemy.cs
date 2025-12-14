@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game.Drops;
 using Game.Weapons;
@@ -10,7 +11,7 @@ namespace Game.Enemies
     /// 
     /// Implements the ICollector interface, such that Enemies can hold or "collect" Drops.
     /// </summary>
-    public abstract partial class Enemy : Area2D, IEnemy, ICollector
+    public abstract partial class Enemy : Area2D, IEnemy, ICollector, IDynamic2DPhysicsObject<Enemy>
     {
         /// <summary>
         /// Reference to GameData Signal BUS and data store.
@@ -36,7 +37,14 @@ namespace Game.Enemies
         /// Number of points this enemy is worth.
         /// </summary>
         protected int worth;
-
+        /// <summary>
+        /// Delegate for modifying the physics state of this enemy.
+        /// </summary>
+        protected Action<Enemy, double> physicsOverhauler;
+        /// <summary>
+        /// Delegate for modifying the physics state of this enemy.
+        /// </summary>
+        protected Action<Enemy> physicsModifier;
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -54,6 +62,18 @@ namespace Game.Enemies
             SetWorth();
             EnemyDestroyed += gameData.OnUpdateScoreEventHandler;
         }
+
+        public override void _Process(double delta)
+        {
+            if (physicsOverhauler is null)
+                throw new NullReferenceException("Instance of Enemy does not have defined physics");
+
+            physicsOverhauler.Invoke(this, delta);
+            
+            if (physicsModifier is not null)
+                physicsModifier.Invoke(this);
+        }
+
         /// <summary>
         /// Handles collision with the player, dealing damage upon contact.
         /// </summary>
@@ -121,6 +141,14 @@ namespace Game.Enemies
             }
             drop.Position = Position;
             return drop;
+        }
+        public void SetPhysicsModifier(Action<Enemy> del)
+        {
+            physicsModifier = del;
+        }
+        public void SetPhysicsOverhauler(Action<Enemy, double> del)
+        {
+            physicsOverhauler = del;
         }
         /// <summary>
         /// Sets the unique enemy ID.

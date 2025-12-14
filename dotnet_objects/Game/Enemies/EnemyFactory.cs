@@ -20,6 +20,18 @@ namespace Game.Enemies
         /// </summary>
         private static PackedScene bogeyScene = GD.Load<PackedScene>("res://scenes/Bogey.tscn");
         /// <summary>
+        /// A collection of physics modifiers for enemies
+        /// </summary>
+        private class EnemyPhysicsModifiers
+        {
+        }
+        /// <summary>
+        /// A collection of physics overhauls for enemies
+        /// </summary>
+        private class EnemyPhysicsOverhaulers
+        {
+        }
+        /// <summary>
         /// Internal helper method to set ID and position for a newly created enemy
         /// </summary>
         /// <param name="enemy"></param>
@@ -50,6 +62,35 @@ namespace Game.Enemies
                     return defaultSetup((Bogey)bogeyScene.Instantiate(), position);
                 default:
                     throw new ArgumentException("Unknown enemy type");
+            }
+        }
+        /// <summary>
+        /// Creates an enemy of the specified type at the given position with optional physics overhauls and modifiers
+        /// </summary>
+        /// <param name="enemyType">An EnemyClasssificiation representing the type of Enemy to create</param>
+        /// <param name="position">A Vector2 (typically a Position or GlobalPosition) representing 
+        ///     the location this enemy should spawn in
+        /// </param>
+        /// <param name="physicsOverhauler">Delegate method containing main physics behavior</param>
+        /// <param name="physicsModifier">Delegate method containing secondary physics behavior</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static Enemy CreateEnemy(EnemyClassification enemyType, Vector2 position, Action<Enemy, double> physicsOverhauler = null, Action<Enemy> physicsModifier = null)
+        {
+            switch (enemyType)
+            {
+                case EnemyClassification.DRONE:
+                    Enemy e = defaultSetup((Drone)droneScene.Instantiate(), position);
+                    e.SetPhysicsOverhauler(physicsOverhauler);
+                    e.SetPhysicsModifier(physicsModifier);
+                    return e;
+                case EnemyClassification.BOGEY:
+                    Enemy e2 = defaultSetup((Bogey)bogeyScene.Instantiate(), position);
+                    e2.SetPhysicsOverhauler(physicsOverhauler);
+                    e2.SetPhysicsModifier(physicsModifier);
+                    return e2;
+                default:
+                    throw new ArgumentException("Unknown enemy type"); 
             }
         }
     }
