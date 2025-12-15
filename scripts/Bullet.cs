@@ -2,49 +2,73 @@ using Godot;
 using System;
 using Game.Weapons;
 using Game.Enemies;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
 using Game;
 
+/// <summary>
+/// Represents a bullet projectile used by weapons. Supports configurable
+/// speed, damage and range, and allows custom physics behavior via
+/// delegates.
+/// </summary>
 public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 {
+	/// <summary>
+	/// Movement speed of the bullet in pixels per second.
+	/// </summary>
 	public float speed { get; set; } = 750;
 
+	/// <summary>
+	/// Damage applied to an entity when this bullet hits it.
+	/// </summary>
 	public int Damage { get; set; } = 20;
 
+	/// <summary>
+	/// Lifetime or range of the bullet in seconds. Used by timers.
+	/// </summary>
 	public float Range { get; set; } = 1;
 
+	/// <summary>
+	/// Optional timer node used for bullet lifetime management.
+	/// </summary>
 	public BulletTimer BulletTimer;
 
 	private bool freeRotate = false;
-	
+
 	private Action<Bullet> bulletPhysicsModifier;
 
 	private Action<Bullet, double> bulletPhysicsOverhauler;
 
+	/// <summary>
+	/// Enables continuous rotation for the bullet (visual effect).
+	/// </summary>
 	public void AllowFreeRotate()
 	{
 		freeRotate = true;
 	}
 
-	// Called when the node enters the scene tree for the first time.
+	/// <summary>
+	/// Called when the node enters the scene tree for the first time.
+	/// </summary>
 	public override void _Ready()
 	{
 		bulletPhysicsModifier = null;
 		bulletPhysicsOverhauler = null;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	/// <summary>
+	/// Called every frame. Used for non-physics visual updates.
+	/// </summary>
+	/// <param name="delta">Time elapsed since last frame, in seconds.</param>
 	public override void _Process(double delta)
 	{
 		if (freeRotate)
 			Rotation += 0.1f;
 	}
 
-	/** Called every physics frame. 'delta' is the elapsed time since the previous frame.
-	* Used for bullet movement, regardless of framerate
-	@param delta Time elapsed since the previous frame
-	*/
+	/// <summary>
+	/// Called every physics frame. Moves the bullet according to the
+	/// configured physics delegates or the default straight-line motion.
+	/// </summary>
+	/// <param name="delta">Time elapsed since the previous physics frame, in seconds.</param>
 	public override void _PhysicsProcess(double delta)
 	{
 		if (bulletPhysicsOverhauler == null)
@@ -52,10 +76,13 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 		else
 			bulletPhysicsOverhauler(this, delta);
 
-		if (bulletPhysicsModifier != null)
-			bulletPhysicsModifier(this);
+		bulletPhysicsModifier?.Invoke(this);
 	}
 
+	/// <summary>
+	/// Deprecated. Legacy method used by the shotgun implementation to
+	/// start an internal lifetime timer for the bullet.
+	/// </summary>
 	[Obsolete("ShootBullet is deprecated due to only being compatible with shotgun.")]
 	public void ShootBullet()
 	{
@@ -64,53 +91,63 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 		this.BulletTimer.Start();
 	}
 
-	/**
-	* Called when the bullet collides with another body
-	*/
+	/// <summary>
+	/// Called when this bullet's area collides with another area.
+	/// Applies damage to <see cref="Game.Enemies.Enemy"/> instances and
+	/// frees the bullet.
+	/// </summary>
+	/// <param name="body">The node that entered this bullet's area.</param>
 	public void OnAreaEnteredBullet(Node body)
 	{
-		// Makes no sense but I have to fully qualify the Enemy class name here
-		// or C# doesn't recognize it.
-		// I'm sure there's a reason but I don't know what it is yet.
 		if (body is Game.Enemies.Enemy enemy)
 		{
 			enemy.TakeDamage(Damage);
-			this.QueueFree();
+			QueueFree();
 		}
-	}
-
-	public void OnBodyEnteredBullet(Node body)
-	{
-		if (body is Player player)
-		{
-			player.TakeDamage(Damage);
-			this.QueueFree();
-		}
-	}
-
-	/**
-	* Sets the stats of the bullet
-	* @param damage The damage the bullet will deal
-	* @param speed The speed of the bullet
-	* @param range Timer time
-	*/
-	public void SetStats(int damage, int speed, float range = 1)
-	{
-		this.Damage = damage;
-		this.speed = speed;
-		this.Range = range;
 	}
 
 	/// <summary>
-	/// Sets a custom physics modifier for the bullet.
+	/// Called when this bullet collides with a physics body.
+	/// Applies damage to <see cref="Player"/> instances and frees the bullet.
 	/// </summary>
-	/// <param name="del">A delegate that defines the custom physics behavior for the bullet. 
-	/// The delegate takes a <see cref="Bullet"/> instance as input and returns an object representing the result of the physics modification.</param>
+	/// <param name="body">The node that entered this bullet's body collision.</param>
+	public void OnBodyEnteredBullet(Node body)
+	{
+		if ((body is Player player) && (GetParent() is not Player))
+		{
+			player.TakeDamage(Damage);
+			QueueFree();
+		}
+	}
+
+	/// <summary>
+	/// Sets the bullet's fundamental stats.
+	/// </summary>
+	/// <param name="damage">Damage dealt on hit.</param>
+	/// <param name="speed">Movement speed (pixels per second).</param>
+	/// <param name="range">Optional lifetime/range in seconds. Default is 1.</param>
+	public void SetStats(int damage, int speed, float range = 1)
+	{
+		Damage = damage;
+		this.speed = speed;
+		Range = range;
+	}
+
+	/// <summary>
+	/// Assigns a delegate that will be invoked each physics frame after
+	/// the bullet movement step. Use to apply custom per-frame physics changes.
+	/// </summary>
+	/// <param name="del">Delegate that receives the current <see cref="Bullet"/> instance.</param>
 	public void SetPhysicsModifier(Action<Bullet> del)
 	{
 		this.bulletPhysicsModifier = del;
 	}
-	
+    
+	/// <summary>
+	/// Assigns a delegate that fully controls the bullet's physics update.
+	/// If set, it is called instead of the default movement logic.
+	/// </summary>
+	/// <param name="del">Delegate receiving the current <see cref="Bullet"/> and the physics <c>delta</c>.</param>
 	public void SetPhysicsOverhauler(Action<Bullet, double> del)
 	{
 		this.bulletPhysicsOverhauler = del;

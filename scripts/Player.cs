@@ -72,6 +72,7 @@ public partial class Player : CharacterBody2D, ICollector
 	 */
 	public void TakeDamage(int damage)
 	{
+		GD.Print("Sanity check: Player.TakeDamage() called");
 		isAlive = gameData.CauseDamage(damage);
 		this.hp.Text = gameData.GetHP().ToString();
 		int hp = gameData.GetHP();
@@ -113,6 +114,7 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		if (collectable is IWeapon w)
 			weaponScene.AddNewWeapon(w);
+			
 		else if (collectable is IStatusModifier sm)
         {
             if (sm is HealthModifier hm)
@@ -141,11 +143,19 @@ public partial class Player : CharacterBody2D, ICollector
 			secondaryAmmo.Text = "0";
 		else secondaryAmmo.Text = newTextValue.ToString();
     }
-
+	
 	public void OnUpdateScoreLabel(int plusMinus)
     {
         int scoreVal = int.Parse(score.Text);
 		scoreVal += plusMinus;
 		score.Text = scoreVal.ToString();
     }	
+
+    /// <summary>
+	/// Returns the player's current HP.
+	/// </summary>
+	public int GetHP()
+	{
+		return gameData.GetHP();
+	}
 }
