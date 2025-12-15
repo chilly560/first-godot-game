@@ -2,14 +2,12 @@ using Godot;
 using System;
 
 namespace Game.Enemies
-{
+{	
+	/// <summary>
+    /// A very basic enemy that more or less does nothing
+    /// </summary>
 	public partial class Drone : Enemy
 	{
-		public override void _Process(double delta)
-		{
-			Position += Transform.Y * 50 * (float)delta;
-		}
-
 		protected override void SetWorth()
 		{
 			worth = 5;

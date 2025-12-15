@@ -86,6 +86,21 @@ namespace Game.Enemies
             /// </summary>
             private const int OFFSET = -115;
             /// <summary>
+            /// Physics modifiers for enemies in a wave
+            /// </summary>
+            private class WaveEnemyPhysicsOverhaulers
+            {
+                /// <summary>
+                /// Drones don't move after instantiation.
+                /// </summary>
+                /// <param name="d"></param>
+                /// <param name="delta"></param>
+                public static void DefaultWavePhysicsOverhauler(Enemy d, double delta)
+                {
+                    d.Position = d.Position;
+                }
+            }
+            /// <summary>
             /// Builds a default enemy matrix formation with all positions filled with Drones.
             /// </summary>
             /// <returns></returns>
@@ -101,6 +116,10 @@ namespace Game.Enemies
                         defaultMatrix[i, j] = EnemyFactory.CreateEnemy(
                             EnemyClassification.DRONE, 
                             new Vector2((i * SPACING) + OFFSET, (j * SPACING) + OFFSET)
+                        );
+
+                        defaultMatrix[i, j].SetPhysicsOverhauler(
+                            WaveEnemyPhysicsOverhaulers.DefaultWavePhysicsOverhauler
                         );
                     }
                 }
