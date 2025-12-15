@@ -150,7 +150,7 @@ namespace Game.Weapons
                 b.Position += 1 * b.Transform.Y * (b.speed * BOGEY_BULLET_SPEED_MOD) * (float)delta;
             }
         }
-        /// <summary>
+        /// <summary>  
         /// Sets the type of bullet used by the weapon
         /// </summary>
         /// <param name="type">A BulletClassification determining the type of Bullet this Weapon should use</param>
@@ -160,25 +160,25 @@ namespace Game.Weapons
             switch (type)
             {
                 case BulletClassification.Standard:
-                    this.Damage = STANDARD_DAMAGE;
+                    Damage = STANDARD_DAMAGE;
                     //this.Damage = HAXXOR_DAMAGE;
-                    this.Speed = STANDARD_SPEED;
+                    Speed = STANDARD_SPEED;
                     break;
                 case BulletClassification.Heavy:
-                    this.Damage = HEAVY_DAMAGE;
-                    this.Speed = HEAVY_SPEED;
+                    Damage = HEAVY_DAMAGE;
+                    Speed = HEAVY_SPEED;
                     break;
                 case BulletClassification.FiftyCal:
-                    this.Damage = FIFTY_CAL_DAMAGE;
-                    this.Speed = FIFTY_CAL_SPEED;
+                    Damage = FIFTY_CAL_DAMAGE;
+                    Speed = FIFTY_CAL_SPEED;
                     break;
                 case BulletClassification.RayGun:
-                    this.Damage = RAY_GUN_DAMAGE;
-                    this.Speed = RAY_GUN_SPEED;
+                    Damage = RAY_GUN_DAMAGE;
+                    Speed = RAY_GUN_SPEED;
                     break;
                 case BulletClassification.Explosive:
-                    this.Damage = EXPLOSIVE_DAMAGE;
-                    this.Speed = EXPLOSIVE_SPEED;
+                    Damage = EXPLOSIVE_DAMAGE;
+                    Speed = EXPLOSIVE_SPEED;
                     break;
                 default:
                     throw new ArgumentException("Invalid bullet classification");

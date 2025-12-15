@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://c38msdsot44sa"]
+[gd_scene load_steps=2 format=3 uid="uid://n5lbhp4a8odl"]
 
 [ext_resource type="Script" uid="uid://ccsh2ov5xmrj3" path="res://dotnet_objects/Game/Enemies/EnemySpawning/WaveSpawner.cs" id="1_ucy73"]
 
