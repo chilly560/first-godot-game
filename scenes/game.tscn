@@ -25,7 +25,7 @@ script = ExtResource("3_p57ef")
 position = Vector2(5, 375)
 
 [node name="EnemySpawner2" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(11, 194)
+position = Vector2(1.0132, 137.602)
 
 [node name="WaveSpawner" parent="." instance=ExtResource("7_u5sy4")]
 position = Vector2(7, 246)

@@ -84,7 +84,12 @@ namespace Game.Enemies
             /// <summary>
             /// Centers the wave.
             /// </summary>
-            private const int OFFSET = -115;
+            private const int X_OFFSET = -115;
+            /// <summary>
+            /// Vertical offset for the wave spawn position (so that it actually instantiates
+            /// on screen).
+            /// </summary>
+            private const int Y_OFFSET = 205;
             /// <summary>
             /// Physics modifiers for enemies in a wave
             /// </summary>
@@ -115,7 +120,7 @@ namespace Game.Enemies
                         // TODO: Tweak actual Vector2 positions later
                         defaultMatrix[i, j] = EnemyFactory.CreateEnemy(
                             EnemyClassification.DRONE, 
-                            new Vector2((i * SPACING) + OFFSET, (j * SPACING) + OFFSET)
+                            new Vector2((i * SPACING) + X_OFFSET, (j * SPACING) + Y_OFFSET)
                         );
 
                         defaultMatrix[i, j].SetPhysicsOverhauler(
