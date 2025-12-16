@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://n5lbhp4a8odl"]
+[gd_scene load_steps=3 format=3 uid="uid://n5lbhp4a8odl"]
 
 [ext_resource type="Script" uid="uid://ccsh2ov5xmrj3" path="res://dotnet_objects/Game/Enemies/EnemySpawning/WaveSpawner.cs" id="1_ucy73"]
+[ext_resource type="Script" uid="uid://det8bek0v2hjt" path="res://scripts/EnemyActivationTimer.cs" id="2_n4a0f"]
 
 [node name="WaveSpawner" type="Area2D"]
 script = ExtResource("1_ucy73")
+
+[node name="EnemyActivationTimer" type="Timer" parent="."]
+script = ExtResource("2_n4a0f")
+
+[connection signal="timeout" from="EnemyActivationTimer" to="." method="OnEnemyActivationTimerTimeout"]

@@ -13,11 +13,21 @@ namespace Game.Enemies.EnemySpawning
 	{
 		private Wave currentWave;
 
+		private EnemyActivationTimer enemyActivationTimer;
+
 		public override void _Ready()
 		{
 			GD.Print("Spawning Wave!");
+			enemyActivationTimer = GetNode<EnemyActivationTimer>("EnemyActivationTimer");
+			enemyActivationTimer.Start(8);
 			currentWave = new Wave();
 			currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
+		}
+
+		public void OnEnemyActivationTimerTimeout()
+		{
+			currentWave.ActivateEnemy(true);
+			enemyActivationTimer.Start(8);
 		}
 	}
 }
