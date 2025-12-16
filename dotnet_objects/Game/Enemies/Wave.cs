@@ -31,7 +31,7 @@ namespace Game.Enemies
 
             public static void DiveWavePhysicsOverhauler(Enemy d, double delta)
             {
-                d.Position -= d.Transform.Y * 10f;
+                d.Position -= d.Transform.Y * 1f;
             }
         }
 
@@ -44,16 +44,23 @@ namespace Game.Enemies
 
                 if (d.Position.X != playerx)
                 {
+                    // Debug
+                    GD.Print($"PlayerX: {playerx}, PlayerY: {playery}, DroneX: {d.Position.X}, DroneY: {d.Position.Y}");
+                    
                     float diff = d.Position.X - playerx;
+                    
+                    // Debug
+                    GD.Print($"X Diff: {diff}");
+
                     float alreadyPassedPlayer = d.Position.Y - playery;
                     if (diff < 0 && alreadyPassedPlayer > 0)
                     {
                         float absX = playerx - d.Position.X;
                         float absY = playery - d.Position.Y;
-                        double hypotenuse = Math.Sqrt(absX * absX + absY * absY);
-                        double rotationAngleRads = Mathf.DegToRad(90f) - Math.Asin(
+                        double hypotenuse = Math.Sqrt((absX * absX) + (absY * absY));
+                        double rotationAngleRads = Mathf.DegToRad(90f) - Math.Abs(Math.Asin(
                             absY / hypotenuse
-                        );
+                        ));
                         d.Rotate((float)rotationAngleRads);
                     }
                 }

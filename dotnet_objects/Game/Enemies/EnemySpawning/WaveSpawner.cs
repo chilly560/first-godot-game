@@ -15,11 +15,12 @@ namespace Game.Enemies.EnemySpawning
 
 		private EnemyActivationTimer enemyActivationTimer;
 
+		private const int FREQUENCY = 3;
 		public override void _Ready()
 		{
 			GD.Print("Spawning Wave!");
 			enemyActivationTimer = GetNode<EnemyActivationTimer>("EnemyActivationTimer");
-			enemyActivationTimer.Start(8);
+			enemyActivationTimer.Start(FREQUENCY);
 			currentWave = new Wave();
 			currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
 		}
@@ -27,7 +28,7 @@ namespace Game.Enemies.EnemySpawning
 		public void OnEnemyActivationTimerTimeout()
 		{
 			currentWave.ActivateEnemy(true);
-			enemyActivationTimer.Start(8);
+			enemyActivationTimer.Start(FREQUENCY);
 		}
 	}
 }

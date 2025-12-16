@@ -214,7 +214,7 @@ namespace Game.Weapons
             }
         }
         /// <summary>
-        /// Creates a weapon of the specified type and attaches it to the pare b nt node.
+        /// Creates a weapon of the specified type and attaches it to the pare bnt node.
         /// </summary>
         /// <param name="weaponType">Type of weapon</param>
         /// <param name="parent">Node to spawn the weapon in</param>
