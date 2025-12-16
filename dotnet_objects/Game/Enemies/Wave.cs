@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Game.Enemies;
 using Game.Enemies.EnemySpawning;
+using System.ComponentModel.DataAnnotations;
 
 namespace Game.Enemies
 {
@@ -104,6 +105,36 @@ namespace Game.Enemies
                 {
                     d.Position = d.Position;
                 }
+
+                public static void DiveWavePhysicsOverhauler(Enemy d, double delta)
+                {
+                    d.Position -= d.Transform.Y * 10f;
+                }
+            }
+
+            private class WaveEnemyPhysicsModifiers
+            {
+                public static void FindPlayerPhysicsModifier(Enemy d)
+                {
+                    float playery = GameData.Get().GetPlayerY();
+                    float playerx = GameData.Get().GetPlayerX();
+
+                    if (d.Position.X != playerx)
+                    {
+                        float diff = d.Position.X - playerx;
+                        float alreadyPassedPlayer = d.Position.Y - playery;
+                        if (diff < 0 && alreadyPassedPlayer > 0)
+                        {
+                            float absX = playerx - d.Position.X;
+                            float absY = playery - d.Position.Y;
+                            double hypotenuse = Math.Sqrt(absX * absX + absY * absY);
+                            double rotationAngleRads = Mathf.DegToRad(90f) - Math.Asin(
+                                absY / hypotenuse
+                            );
+                            d.Rotate((float)rotationAngleRads);
+                        }
+                    }
+                }
             }
             /// <summary>
             /// Builds a default enemy matrix formation with all positions filled with Drones.
@@ -140,6 +171,7 @@ namespace Game.Enemies
         /// </summary>
         public Wave(WavePattern pattern = WavePattern.DEFAULT)
         {
+
             switch (pattern)
             {
                 case WavePattern.DEFAULT:
@@ -156,5 +188,8 @@ namespace Game.Enemies
         {
             eMatrix.InstiantiateMatrixEntities(gameRoot);
         }
+
+        public void ActivateEnemy(bool lockToPlayer)
+        {}
     }
 }

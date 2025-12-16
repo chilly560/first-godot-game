@@ -194,24 +194,13 @@ namespace Game.Weapons
                         bullets.Add(newBullet);
                     }
 
-                    bullets[0].Rotate(DEG_30_IN_RAD * -.5f);
-                    bullets[0].GlobalPosition = weaponPosition;
-                    root.AddChild(bullets[0]);
-
-                    bullets[1].Rotate(DEG_30_IN_RAD * -.25f);
-                    bullets[1].GlobalPosition = weaponPosition;
-                    root.AddChild(bullets[1]);
-
-                    bullets[2].GlobalPosition = weaponPosition;
-                    root.AddChild(bullets[2]);
-
-                    bullets[3].Rotate(DEG_30_IN_RAD * .25f);
-                    bullets[3].GlobalPosition = weaponPosition;
-                    root.AddChild(bullets[3]);
-
-                    bullets[4].Rotate(DEG_30_IN_RAD * .5f);
-                    bullets[4].GlobalPosition = weaponPosition;
-                    root.AddChild(bullets[4]);
+                    float[] spreadAngles = { -.5f, -.25f, 0f, .25f, .5f };
+                    for (int i = 0; i < bullets.Count; i++)
+                    {
+                        bullets[i].Rotate(DEG_30_IN_RAD * spreadAngles[i]);
+                        bullets[i].GlobalPosition = weaponPosition;
+                        root.AddChild(bullets[i]);
+                    }
 
                     bool isPlayer = parent is Player;
 
@@ -225,7 +214,7 @@ namespace Game.Weapons
             }
         }
         /// <summary>
-        /// Creates a weapon of the specified type and attaches it to the parent node.
+        /// Creates a weapon of the specified type and attaches it to the pare b nt node.
         /// </summary>
         /// <param name="weaponType">Type of weapon</param>
         /// <param name="parent">Node to spawn the weapon in</param>

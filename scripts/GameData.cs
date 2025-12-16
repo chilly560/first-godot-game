@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Game.Enemies;
+using System.ComponentModel.Design;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Originally meant to store game data about the current scene (hence the name 'GameData'),
@@ -34,6 +36,8 @@ public partial class GameData : Node
 	/// </summary>
 	private Enemy enemyParentClassNode;
 
+	private static GameData self;
+
 	/// <summary>
 	/// Dictionary of active enemies in the scene.
 	/// Key: enemy ID
@@ -44,6 +48,7 @@ public partial class GameData : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		self = this;
 		HP = 100;
 		enemies = new Dictionary<int, Enemy>();
 		player = GetNode<Player>("../Player");
@@ -175,5 +180,16 @@ public partial class GameData : Node
 	public void OnUpdateScoreEventHandler(int plusMinus)
 	{
 		EmitSignal(SignalName.UpdateScoreLabel, plusMinus);
+	}
+	/// <summary>
+	/// Get the current instance of GameData.
+	/// 
+	/// Excluding the typical singleton pattern - this Node is set to 'autoload', therefore it's already
+	/// instantiated and just needs to be accessed.
+	/// </summary>
+	/// <returns></returns>
+	public static GameData Get()
+	{
+		return self;
 	}
 }

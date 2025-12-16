@@ -176,5 +176,6 @@ namespace Game.Enemies
         /// <param name="score">Amount to increase player score by.</param>
         [Signal]
         public delegate void EnemyDestroyedEventHandler(int score);
+        
     }
 }
