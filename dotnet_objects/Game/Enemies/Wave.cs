@@ -15,6 +15,51 @@ namespace Game.Enemies
     public class Wave
     {
         /// <summary>
+        /// Physics modifiers for enemies in a wave
+        /// </summary>
+        public class WaveEnemyPhysicsOverhaulers
+        {
+            /// <summary>
+            /// Drones don't move after instantiation.
+            /// </summary>
+            /// <param name="d"></param>
+            /// <param name="delta"></param>
+            public static void DefaultWavePhysicsOverhauler(Enemy d, double delta)
+            {
+                d.Position = d.Position;
+            }
+
+            public static void DiveWavePhysicsOverhauler(Enemy d, double delta)
+            {
+                d.Position -= d.Transform.Y * 10f;
+            }
+        }
+
+        public class WaveEnemyPhysicsModifiers
+        {
+            public static void FindPlayerPhysicsModifier(Enemy d)
+            {
+                float playery = GameData.Get().GetPlayerY();
+                float playerx = GameData.Get().GetPlayerX();
+
+                if (d.Position.X != playerx)
+                {
+                    float diff = d.Position.X - playerx;
+                    float alreadyPassedPlayer = d.Position.Y - playery;
+                    if (diff < 0 && alreadyPassedPlayer > 0)
+                    {
+                        float absX = playerx - d.Position.X;
+                        float absY = playery - d.Position.Y;
+                        double hypotenuse = Math.Sqrt(absX * absX + absY * absY);
+                        double rotationAngleRads = Mathf.DegToRad(90f) - Math.Asin(
+                            absY / hypotenuse
+                        );
+                        d.Rotate((float)rotationAngleRads);
+                    }
+                }
+            }
+        }
+        /// <summary>
         /// Class representing a 2D matrix of enemies for enemy wave formations.
         /// 
         /// Enscapsulates logic for managing enemy formations in a grid layout.
@@ -61,6 +106,26 @@ namespace Game.Enemies
                     matrix[x, y] = enemy;
                 }
             }  
+            /// 
+            public void ActivateRandom(bool lockToPlayer)
+            {
+                Random rand = new Random();
+                int x = rand.Next(0, ROWS);
+                int y = rand.Next(0, COLUMNS);
+
+                if (matrix[x, y] != null)
+                    ActivateEnemy(x, y, lockToPlayer);
+
+                else ActivateRandom(lockToPlayer);
+            }
+            public void ActivateEnemy(int x, int y, bool lockToPlayer)
+            {
+                if (lockToPlayer && matrix[x, y] != null)
+                {
+                    matrix[x, y].SetPhysicsOverhauler(WaveEnemyPhysicsOverhaulers.DiveWavePhysicsOverhauler);
+                    matrix[x, y].SetPhysicsModifier(WaveEnemyPhysicsModifiers.FindPlayerPhysicsModifier);
+                }
+            }
             /// <summary>
             /// Adds each enemy in the matrix as a child node to the provided GameRoot.
             /// </summary>
@@ -91,51 +156,6 @@ namespace Game.Enemies
             /// on screen).
             /// </summary>
             private const int Y_OFFSET = 205;
-            /// <summary>
-            /// Physics modifiers for enemies in a wave
-            /// </summary>
-            private class WaveEnemyPhysicsOverhaulers
-            {
-                /// <summary>
-                /// Drones don't move after instantiation.
-                /// </summary>
-                /// <param name="d"></param>
-                /// <param name="delta"></param>
-                public static void DefaultWavePhysicsOverhauler(Enemy d, double delta)
-                {
-                    d.Position = d.Position;
-                }
-
-                public static void DiveWavePhysicsOverhauler(Enemy d, double delta)
-                {
-                    d.Position -= d.Transform.Y * 10f;
-                }
-            }
-
-            private class WaveEnemyPhysicsModifiers
-            {
-                public static void FindPlayerPhysicsModifier(Enemy d)
-                {
-                    float playery = GameData.Get().GetPlayerY();
-                    float playerx = GameData.Get().GetPlayerX();
-
-                    if (d.Position.X != playerx)
-                    {
-                        float diff = d.Position.X - playerx;
-                        float alreadyPassedPlayer = d.Position.Y - playery;
-                        if (diff < 0 && alreadyPassedPlayer > 0)
-                        {
-                            float absX = playerx - d.Position.X;
-                            float absY = playery - d.Position.Y;
-                            double hypotenuse = Math.Sqrt(absX * absX + absY * absY);
-                            double rotationAngleRads = Mathf.DegToRad(90f) - Math.Asin(
-                                absY / hypotenuse
-                            );
-                            d.Rotate((float)rotationAngleRads);
-                        }
-                    }
-                }
-            }
             /// <summary>
             /// Builds a default enemy matrix formation with all positions filled with Drones.
             /// </summary>
@@ -190,6 +210,12 @@ namespace Game.Enemies
         }
 
         public void ActivateEnemy(bool lockToPlayer)
-        {}
+        {
+            if (lockToPlayer)
+            {
+                // temporarily hardcoded to be true for testing purposes
+                eMatrix.ActivateRandom(true);
+            }
+        }
     }
 }
