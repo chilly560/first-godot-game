@@ -39,19 +39,19 @@ namespace Game.Enemies
         {
             public static void FindPlayerPhysicsModifier(Enemy d)
             {
+
+
                 float playery = GameData.Get().GetPlayerY();
                 float playerx = GameData.Get().GetPlayerX();
 
                 if (d.Position.X != playerx)
                 {
-                    // Debug
-                    GD.Print($"PlayerX: {playerx}, PlayerY: {playery}, DroneX: {d.Position.X}, DroneY: {d.Position.Y}");
-                    
+                    if (d.Position.X < playerx)
+                        d.Position -= d.Transform.X * 1f;
+                    else
+                        d.Position += d.Transform.X * 1f;
+                    /*
                     float diff = d.Position.X - playerx;
-                    
-                    // Debug
-                    GD.Print($"X Diff: {diff}");
-
                     float alreadyPassedPlayer = d.Position.Y - playery;
                     if (diff < 0 && alreadyPassedPlayer > 0)
                     {
@@ -61,8 +61,9 @@ namespace Game.Enemies
                         double rotationAngleRads = Mathf.DegToRad(90f) - Math.Abs(Math.Asin(
                             absY / hypotenuse
                         ));
-                        d.Rotate((float)rotationAngleRads);
+                        d.Rotate((float)rotationAngleRads * -1);
                     }
+                    */
                 }
             }
         }
@@ -180,6 +181,8 @@ namespace Game.Enemies
                             EnemyClassification.DRONE, 
                             new Vector2((i * SPACING) + X_OFFSET, (j * SPACING) + Y_OFFSET)
                         );
+
+                        defaultMatrix[i, j].Rotate(Mathf.DegToRad(180));
 
                         defaultMatrix[i, j].SetPhysicsOverhauler(
                             WaveEnemyPhysicsOverhaulers.DefaultWavePhysicsOverhauler
