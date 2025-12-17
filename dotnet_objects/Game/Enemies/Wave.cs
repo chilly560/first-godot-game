@@ -31,13 +31,17 @@ namespace Game.Enemies
 
             public static void DiveWavePhysicsOverhauler(Enemy d, double delta)
             {
-                //d.Position -= d.Transform.Y * 1f;
+                d.Position -= d.Transform.Y * 1f;
             }
         }
 
         public class WaveEnemyPhysicsModifiers
         {
             private const float THIRTY_DEGREES_RADIANS = 0.523599f;
+
+            private const float LEFT = THIRTY_DEGREES_RADIANS * 2;
+
+            private const float RIGHT = THIRTY_DEGREES_RADIANS * -2;
             /// <summary>
             /// Currently WIP to figure out a way to make the enemy 'rotate' or 'look at' the player.
             /// 
@@ -62,13 +66,16 @@ namespace Game.Enemies
                     {
                         if (wd.Position.X < playerx)
                         {
-                            wd.RotateDrone(-THIRTY_DEGREES_RADIANS);
+                            wd.RotateDrone(RIGHT);
                             //wd.LookAt(GameData.Get().GetPlayerPosition());
                         }
                         else if (wd.Position.X > playerx)
                         {
-                            wd.RotateDrone(THIRTY_DEGREES_RADIANS);
+                            wd.RotateDrone(LEFT);
                         }
+                    } else if (wd.Position.X == playerx)
+                    {
+                        wd.RotateDrone(0f);
                     }
 
                     //wd.LookAt(GameData.Get().GetPlayerGlobalPosition());

@@ -28,13 +28,15 @@ namespace Game.Enemies
         /// <param name="radians">A radian of thirty degrees (negative for right, positive for left)</param>
         public void RotateDrone(float radians)
         {
-            if ( (rotation == THIRTY_DEGREES_RADIANS && radians != THIRTY_DEGREES_RADIANS) || 
-                (rotation == -THIRTY_DEGREES_RADIANS && radians != -THIRTY_DEGREES_RADIANS) ||
-                rotation == 0)
+            if ( (rotation == THIRTY_DEGREES_RADIANS && radians != (THIRTY_DEGREES_RADIANS * 2)) || 
+                (rotation == -THIRTY_DEGREES_RADIANS && radians != (-THIRTY_DEGREES_RADIANS * 2)))
             {
-                rotation = radians;
+                rotation += radians;
                 Rotate(radians);   
-            } 
+            } else if (rotation == 0) {
+                rotation = radians / 2;
+                Rotate(radians / 2);
+            }
         }       
         // WIP For other implementation
         /*
