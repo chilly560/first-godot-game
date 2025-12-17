@@ -60,9 +60,9 @@ namespace Game.Enemies
 
                 if (d is WaveDrone wd)
                 {
-                    float playery = GameData.Get().GetPlayerY();
                     float playerx = GameData.Get().GetPlayerX();
-                    if (wd.Position.X != playerx)
+
+                    if (Math.Abs(wd.Position.X - playerx) > 5)
                     {
                         if (wd.Position.X < playerx)
                         {
@@ -73,10 +73,7 @@ namespace Game.Enemies
                         {
                             wd.RotateDrone(LEFT);
                         }
-                    } else if (wd.Position.X == playerx)
-                    {
-                        wd.RotateDrone(0f);
-                    }
+                    } else wd.RotateDrone(-1);
 
                     //wd.LookAt(GameData.Get().GetPlayerGlobalPosition());
                     /*
