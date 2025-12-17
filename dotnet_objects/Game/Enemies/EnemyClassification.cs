@@ -3,6 +3,7 @@ namespace Game.Enemies
     public enum EnemyClassification
     {
         DRONE,
-        BOGEY
+        BOGEY,
+        WAVE_DRONE
     }
 }

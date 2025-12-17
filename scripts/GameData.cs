@@ -138,6 +138,15 @@ public partial class GameData : Node
 		return player.Position.Y;
 	}
 
+	public Vector2 GetPlayerPosition()
+	{
+		return player.Position;
+	}
+
+	public Vector2 GetPlayerGlobalPosition()
+	{
+		return player.GlobalPosition;
+	}
 	/// <summary>
     /// Decrease player's HP by the given amount. Amount must be positive.
     /// </summary>

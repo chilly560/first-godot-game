@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Godot;
+
+namespace Game.Enemies
+{
+	/// <summary>
+	/// Special extensino of the Drone class which has an internal tracker for rotations,
+	/// preventing over-rotation (past 90 degrees in either direction)
+	/// </summary>
+	public partial class WaveDrone : Drone
+	{
+		private const float THIRTY_DEGREES_RADIANS = .523599f;
+
+		private double rotation;
+
+
+		public override void _Ready()
+		{
+			base._Ready();
+			rotation = 0;
+		}
+        /// <summary>
+        /// Rotates in the desired direction IF the WaveDrone has not already been rotated in that direction
+        /// </summary>
+        /// <param name="radians">A radian of thirty degrees (negative for right, positive for left)</param>
+        public void RotateDrone(float radians)
+        {
+            if ( (rotation == THIRTY_DEGREES_RADIANS && radians != THIRTY_DEGREES_RADIANS) || 
+                (rotation == -THIRTY_DEGREES_RADIANS && radians != -THIRTY_DEGREES_RADIANS) ||
+                rotation == 0)
+            {
+                rotation = radians;
+                Rotate(radians);   
+            } 
+        }       
+        // WIP For other implementation
+        /*
+		public void RotateDrone(float radians)
+		{
+			if (Math.Abs(rotation + radians) > THIRTY_DEGREES_RADIANS)
+			{
+				radians = (float) (radians > 0 ? THIRTY_DEGREES_RADIANS - rotation : -THIRTY_DEGREES_RADIANS + rotation);
+			}
+			Rotate(radians);
+			rotation += radians;
+			
+			GD.Print($"Radians: {radians}");
+			GD.Print($"Rotation: {rotation}");
+		}
+        */
+	}
+}

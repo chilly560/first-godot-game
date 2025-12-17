@@ -20,6 +20,10 @@ namespace Game.Enemies
         /// </summary>
         private static PackedScene bogeyScene = GD.Load<PackedScene>("res://scenes/Bogey.tscn");
         /// <summary>
+        /// Special type of drone for use in waves.
+        /// </summary>
+        private static PackedScene waveDroneScene = GD.Load<PackedScene>("res://scenes/wavedrone.tscn");
+        /// <summary>
         /// A collection of physics modifiers for enemies
         /// </summary>
         private class EnemyPhysicsModifiers
@@ -60,6 +64,8 @@ namespace Game.Enemies
                     return defaultSetup((Drone)droneScene.Instantiate(), position);
                 case EnemyClassification.BOGEY:
                     return defaultSetup((Bogey)bogeyScene.Instantiate(), position);
+                case EnemyClassification.WAVE_DRONE:
+                    return defaultSetup((WaveDrone)waveDroneScene.Instantiate(), position);
                 default:
                     throw new ArgumentException("Unknown enemy type");
             }

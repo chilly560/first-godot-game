@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://m7bwxi086h48"]
+
+[ext_resource type="PackedScene" uid="uid://ti5vqdeovlqr" path="res://scenes/drone.tscn" id="1_bm4pe"]
+[ext_resource type="Script" uid="uid://b2dmwxeat63em" path="res://dotnet_objects/Game/Enemies/WaveDrone.cs" id="2_3t3q4"]
+
+[node name="Drone" instance=ExtResource("1_bm4pe")]
+script = ExtResource("2_3t3q4")

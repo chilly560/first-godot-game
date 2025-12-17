@@ -31,28 +31,49 @@ namespace Game.Enemies
 
             public static void DiveWavePhysicsOverhauler(Enemy d, double delta)
             {
-                d.Position -= d.Transform.Y * 1f;
+                //d.Position -= d.Transform.Y * 1f;
             }
         }
 
         public class WaveEnemyPhysicsModifiers
         {
+            private const float THIRTY_DEGREES_RADIANS = 0.523599f;
+            /// <summary>
+            /// Currently WIP to figure out a way to make the enemy 'rotate' or 'look at' the player.
+            /// 
+            /// The complexity being that LookAt is not functioning as expected, and rotating based on 
+            /// the angle between the enemy is proving to be trickier than expected.
+            /// 
+            /// Temporary solution: rotate 30 degrees in either direction based on direction of movement.
+            /// This is implemented using a custom 'RotateDrone' method inside of the WaveDrone.
+            /// 
+            /// See ./WaveDrone.cs
+            /// </summary>
+            /// <param name="d"></param>
+            /// <exception cref="ArgumentException"></exception>
             public static void FindPlayerPhysicsModifier(Enemy d)
             {
 
-
-                float playery = GameData.Get().GetPlayerY();
-                float playerx = GameData.Get().GetPlayerX();
-
-                if (d.Position.X != playerx)
+                if (d is WaveDrone wd)
                 {
-                    if (d.Position.X < playerx)
-                        d.Position -= d.Transform.X * 1f;
-                    else
-                        d.Position += d.Transform.X * 1f;
+                    float playery = GameData.Get().GetPlayerY();
+                    float playerx = GameData.Get().GetPlayerX();
+                    if (wd.Position.X != playerx)
+                    {
+                        if (wd.Position.X < playerx)
+                        {
+                            wd.RotateDrone(-THIRTY_DEGREES_RADIANS);
+                            //wd.LookAt(GameData.Get().GetPlayerPosition());
+                        }
+                        else if (wd.Position.X > playerx)
+                        {
+                            wd.RotateDrone(THIRTY_DEGREES_RADIANS);
+                        }
+                    }
+
+                    //wd.LookAt(GameData.Get().GetPlayerGlobalPosition());
                     /*
-                    float diff = d.Position.X - playerx;
-                    float alreadyPassedPlayer = d.Position.Y - playery;
+                    /*
                     if (diff < 0 && alreadyPassedPlayer > 0)
                     {
                         float absX = playerx - d.Position.X;
@@ -64,7 +85,7 @@ namespace Game.Enemies
                         d.Rotate((float)rotationAngleRads * -1);
                     }
                     */
-                }
+                } else throw new ArgumentException("Invalid Enemy Type (Must be WaveDrone)");
             }
         }
         /// <summary>
@@ -178,7 +199,7 @@ namespace Game.Enemies
                     {
                         // TODO: Tweak actual Vector2 positions later
                         defaultMatrix[i, j] = EnemyFactory.CreateEnemy(
-                            EnemyClassification.DRONE, 
+                            EnemyClassification.WAVE_DRONE, 
                             new Vector2((i * SPACING) + X_OFFSET, (j * SPACING) + Y_OFFSET)
                         );
 
