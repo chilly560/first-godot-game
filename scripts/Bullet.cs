@@ -97,7 +97,7 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 	/// frees the bullet.
 	/// </summary>
 	/// <param name="body">The node that entered this bullet's area.</param>
-	public void OnAreaEnteredBullet(Node body)
+	public virtual void OnAreaEnteredBullet(Node body)
 	{
 		if (body is Game.Enemies.Enemy enemy)
 		{

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Game.Enemies;
 using Game.Drops;
 using System.ComponentModel;
+using NewGameProject.scripts;
 
 namespace Game.Weapons
 {
@@ -58,13 +59,22 @@ namespace Game.Weapons
             /// <param name="weaponPosition"></param>
             public override void Shoot(Vector2 weaponPosition)
             {
-                Bullet bullet = (Bullet)bulletScene.Instantiate();
-                bullet.GlobalPosition = weaponPosition;
-                bullet.SetStats(Damage, Speed);
-                // TODO: Overhaul the Timer system used in Bullet.ShootBullet
-                // to be universal to all bullet types. 
-                root.AddChild(bullet);
-                SetBulletPhysics(bullet, parent is Player);
+                if (parent is Player)
+                {
+                    Bullet bullet = (Bullet)bulletScene.Instantiate();
+                    bullet.GlobalPosition = weaponPosition;
+                    bullet.SetStats(Damage, Speed);
+                    root.AddChild(bullet);
+                    SetBulletPhysics(bullet, parent is Player);   
+                } else
+                {
+                    EnemyBullet bullet = (EnemyBullet)enemyBulletScene.Instantiate();
+                    bullet.GlobalPosition = weaponPosition;
+                    bullet.SetStats(Damage, Speed);
+                    root.AddChild(bullet);
+                    SetBulletPhysics(bullet, parent is Player);   
+                }
+                
             }
         }
         /// <summary>

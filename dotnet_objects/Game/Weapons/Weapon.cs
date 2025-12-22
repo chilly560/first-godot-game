@@ -54,7 +54,11 @@ namespace Game.Weapons
         /// <summary>
         /// The Godot Scene for a Bullet
         /// </summary>
-        protected PackedScene bulletScene;
+        protected PackedScene bulletScene;  
+        /// <summary>
+        /// The Godot Scene for an EnemyBullet
+        /// </summary>
+        protected PackedScene enemyBulletScene;
         /// <summary>
         /// The root node of the game
         /// </summary>
@@ -81,7 +85,8 @@ namespace Game.Weapons
             BulletOverhaul = new BulletPhysicsOverhaulers();
             SetParent(parent);
             root = parent.GetTree().Root.GetNode("GameRoot") as Node2D;
-            this.bulletScene = (PackedScene)GD.Load("res://scenes/bullet.tscn");
+            bulletScene = (PackedScene)GD.Load("res://scenes/bullet.tscn");
+            enemyBulletScene = (PackedScene)GD.Load("res://scenes/enemy_bullet.tscn");
         }
         /// <summary>
         /// Removes ammo from the weapon's ammo count if the weapon does not have infinite ammo
