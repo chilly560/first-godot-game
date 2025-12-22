@@ -92,8 +92,8 @@ public partial class Player : CharacterBody2D, ICollector
 			
 		gameData.Heal(amount);
 
-		this.hp.Text = gameData.GetHP().ToString();
-		this.isAlive = true;
+		hp.Text = gameData.GetHP().ToString();
+		isAlive = true;
 	}
 
 	/// <summary>
@@ -146,9 +146,11 @@ public partial class Player : CharacterBody2D, ICollector
 	
 	public void OnUpdateScoreLabel(int plusMinus)
     {
+		GD.Print($"Before: {score.Text}");
         int scoreVal = int.Parse(score.Text);
 		scoreVal += plusMinus;
 		score.Text = scoreVal.ToString();
+		GD.Print($"After: {score.Text}");
     }	
 
     /// <summary>

@@ -206,6 +206,7 @@ public partial class GameData : Node
 	/// </summary>
 	public void OnSignalWaveEnemyDestroyedEventHandler(int X, int Y)
 	{
+		GD.Print("Wave Enemy removed from formation");
 		EmitSignal(SignalName.RemoveEnemyXYFromFormation, X, Y);
 	}
 	/// <summary>
@@ -222,6 +223,7 @@ public partial class GameData : Node
 	/// </summary>
 	public void EmitWaveDestroyedEventHandlerSignal()
 	{
+		GD.Print("Emitting WaveDestroyedEventHandler");
 		EmitSignal(SignalName.WaveDestroyed);
 	}
 	/// <summary>
@@ -237,6 +239,7 @@ public partial class GameData : Node
 	/// <exception cref="NotImplementedException"></exception>
 	public void EmitWaveBonusEventHandlerSignal(int bonus)
 	{
+		GD.Print("Emitting WaveBonusEventHandler");
 		EmitSignal(SignalName.WaveBonus, bonus);
 	}
 	/// <summary>

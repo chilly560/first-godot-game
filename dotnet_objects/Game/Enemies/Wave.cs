@@ -152,6 +152,7 @@ namespace Game.Enemies
                     matrix[x, y].SetPhysicsOverhauler(WaveEnemyPhysicsOverhaulers.DiveWavePhysicsOverhauler);
                     matrix[x, y].SetPhysicsModifier(WaveEnemyPhysicsModifiers.FindPlayerPhysicsModifier);
                     Count--;
+                    GameData.Get().OnSignalWaveEnemyDestroyedEventHandler(x, y);
                 }
             }
             /// <summary>
@@ -163,7 +164,10 @@ namespace Game.Enemies
                 for (int i = 0; i < ROWS; i++)
                     for (int j = 0; j < COLUMNS; j++)
                         if (matrix[i, j] != null)
+                        {
                             gameRoot.CallDeferred("add_child", matrix[i, j]);
+                            Count++;
+                        }
             }
         }
         /// <summary>
@@ -248,6 +252,7 @@ namespace Game.Enemies
             // Temporarily just reduces the count.
             // X and Y coordinates may be useful later, which is why I've included them.
             eMatrix.Count--;
+            GD.Print(eMatrix.Count);
 
             if (eMatrix.Count == 0)
                 Destroy();
@@ -264,8 +269,14 @@ namespace Game.Enemies
 
         private void Destroy()
         {
+            GD.Print($"Wave Complete.");
             gameData.EmitWaveDestroyedEventHandlerSignal();
             gameData.EmitWaveBonusEventHandlerSignal(BONUS);
+        }
+
+        public int GetCount()
+        {
+            return eMatrix.Count;
         }
     }
 }
