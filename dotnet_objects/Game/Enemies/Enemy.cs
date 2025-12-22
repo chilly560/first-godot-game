@@ -45,6 +45,20 @@ namespace Game.Enemies
         /// Delegate for modifying the physics state of this enemy.
         /// </summary>
         protected Action<Enemy> physicsModifier;
+        /// <summary>
+        /// This bool is used to identify whether this exists as a part of larger wave formation.
+        /// When this enemy is part of a wave formation, it will send signals back to the wave.
+        /// </summary>
+        protected bool inWaveFormation;
+        /// <summary>
+        /// Identifies which cell of the respective matrix this enemy occupies IF this enemy
+        /// is part of a wave formation.
+        /// 
+        /// These coords will be used to notify the parent wave that this particular enemy is 
+        /// performing some action or entering some state (e.g. destroying due to being defeated
+        /// by the player)
+        /// </summary>
+        protected int formationX, formationY;
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -61,6 +75,7 @@ namespace Game.Enemies
 
             SetWorth();
             EnemyDestroyed += gameData.OnUpdateScoreEventHandler;
+            SignalWaveEnemyDestroyed += gameData.OnSignalWaveEnemyDestroyedEventHandler;
         }
 
         public override void _Process(double delta)
@@ -72,6 +87,17 @@ namespace Game.Enemies
             
             if (physicsModifier is not null)
                 physicsModifier.Invoke(this);
+        }
+        /// <summary>
+        /// To be used when creating a new Enemy as part of a wave formation
+        /// </summary>
+        /// <param name="X">X matrix coord</param>
+        /// <param name="Y">Y matrix coord</param>
+        public void SetFormation(int X, int Y)
+        {
+            inWaveFormation = true;
+            formationX = X;
+            formationY = Y;
         }
 
         /// <summary>
@@ -103,6 +129,9 @@ namespace Game.Enemies
             if (hp <= 0)
             {
                 EmitSignal(nameof(EnemyDestroyed), worth);
+
+                if (inWaveFormation)
+                    EmitSignal(nameof(SignalWaveEnemyDestroyed), formationX, formationY);
 
                 Drop drop = MakeDrop();
 
@@ -176,6 +205,11 @@ namespace Game.Enemies
         /// <param name="score">Amount to increase player score by.</param>
         [Signal]
         public delegate void EnemyDestroyedEventHandler(int score);
+        /// <summary>
+        /// A secondary signal used to notify the 'Wave' this enemy is a part of that it has been destroyed.
+        /// </summary>
+        [Signal]
+        public delegate void SignalWaveEnemyDestroyedEventHandler(int X, int Y);
         
     }
 }

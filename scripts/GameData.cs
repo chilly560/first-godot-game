@@ -191,6 +191,55 @@ public partial class GameData : Node
 		EmitSignal(SignalName.UpdateScoreLabel, plusMinus);
 	}
 	/// <summary>
+	/// Signal for informing a wave that an enemy in formation has been destroyed and must be 
+	/// removed.
+	/// </summary>
+	/// <param name="X">'X' coord of the matrix</param>
+	/// <param name="Y">'Y' coord of the matrix</param>
+	[Signal]
+	public delegate void RemoveEnemyXYFromFormationEventHandler(int X, int Y);
+	/// <summary>
+	/// Signal Handler for informing the 'Wave' that an enemy in it's formation has been 
+	/// destroyed.
+	/// 
+	/// Signals the Wave.cs class
+	/// </summary>
+	public void OnSignalWaveEnemyDestroyedEventHandler(int X, int Y)
+	{
+		EmitSignal(SignalName.RemoveEnemyXYFromFormation, X, Y);
+	}
+	/// <summary>
+	/// Signal to inform the spawner that the current wave has been destroyed. This will 
+	/// tell the spawner to wait until any residual Bogey's are destroyed, before spawning the
+	/// next wave.
+	/// </summary>
+	[Signal]
+	public delegate void WaveDestroyedEventHandler();
+	/// <summary>
+	/// Emit the signal for informing the spawner that the current wave has been destroyed.
+	/// 
+	/// Implemented since 'Wave.cs' is not a godot node.
+	/// </summary>
+	public void EmitWaveDestroyedEventHandlerSignal()
+	{
+		EmitSignal(SignalName.WaveDestroyed);
+	}
+	/// <summary>
+	/// Signal to award bonus points to the player for defeating a wave.
+	/// </summary>
+	/// <param name="bonus"></param>
+	[Signal]
+	public delegate void WaveBonusEventHandler(int bonus);
+	/// <summary>
+	/// Signal to instruct GameData
+	/// </summary>
+	/// <param name="bonus">The int representation of bonus points to be awarded</param>
+	/// <exception cref="NotImplementedException"></exception>
+	public void EmitWaveBonusEventHandlerSignal(int bonus)
+	{
+		EmitSignal(SignalName.WaveBonus, bonus);
+	}
+	/// <summary>
 	/// Get the current instance of GameData.
 	/// 
 	/// Excluding the typical singleton pattern - this Node is set to 'autoload', therefore it's already

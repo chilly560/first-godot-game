@@ -112,11 +112,7 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 	/// </summary>
 	/// <param name="body">The node that entered this bullet's body collision.</param>
 	public void OnBodyEnteredBullet(Node body)
-	{
-		//Debug
-		GD.Print((body as Node2D).Position);
-		GD.Print(this.Position);
-		
+	{	
 		if (body is Player player)
 		{
 			player.TakeDamage(Damage);

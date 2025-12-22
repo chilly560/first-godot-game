@@ -46,20 +46,5 @@ namespace Game.Enemies
                 }
             }
         }       
-        // WIP For other implementation
-        /*
-		public void RotateDrone(float radians)
-		{
-			if (Math.Abs(rotation + radians) > THIRTY_DEGREES_RADIANS)
-			{
-				radians = (float) (radians > 0 ? THIRTY_DEGREES_RADIANS - rotation : -THIRTY_DEGREES_RADIANS + rotation);
-			}
-			Rotate(radians);
-			rotation += radians;
-			
-			GD.Print($"Radians: {radians}");
-			GD.Print($"Rotation: {rotation}");
-		}
-        */
 	}
 }

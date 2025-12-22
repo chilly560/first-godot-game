@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Game.Enemies;
 using Game.Enemies.EnemySpawning;
 using System.ComponentModel.DataAnnotations;
+using System.Threading;
 
 namespace Game.Enemies
 {
@@ -14,6 +15,11 @@ namespace Game.Enemies
     /// </summary>
     public class Wave
     {
+        private const int BONUS = 250;
+        /// <summary>
+        /// GameData event bus singleton.
+        /// </summary>
+        private GameData gameData;
         /// <summary>
         /// Physics modifiers for enemies in a wave
         /// </summary>
@@ -67,28 +73,12 @@ namespace Game.Enemies
                         if (wd.Position.X < playerx)
                         {
                             wd.RotateDrone(RIGHT);
-                            //wd.LookAt(GameData.Get().GetPlayerPosition());
                         }
                         else if (wd.Position.X > playerx)
                         {
                             wd.RotateDrone(LEFT);
                         }
                     } else wd.RotateDrone(-1);
-
-                    //wd.LookAt(GameData.Get().GetPlayerGlobalPosition());
-                    /*
-                    /*
-                    if (diff < 0 && alreadyPassedPlayer > 0)
-                    {
-                        float absX = playerx - d.Position.X;
-                        float absY = playery - d.Position.Y;
-                        double hypotenuse = Math.Sqrt((absX * absX) + (absY * absY));
-                        double rotationAngleRads = Mathf.DegToRad(90f) - Math.Abs(Math.Asin(
-                            absY / hypotenuse
-                        ));
-                        d.Rotate((float)rotationAngleRads * -1);
-                    }
-                    */
                 } else throw new ArgumentException("Invalid Enemy Type (Must be WaveDrone)");
             }
         }
@@ -107,6 +97,10 @@ namespace Game.Enemies
             /// Number of columns in the enemy matrix.
             /// </summary>
             public const int COLUMNS = 4;
+            /// <summary>
+            /// Number of cells actually populated by an enemy.
+            /// </summary>
+            public int Count;
             /// <summary>
             /// 2D array representing the enemy formation.
             /// </summary>
@@ -139,7 +133,6 @@ namespace Game.Enemies
                     matrix[x, y] = enemy;
                 }
             }  
-            /// 
             public void ActivateRandom(bool lockToPlayer)
             {
                 Random rand = new Random();
@@ -147,8 +140,9 @@ namespace Game.Enemies
                 int y = rand.Next(0, COLUMNS);
 
                 if (matrix[x, y] != null)
+                {
                     ActivateEnemy(x, y, lockToPlayer);
-
+                }
                 else ActivateRandom(lockToPlayer);
             }
             public void ActivateEnemy(int x, int y, bool lockToPlayer)
@@ -157,6 +151,7 @@ namespace Game.Enemies
                 {
                     matrix[x, y].SetPhysicsOverhauler(WaveEnemyPhysicsOverhaulers.DiveWavePhysicsOverhauler);
                     matrix[x, y].SetPhysicsModifier(WaveEnemyPhysicsModifiers.FindPlayerPhysicsModifier);
+                    Count--;
                 }
             }
             /// <summary>
@@ -207,6 +202,8 @@ namespace Game.Enemies
                             new Vector2((i * SPACING) + X_OFFSET, (j * SPACING) + Y_OFFSET)
                         );
 
+                        defaultMatrix[i, j].SetFormation(i, j);
+
                         defaultMatrix[i, j].Rotate(Mathf.DegToRad(180));
 
                         defaultMatrix[i, j].SetPhysicsOverhauler(
@@ -226,7 +223,9 @@ namespace Game.Enemies
         /// </summary>
         public Wave(WavePattern pattern = WavePattern.DEFAULT)
         {
-
+            gameData = GameData.Get();  
+            gameData.RemoveEnemyXYFromFormation += EnemyDestroyedEventHandler;
+            
             switch (pattern)
             {
                 case WavePattern.DEFAULT:
@@ -243,6 +242,16 @@ namespace Game.Enemies
         {
             eMatrix.InstiantiateMatrixEntities(gameRoot);
         }
+        
+        private void EnemyDestroyedEventHandler(int X, int Y)
+        {
+            // Temporarily just reduces the count.
+            // X and Y coordinates may be useful later, which is why I've included them.
+            eMatrix.Count--;
+
+            if (eMatrix.Count == 0)
+                Destroy();
+        }
 
         public void ActivateEnemy(bool lockToPlayer)
         {
@@ -251,6 +260,12 @@ namespace Game.Enemies
                 // temporarily hardcoded to be true for testing purposes
                 eMatrix.ActivateRandom(true);
             }
+        }
+
+        private void Destroy()
+        {
+            gameData.EmitWaveDestroyedEventHandlerSignal();
+            gameData.EmitWaveBonusEventHandlerSignal(BONUS);
         }
     }
 }

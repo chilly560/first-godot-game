@@ -51,7 +51,6 @@ namespace Game.Weapons
             public override void Reload()
             {
                 // Pistol does not need to reload
-                GD.Print("[TEMP] Pistol does not need to reload.");
             }
             /// <summary>
             /// Shoots a standard bullet from the weapon's position.
@@ -128,7 +127,6 @@ namespace Game.Weapons
             public override void Reload()
             {
                 // Pistol does not need to reload
-                GD.Print("[TEMP] Pistol does not need to reload.");
             }
             /// <summary>
             /// Randomly generates a spread angle between -15 and 15 degrees.
@@ -191,7 +189,6 @@ namespace Game.Weapons
                     }
                 } else
                 {
-                    GD.Print("Ammo:" + Ammo);
                     if (Ammo < 1)
                         return;
 

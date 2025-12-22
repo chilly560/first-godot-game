@@ -35,6 +35,7 @@ public partial class Player : CharacterBody2D, ICollector
 		gameData = GetNode<GameData>("%GameData");
 		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;
 		gameData.UpdateScoreLabel += OnUpdateScoreLabel;
+		gameData.WaveBonus += OnUpdateScoreLabel;
 		autofireTimer = GetNode<Timer>("./AutofireTimer");
 		hp = GetNode<Label>("Camera2D/HUD/HPValue");
 		secondaryAmmo = GetNode<Label>("Camera2D/HUD/AmmoValue");
@@ -72,7 +73,6 @@ public partial class Player : CharacterBody2D, ICollector
 	 */
 	public void TakeDamage(int damage)
 	{
-		GD.Print("Sanity check: Player.TakeDamage() called");
 		isAlive = gameData.CauseDamage(damage);
 		this.hp.Text = gameData.GetHP().ToString();
 		int hp = gameData.GetHP();
