@@ -55,9 +55,9 @@ namespace Game.Drops
         /// Event handler for body entering drop area.
         /// </summary>
         /// <param name="body"></param>
-        public virtual void OnBodyEnteredDrop(CharacterBody2D body)
+        public virtual void OnBodyEnteredDrop(Node2D node)
         {
-            if (body is Player player)
+            if (node is Player player)
             {
                 AddAttribute(player, collectable);
             }
