@@ -21,9 +21,6 @@ namespace Game.Enemies
         /// Unique enemy ID assigned at instantiation.
         /// </summary>
         private int enemyid;
-        /// <summary>
-        /// Current HP of the enemy.
-        /// </summary>
         private int hp;
         /// <summary>
         /// Factory for creating Drops upon enemy destruction.
@@ -51,6 +48,13 @@ namespace Game.Enemies
         /// </summary>
         protected bool inWaveFormation;
         /// <summary>
+        /// Sister property to 'inWaveFormation' - identifies whether this enemy has been activated.
+        /// 
+        /// False by default as this distinction is only required for enemies part of wave formations, so as 
+        /// to avoid double-counting destroyed enemies.
+        /// </summary>
+        public bool Activated { get; set; } = false;
+        /// <summary>
         /// Identifies which cell of the respective matrix this enemy occupies IF this enemy
         /// is part of a wave formation.
         /// 
@@ -62,7 +66,7 @@ namespace Game.Enemies
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            gameData = GetNode<GameData>("/root/GameRoot/GameData");
+            gameData = GameData.Get();
             enemyid = gameData.GetNumberOfEnemies();
             gameData.AddEnemy(this);
             hp = 100;
@@ -130,8 +134,8 @@ namespace Game.Enemies
             {
                 EmitSignal(nameof(EnemyDestroyed), worth);
 
-                if (inWaveFormation)
-                    EmitSignal(nameof(SignalWaveEnemyDestroyed), formationX, formationY);
+                if (inWaveFormation && Activated == false)
+                    EmitSignal(SignalName.SignalWaveEnemyDestroyed, formationX, formationY, false);
 
                 Drop drop = MakeDrop();
 
@@ -209,7 +213,6 @@ namespace Game.Enemies
         /// A secondary signal used to notify the 'Wave' this enemy is a part of that it has been destroyed.
         /// </summary>
         [Signal]
-        public delegate void SignalWaveEnemyDestroyedEventHandler(int X, int Y);
-        
+        public delegate void SignalWaveEnemyDestroyedEventHandler(int X, int Y, bool activated = false);
     }
 }

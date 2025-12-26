@@ -197,17 +197,17 @@ public partial class GameData : Node
 	/// <param name="X">'X' coord of the matrix</param>
 	/// <param name="Y">'Y' coord of the matrix</param>
 	[Signal]
-	public delegate void RemoveEnemyXYFromFormationEventHandler(int X, int Y);
+	public delegate void RemoveEnemyXYFromFormationEventHandler(int X, int Y, bool activated = false);
 	/// <summary>
 	/// Signal Handler for informing the 'Wave' that an enemy in it's formation has been 
 	/// destroyed.
 	/// 
 	/// Signals the Wave.cs class
 	/// </summary>
-	public void OnSignalWaveEnemyDestroyedEventHandler(int X, int Y)
+	public void OnSignalWaveEnemyDestroyedEventHandler(int X, int Y, bool activated = false)
 	{
 		GD.Print("Wave Enemy removed from formation");
-		EmitSignal(SignalName.RemoveEnemyXYFromFormation, X, Y);
+		EmitSignal(SignalName.RemoveEnemyXYFromFormation, X, Y, activated);
 	}
 	/// <summary>
 	/// Signal to inform the spawner that the current wave has been destroyed. This will 
@@ -236,10 +236,8 @@ public partial class GameData : Node
 	/// Signal to instruct GameData
 	/// </summary>
 	/// <param name="bonus">The int representation of bonus points to be awarded</param>
-	/// <exception cref="NotImplementedException"></exception>
 	public void EmitWaveBonusEventHandlerSignal(int bonus)
 	{
-		GD.Print("Emitting WaveBonusEventHandler");
 		EmitSignal(SignalName.WaveBonus, bonus);
 	}
 	/// <summary>

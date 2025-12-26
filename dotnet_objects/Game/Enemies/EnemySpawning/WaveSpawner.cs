@@ -30,9 +30,12 @@ namespace Game.Enemies.EnemySpawning
 
 	    private void EnemyDestroyedSignalHandler()
 		{
+			// TODO: This SignalHandler should pause the Bogey spawner and wait for the 
+			// player to finish clearing enemies - after which a new wave should be spawned.
+			// 
+			// Don't forget - you're planning multiple types of waves to be spawnable!
 			throw new NotImplementedException("EnemyDestroyedSignalHandler succesfully invoked!");
 		}
-
 		public void OnEnemyActivationTimerTimeout()
 		{
 			currentWave.ActivateEnemy(true);

@@ -145,14 +145,19 @@ namespace Game.Enemies
                 }
                 else ActivateRandom(lockToPlayer);
             }
+            /// <summary>
+            /// ACtivates the enemy at the specified coordinates.
+            /// 
+            /// When an enemy is activate, it is considered "destroyed" from the wave formation's perspective.
+            /// </summary>
+            /// <param name="lockToPlayer">Bool determining whether the enemy should chase the player's position</param>
             public void ActivateEnemy(int x, int y, bool lockToPlayer)
             {
                 if (lockToPlayer && matrix[x, y] != null)
                 {
                     matrix[x, y].SetPhysicsOverhauler(WaveEnemyPhysicsOverhaulers.DiveWavePhysicsOverhauler);
                     matrix[x, y].SetPhysicsModifier(WaveEnemyPhysicsModifiers.FindPlayerPhysicsModifier);
-                    Count--;
-                    GameData.Get().OnSignalWaveEnemyDestroyedEventHandler(x, y);
+                    GameData.Get().OnSignalWaveEnemyDestroyedEventHandler(x, y, true);
                 }
             }
             /// <summary>
@@ -167,7 +172,16 @@ namespace Game.Enemies
                         {
                             gameRoot.CallDeferred("add_child", matrix[i, j]);
                             Count++;
+                            GD.Print($"Count: {Count}");
                         }
+            }
+            public Enemy GetEnemyAt(int x, int y)
+            {
+                if (x >= 0 && x < ROWS && y >= 0 && y < COLUMNS)
+                {
+                    return matrix[x, y];
+                }
+                throw new IndexOutOfRangeException("Invalid matrix coordinates");
             }
         }
         /// <summary>
@@ -215,7 +229,9 @@ namespace Game.Enemies
                         );
                     }
                 }
-                return new EnemyMatrix(defaultMatrix);
+                EnemyMatrix e = new EnemyMatrix(defaultMatrix);
+                //e.Count = EnemyMatrix.ROWS * EnemyMatrix.COLUMNS;
+                return e;
             }
         }
         /// <summary>
@@ -235,6 +251,7 @@ namespace Game.Enemies
                 case WavePattern.DEFAULT:
                 default:
                     eMatrix = EnemyMatrixBuilder.BuildDefaultMatrix();
+                    GD.Print(eMatrix.Count);
                     break;
             }
         }   
@@ -247,12 +264,16 @@ namespace Game.Enemies
             eMatrix.InstiantiateMatrixEntities(gameRoot);
         }
         
-        private void EnemyDestroyedEventHandler(int X, int Y)
+        private void EnemyDestroyedEventHandler(int X, int Y, bool activated)
         {
             // Temporarily just reduces the count.
             // X and Y coordinates may be useful later, which is why I've included them.
+            if (activated)
+                eMatrix.GetEnemyAt(X, Y).Activated = true;
+
             eMatrix.Count--;
-            GD.Print(eMatrix.Count);
+                
+            GD.Print($"Wave Enemy Count: {eMatrix.Count}");
 
             if (eMatrix.Count == 0)
                 Destroy();
