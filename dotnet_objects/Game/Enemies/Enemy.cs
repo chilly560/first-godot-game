@@ -138,6 +138,9 @@ namespace Game.Enemies
                 {
                     GD.Print("Enemy destroyed by player, emitting SignalWaveEnemyDestroyed");
                     EmitSignal(SignalName.SignalWaveEnemyDestroyed, formationX, formationY, false);
+                } else if (!inWaveFormation)
+                {
+                    gameData.Entities--;
                 }
 
                 Drop drop = MakeDrop();

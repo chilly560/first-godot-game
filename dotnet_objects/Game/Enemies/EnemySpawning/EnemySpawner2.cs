@@ -4,6 +4,10 @@ using Game.Enemies;
 using Game;
 using Game.Enemies.EnemySpawning.SpawnerPhysics;
 
+/*
+TODO: Move spawner back within arena bounds
+*/
+
 namespace Game.Enemies.EnemySpawning
 {
 	/// <summary>
@@ -39,10 +43,11 @@ namespace Game.Enemies.EnemySpawning
         /// Direction of movement: 1 for right, -1 for left.
         /// </summary>
 		public int dir = 1;
-
+		private GameData gameData;
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
+			gameData = GameData.Get();
 			leftCollisionRay = GetNode<RayCast2D>("./RayCast2D2");
 			rightCollisionRay = GetNode<RayCast2D>("./RayCast2D");
 			SetPhysicsOverhauler(SpawnerPhysicsOverhaulers.MothershipDefaultPhyysics);
@@ -55,7 +60,12 @@ namespace Game.Enemies.EnemySpawning
         /// </summary>
 		public void OnSpawnTimerTimeout()
 		{
-			SpawnBogey(GlobalPosition);
+			if ((!gameData.PauseSpawning) && (gameData.Entities < gameData.EntityCap))
+			{
+				SpawnBogey(GlobalPosition);
+				gameData.Entities++;
+			}
+
 			spawnTimer.Start();
 		}
 	}

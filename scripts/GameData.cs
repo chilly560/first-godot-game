@@ -5,6 +5,10 @@ using Game.Enemies;
 using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 
+/*
+TODO: Fix Entity cap and spawn pausing.
+*/
+
 /// <summary>
 /// Originally meant to store game data about the current scene (hence the name 'GameData'),
 /// This class has been retrofitted to function as the main Event-BUS for the game.
@@ -44,12 +48,24 @@ public partial class GameData : Node
 	/// Value: enemy instance
 	/// </summary>
 	private Dictionary<int, Enemy> enemies;
-
+	/// <summary>
+	/// Number of active non-wave enemies.
+	/// </summary>
+	public int Entities { get; set; } = 0;
+	/// <summary>
+	/// Maximum number of non-wave enemies allowed to be spawned.
+	/// </summary>
+	public int EntityCap { get; private set; } = 8;
+	/// <summary>
+	/// Indicates whether enemy spawning is paused. Should only be invoked when a wave is cleared.
+	/// </summary>
+	public bool PauseSpawning { get; set; } = false;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		self = this;
 		HP = MAX_HP;
+
 		enemies = new Dictionary<int, Enemy>();
 		player = GetNode<Player>("../Player");
 		weaponScene = GetNode<WeaponScene>("../Player/AnimatedSprite2D/WeaponScene");
@@ -239,7 +255,7 @@ public partial class GameData : Node
 	/// Signal to instruct GameData
 	/// </summary>
 	/// <param name="bonus">The int representation of bonus points to be awarded</param>
-	public void EmitWaveBonusEventHandlerSignal(int bonus)
+	public void EmitWaveBownusEventHandlerSignal(int bonus)
 	{
 		EmitSignal(SignalName.WaveBonus, bonus);
 	}

@@ -34,12 +34,24 @@ namespace Game.Enemies.EnemySpawning
 			// player to finish clearing enemies - after which a new wave should be spawned.
 			// 
 			// Don't forget - you're planning multiple types of waves to be spawnable!
-			throw new NotImplementedException("EnemyDestroyedSignalHandler succesfully invoked!");
+			gameData.PauseSpawning = true;
+			if (gameData.Entities == 0)
+			    gameData.PauseSpawning = false;
 		}
 		public void OnEnemyActivationTimerTimeout()
 		{
-			currentWave.ActivateEnemy(true);
-			enemyActivationTimer.Start(FREQUENCY);
+			if (currentWave.GetCount() > 0)
+			{
+				currentWave.ActivateEnemy(true);
+				enemyActivationTimer.Start(FREQUENCY);
+			} else if (gameData.Entities == 0)
+			{
+				GD.Print("Wave cleared! Spawning new wave...");
+				// Temporarily just spawning new default wave, can add logic for different wave types later.
+				currentWave = new Wave();
+				currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
+				enemyActivationTimer.Start(FREQUENCY);
+			}
 		}
 	}
 }

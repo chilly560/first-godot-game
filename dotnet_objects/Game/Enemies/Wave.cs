@@ -304,7 +304,7 @@ namespace Game.Enemies
         {
             GD.Print($"Wave Complete.");
             gameData.EmitWaveDestroyedEventHandlerSignal();
-            gameData.EmitWaveBonusEventHandlerSignal(BONUS);
+            gameData.EmitWaveBownusEventHandlerSignal(BONUS);
         }
 
         public int GetCount()
