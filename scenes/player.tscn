@@ -1,43 +1,22 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7rqggkyxpph4"]
+[gd_scene load_steps=7 format=3 uid="uid://c7rqggkyxpph4"]
 
-[ext_resource type="Texture2D" uid="uid://s3tj76v46ls3" path="res://assets/1 Main Character/1 Character/Walk1.png" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://c0x4xuh8slnk5" path="res://assets/3 Enemies/Player/player_b_m.png" id="1_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://c4i3m8rk703u2" path="res://scenes/WeaponScene.tscn" id="2_g2els"]
 [ext_resource type="Script" uid="uid://dhokgx236yfvt" path="res://scripts/AutofireTimer.cs" id="3_qhqgy"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g2brh"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(0, 0, 48, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("1_qhqgy")
+region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dn4c7"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4vejd"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ws0vm"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_rhr3r"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_qlg0r"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g2brh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dn4c7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4vejd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ws0vm")
+"texture": SubResource("AtlasTexture_dqkch")
 }],
 "loop": true,
-"name": &"PlayerWalk1",
-"speed": 9.0
+"name": &"default",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t53lx"]
@@ -48,17 +27,15 @@ z_index = 5
 position = Vector2(-1, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, 433)
-sprite_frames = SubResource("SpriteFrames_rhr3r")
-animation = &"PlayerWalk1"
-autoplay = "PlayerWalk1"
-frame_progress = 0.882947
+position = Vector2(2, 444)
+scale = Vector2(0.546875, 0.5)
+sprite_frames = SubResource("SpriteFrames_qlg0r")
 
 [node name="WeaponScene" parent="AnimatedSprite2D" instance=ExtResource("2_g2els")]
-position = Vector2(1, -53)
+position = Vector2(-1.82857, -114)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 433)
+position = Vector2(1, 444)
 shape = SubResource("RectangleShape2D_t53lx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
