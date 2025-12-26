@@ -209,16 +209,16 @@ namespace Game.Enemies
             /// <summary>
             /// Spacing between enemies in the matrix.
             /// </summary>
-            private const int SPACING = 35;
+            private const int SPACING = 36;
             /// <summary>
             /// Centers the wave.
             /// </summary>
-            private const int X_OFFSET = -115;
+            private const int X_OFFSET = -125;
             /// <summary>
             /// Vertical offset for the wave spawn position (so that it actually instantiates
             /// on screen).
             /// </summary>
-            private const int Y_OFFSET = 205;
+            private const int Y_OFFSET = 60;
             /// <summary>
             /// Builds a default enemy matrix formation with all positions filled with Drones.
             /// </summary>
@@ -271,7 +271,10 @@ namespace Game.Enemies
                     break;
             }
         }   
-
+        /// <summary>
+        /// Constructor called for subsequent waves after the first wave. 
+        /// </summary>
+        /// <param name="WaveID">Chronological by wave iterations.</param>
         public Wave(int WaveID, WavePattern pattern = WavePattern.DEFAULT) : this(pattern)
         {
             this.WaveID = WaveID;
@@ -316,7 +319,9 @@ namespace Game.Enemies
             gameData.EmitWaveDestroyedEventHandlerSignal();
             gameData.EmitWaveBonusEventHandlerSignal(BONUS);
         }
-
+        /// <summary>
+        /// Number of Enemies remaining in the current wave.
+        /// </summary>
         public int GetCount()
         {
             return eMatrix.Count;
