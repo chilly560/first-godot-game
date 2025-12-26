@@ -37,9 +37,9 @@ public partial class Player : CharacterBody2D, ICollector
 		gameData.UpdateScoreLabel += OnUpdateScoreLabel;
 		gameData.WaveBonus += OnUpdateScoreLabel;
 		autofireTimer = GetNode<Timer>("./AutofireTimer");
-		hp = GetNode<Label>("Camera2D/HUD/HPValue");
-		secondaryAmmo = GetNode<Label>("Camera2D/HUD/AmmoValue");
-		score = GetNode<Label>("Camera2D/HUD/ScoreValue");
+		hp = GetNode<Label>("../Camera2D/HUD/HPValue");
+		secondaryAmmo = GetNode<Label>("../Camera2D/HUD/AmmoValue");
+		score = GetNode<Label>("../Camera2D/HUD/ScoreValue");
 		isAlive = true;
 		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();

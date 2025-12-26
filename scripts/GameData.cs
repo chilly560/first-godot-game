@@ -18,7 +18,7 @@ public partial class GameData : Node
 	/// <summary>
 	/// Maximum HP for the player.
 	/// </summary>
-	private const int MAX_HP = 999999;
+	private const int MAX_HP = 100;
 
 	/// <summary>
 	/// Current HP for the player.
