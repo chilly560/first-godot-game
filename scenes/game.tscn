@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://chjkhfsdsws7j"]
+[gd_scene load_steps=9 format=4 uid="uid://chjkhfsdsws7j"]
 
 [ext_resource type="Script" uid="uid://bej06gxouydca" path="res://scripts/GameData.cs" id="1_lbhrr"]
 [ext_resource type="Script" uid="uid://b4vfbl26uu676" path="res://scenes/GameRoot.cs" id="1_p57ef"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dw2s1kdlqxre3" path="res://scenes/tile_map_layer.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://coxv56so0e6h8" path="res://scenes/enemy_spawner_2.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://n5lbhp4a8odl" path="res://scenes/WaveSpawner.tscn" id="7_u5sy4"]
+[ext_resource type="Texture2D" uid="uid://cj11oejj8d3ty" path="res://assets/BG.png" id="8_gee14"]
 
 [node name="GameRoot" type="Node2D"]
 position = Vector2(1, 32)
@@ -31,3 +32,8 @@ position = Vector2(1.0132, 137.602)
 
 [node name="WaveSpawner" parent="." instance=ExtResource("7_u5sy4")]
 position = Vector2(7, 246)
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(5.06599, 251.274)
+scale = Vector2(1.037, 1.23413)
+texture = ExtResource("8_gee14")

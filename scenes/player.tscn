@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://c7rqggkyxpph4"]
 
-[ext_resource type="Texture2D" uid="uid://c0x4xuh8slnk5" path="res://assets/3 Enemies/Player/player_b_m.png" id="1_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://c0x4xuh8slnk5" path="res://assets/Player/player_b_m.png" id="1_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://c4i3m8rk703u2" path="res://scenes/WeaponScene.tscn" id="2_g2els"]
 [ext_resource type="Script" uid="uid://dhokgx236yfvt" path="res://scripts/AutofireTimer.cs" id="3_qhqgy"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("1_qhqgy")
 region = Rect2(0, 0, 64, 64)
 
@@ -12,7 +12,7 @@ region = Rect2(0, 0, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dqkch")
+"texture": SubResource("AtlasTexture_qhqgy")
 }],
 "loop": true,
 "name": &"default",
@@ -27,7 +27,7 @@ z_index = 5
 position = Vector2(-1, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(2, 444)
+position = Vector2(1, 444)
 scale = Vector2(0.546875, 0.5)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 
