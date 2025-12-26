@@ -24,26 +24,32 @@ namespace Game.Enemies
 
         public int WaveID { get; private set; } = GameData.Get().WaveNumber;
         /// <summary>
-        /// Physics modifiers for enemies in a wave
+        /// Main behavioral (physics) instructions for Wave enemies. These are applied at runtime.
         /// </summary>
         public class WaveEnemyPhysicsOverhaulers
         {
             /// <summary>
-            /// Drones don't move after instantiation.
+            /// Enemies don't move after instantiation.
             /// </summary>
-            /// <param name="d"></param>
-            /// <param name="delta"></param>
+            /// <param name="d">The Enemy to apply these instructions to</param>
+            /// <param name="delta">The time elapsed since the last frame</param>
             public static void DefaultWavePhysicsOverhauler(Enemy d, double delta)
             {
                 d.Position = d.Position;
             }
-
+            /// <summary>
+            /// Makes the enemy dive downwards in a straight line.
+            /// </summary>
+            /// <param name="d">The Enemy to apply these instructions to</param>
+            /// <param name="delta">The time elapsed since the last frame</param>
             public static void DiveWavePhysicsOverhauler(Enemy d, double delta)
             {
                 d.Position -= d.Transform.Y * 1f;
             }
         }
-
+        /// <summary>
+        /// Additional physics instructions to be run after the PhysicsOverhauler. 
+        /// </summary>
         public class WaveEnemyPhysicsModifiers
         {
             private const float THIRTY_DEGREES_RADIANS = 0.523599f;
@@ -62,8 +68,8 @@ namespace Game.Enemies
             /// 
             /// See ./WaveDrone.cs
             /// </summary>
-            /// <param name="d"></param>
-            /// <exception cref="ArgumentException"></exception>
+            /// <param name="d">The Enemy to apply these instructions to</param>
+            /// <exception cref="ArgumentException">Thrown if the Enemy is not a WaveDrone</exception>
             public static void FindPlayerPhysicsModifier(Enemy d)
             {
 

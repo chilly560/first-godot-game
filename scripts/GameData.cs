@@ -19,29 +19,26 @@ public partial class GameData : Node
 	/// Maximum HP for the player.
 	/// </summary>
 	private const int MAX_HP = 100;
-
 	/// <summary>
 	/// Current HP for the player.
 	/// </summary>
 	private int HP;
-
 	/// <summary>
 	/// Reference to the player node.
 	/// </summary>
 	private Player player;
-
 	/// <summary>
 	/// Reference to the player's weapon scene node.
 	/// </summary>
 	private WeaponScene weaponScene;
-
 	/// <summary>
 	/// Reference to the enemy parent class node.
 	/// </summary>
 	private Enemy enemyParentClassNode;
-
+	/// <summary>
+	/// Singleton instance of GameData.
+	/// </summary>
 	private static GameData self;
-
 	/// <summary>
 	/// Dictionary of active enemies in the scene.
 	/// Key: enemy ID
@@ -60,7 +57,9 @@ public partial class GameData : Node
 	/// Indicates whether enemy spawning is paused. Should only be invoked when a wave is cleared.
 	/// </summary>
 	public bool PauseSpawning { get; set; } = false;
-
+	/// <summary>
+	/// Current iteration of waves.
+	/// </summary>
 	public int WaveNumber { get; set; } = 0;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -73,12 +72,6 @@ public partial class GameData : Node
 		weaponScene = GetNode<WeaponScene>("../Player/AnimatedSprite2D/WeaponScene");
 		weaponScene.UpdateAmmoHUD += OnUpdateHUDEventHandler;
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	/// <summary>
 	/// Get the number of active enemies.
 	/// </summary>
@@ -87,7 +80,6 @@ public partial class GameData : Node
 	{
 		return enemies.Count;
 	}
-
 	/// <summary>
 	/// Add enemy to the list of active enemies.
 	/// </summary>
@@ -96,7 +88,6 @@ public partial class GameData : Node
 	{
 		enemies.Add(enemy.GetID(), enemy);
 	}
-
 	/// <summary>
 	/// Remove enemy from the list of active enemies.
 	/// </summary>
@@ -105,16 +96,10 @@ public partial class GameData : Node
 	{
 		enemies.Remove(enemyId);
 	}
-
-	/// <summary>
-	/// Get player's current HP.
-	/// </summary>
-	/// <returns></returns>
 	public int GetHP()
 	{
 		return HP;
 	}
-
 	/// <summary>
 	/// Increase player's HP by the given amount. Amount must be positive.
 	/// </summary>
@@ -128,39 +113,22 @@ public partial class GameData : Node
 
 		else HP += amount;
 	}
-
-	/// <summary>
-	/// Get player's position.
-	/// </summary>
-	/// <returns></returns>
-	public Vector2 GetPlayerXY()
-	{
-		return player.Position;
-	}
-
 	/// <summary>
 	/// Get player's X position.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>float representing the player's X position</returns>
 	public float GetPlayerX()
 	{
 		return player.Position.X;
 	}
-
 	/// <summary>
 	/// Get player's Y position.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>float representing the player's Y position</returns>
 	public float GetPlayerY()
 	{
 		return player.Position.Y;
 	}
-
-	public Vector2 GetPlayerPosition()
-	{
-		return player.Position;
-	}
-
 	public Vector2 GetPlayerGlobalPosition()
 	{
 		return player.GlobalPosition;
@@ -172,10 +140,12 @@ public partial class GameData : Node
 	/// <returns>True if player dies</returns>
 	public bool CauseDamage(int amount)
 	{
+		if (amount < 0)
+			throw new ArgumentException("Damage amount must be positive");
+			
 		HP -= amount;
 		return (HP > 0);
 	}
-
 	/// <summary>
 	/// Signal for updating the UI counter for ammo. 
 	/// 
