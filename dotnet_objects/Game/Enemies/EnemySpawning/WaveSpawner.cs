@@ -58,9 +58,6 @@ namespace Game.Enemies.EnemySpawning
 				GD.Print("Wave cleared! Spawning new wave...");
 				// Temporarily just spawning new default wave, can add logic for different wave types later.
 				currentWave = null;
-				//GC.Collect();
-				//GC.WaitForPendingFinalizers();
-				//GC.Collect();
 				gameData.WaveNumber++;
 				currentWave = new Wave(gameData.WaveNumber);
 				currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
