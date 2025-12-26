@@ -49,7 +49,7 @@ namespace Game.Enemies.EnemySpawning
 		}
 		public void OnEnemyActivationTimerTimeout()
 		{
-			if (currentWave.GetCount() > 0)
+			if (currentWave != null && currentWave.GetCount() > 0)
 			{
 				currentWave.ActivateEnemy(true);
 				enemyActivationTimer.Start(FREQUENCY);
@@ -58,9 +58,9 @@ namespace Game.Enemies.EnemySpawning
 				GD.Print("Wave cleared! Spawning new wave...");
 				// Temporarily just spawning new default wave, can add logic for different wave types later.
 				currentWave = null;
-				GC.Collect();
-				GC.WaitForPendingFinalizers();
-				GC.Collect();
+				//GC.Collect();
+				//GC.WaitForPendingFinalizers();
+				//GC.Collect();
 				gameData.WaveNumber++;
 				currentWave = new Wave(gameData.WaveNumber);
 				currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
