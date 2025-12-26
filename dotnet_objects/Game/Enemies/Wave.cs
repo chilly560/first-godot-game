@@ -7,6 +7,7 @@ using Game.Enemies;
 using Game.Enemies.EnemySpawning;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
+using System.Xml.Schema;
 
 namespace Game.Enemies
 {
@@ -143,7 +144,8 @@ namespace Game.Enemies
                 {
                     ActivateEnemy(x, y, lockToPlayer);
                 }
-                else ActivateRandom(lockToPlayer);
+                else if (Count > 0) 
+                    ActivateRandom(lockToPlayer);
             }
             /// <summary>
             /// ACtivates the enemy at the specified coordinates.
@@ -155,8 +157,10 @@ namespace Game.Enemies
             {
                 if (lockToPlayer && matrix[x, y] != null)
                 {
+                    GD.Print($"Activating Enemy {matrix[x, y]} at [{x}, {y}] from wave formation.");
                     matrix[x, y].SetPhysicsOverhauler(WaveEnemyPhysicsOverhaulers.DiveWavePhysicsOverhauler);
                     matrix[x, y].SetPhysicsModifier(WaveEnemyPhysicsModifiers.FindPlayerPhysicsModifier);
+                    GD.Print("Enemy activated from wave formation, Manually Calling OnSignalWaveEnemyDestroyedEventHandler");
                     GameData.Get().OnSignalWaveEnemyDestroyedEventHandler(x, y, true);
                 }
             }
@@ -182,6 +186,14 @@ namespace Game.Enemies
                     return matrix[x, y];
                 }
                 throw new IndexOutOfRangeException("Invalid matrix coordinates");
+            }
+
+            public void RemoveEnemyAt(int x, int y)
+            {
+                if (x >= 0 && x < ROWS && y >= 0 && y < COLUMNS)
+                {
+                    matrix[x, y] = null;
+                }
             }
         }
         /// <summary>
@@ -266,10 +278,10 @@ namespace Game.Enemies
         
         private void EnemyDestroyedEventHandler(int X, int Y, bool activated)
         {
-            // Temporarily just reduces the count.
-            // X and Y coordinates may be useful later, which is why I've included them.
             if (activated)
                 eMatrix.GetEnemyAt(X, Y).Activated = true;
+
+            eMatrix.RemoveEnemyAt(X, Y);
 
             eMatrix.Count--;
                 

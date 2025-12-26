@@ -14,7 +14,7 @@ public partial class GameData : Node
 	/// <summary>
     /// Maximum HP for the player.
     /// </summary>
-	private const int MAX_HP = 100;	
+	private const int MAX_HP = 999999;	
 
 	/// <summary>
 	/// Current HP for the player.
@@ -49,7 +49,7 @@ public partial class GameData : Node
 	public override void _Ready()
 	{
 		self = this;
-		HP = 100;
+		HP = MAX_HP;
 		enemies = new Dictionary<int, Enemy>();
 		player = GetNode<Player>("../Player");
 		weaponScene = GetNode<WeaponScene>("../Player/AnimatedSprite2D/WeaponScene");
@@ -106,9 +106,9 @@ public partial class GameData : Node
 			return;
 
 		if (amount + HP > MAX_HP)
-			this.HP = MAX_HP;
+			HP = MAX_HP;
 			
-		else this.HP += amount;
+		else HP += amount;
 	}
 	
 	/// <summary>
@@ -154,8 +154,8 @@ public partial class GameData : Node
     /// <returns>True if player dies</returns>
 	public bool CauseDamage(int amount)
 	{
-		this.HP -= amount;
-		return (this.HP > 0);
+		HP -= amount;
+		return (HP > 0);
 	}
 
 	/// <summary>
@@ -206,7 +206,10 @@ public partial class GameData : Node
 	/// </summary>
 	public void OnSignalWaveEnemyDestroyedEventHandler(int X, int Y, bool activated = false)
 	{
-		GD.Print("Wave Enemy removed from formation");
+		if (activated)
+			GD.Print("OnSignalWaveEnemyDestroyedEventHandler called by Wave.ActivateEnemy");
+		else 
+			GD.Print("OnSignalWaveEnemyDestroyedEventHandler invoked by SignalWaveEnemyDestroyed Emitted by Enemy.TakeDamage");
 		EmitSignal(SignalName.RemoveEnemyXYFromFormation, X, Y, activated);
 	}
 	/// <summary>
