@@ -21,6 +21,8 @@ namespace Game.Enemies
         /// GameData event bus singleton.
         /// </summary>
         private GameData gameData;
+
+        public int WaveID { get; private set; } = GameData.Get().WaveNumber;
         /// <summary>
         /// Physics modifiers for enemies in a wave
         /// </summary>
@@ -183,6 +185,9 @@ namespace Game.Enemies
             {
                 if (x >= 0 && x < ROWS && y >= 0 && y < COLUMNS)
                 {
+                    if (matrix[x, y] == null)
+                        throw new NullReferenceException("No enemy at specified matrix coordinates");
+
                     return matrix[x, y];
                 }
                 throw new IndexOutOfRangeException("Invalid matrix coordinates");
@@ -223,7 +228,6 @@ namespace Game.Enemies
                 Enemy[,] defaultMatrix = new Enemy[EnemyMatrix.ROWS, EnemyMatrix.COLUMNS];
                 
                 for (int i = 0; i < EnemyMatrix.ROWS; i++)
-                {
                     for (int j = 0; j < EnemyMatrix.COLUMNS; j++)
                     {
                         // TODO: Tweak actual Vector2 positions later
@@ -240,7 +244,7 @@ namespace Game.Enemies
                             WaveEnemyPhysicsOverhaulers.DefaultWavePhysicsOverhauler
                         );
                     }
-                }
+
                 EnemyMatrix e = new EnemyMatrix(defaultMatrix);
                 //e.Count = EnemyMatrix.ROWS * EnemyMatrix.COLUMNS;
                 return e;
@@ -267,6 +271,11 @@ namespace Game.Enemies
                     break;
             }
         }   
+
+        public Wave(int WaveID, WavePattern pattern = WavePattern.DEFAULT) : this(pattern)
+        {
+            this.WaveID = WaveID;
+        }
         /// <summary>
         /// Adds each enemy as a child node to the provided GameRoot.
         /// </summary>
@@ -285,9 +294,9 @@ namespace Game.Enemies
 
             eMatrix.Count--;
                 
-            GD.Print($"Wave Enemy Count: {eMatrix.Count}");
+            GD.Print($"Wave ({WaveID}) Enemy Count: {eMatrix.Count}.");
 
-            if (eMatrix.Count == 0)
+            if (eMatrix.Count <= 0)
                 Destroy();
         }
 
@@ -297,14 +306,15 @@ namespace Game.Enemies
             {
                 // temporarily hardcoded to be true for testing purposes
                 eMatrix.ActivateRandom(true);
-            }
+            } 
         }
 
         private void Destroy()
         {
+            gameData.RemoveEnemyXYFromFormation -= EnemyDestroyedEventHandler;
             GD.Print($"Wave Complete.");
             gameData.EmitWaveDestroyedEventHandlerSignal();
-            gameData.EmitWaveBownusEventHandlerSignal(BONUS);
+            gameData.EmitWaveBonusEventHandlerSignal(BONUS);
         }
 
         public int GetCount()

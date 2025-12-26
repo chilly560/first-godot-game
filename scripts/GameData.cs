@@ -16,9 +16,9 @@ TODO: Fix Entity cap and spawn pausing.
 public partial class GameData : Node
 {
 	/// <summary>
-    /// Maximum HP for the player.
-    /// </summary>
-	private const int MAX_HP = 999999;	
+	/// Maximum HP for the player.
+	/// </summary>
+	private const int MAX_HP = 999999;
 
 	/// <summary>
 	/// Current HP for the player.
@@ -60,6 +60,8 @@ public partial class GameData : Node
 	/// Indicates whether enemy spawning is paused. Should only be invoked when a wave is cleared.
 	/// </summary>
 	public bool PauseSpawning { get; set; } = false;
+
+	public int WaveNumber { get; set; } = 0;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -76,41 +78,41 @@ public partial class GameData : Node
 	public override void _Process(double delta)
 	{
 	}
-	
+
 	/// <summary>
-    /// Get the number of active enemies.
-    /// </summary>
-    /// <returns></returns>
+	/// Get the number of active enemies.
+	/// </summary>
+	/// <returns></returns>
 	public int GetNumberOfEnemies()
 	{
 		return enemies.Count;
 	}
-	
+
 	/// <summary>
-    /// Add enemy to the list of active enemies.
-    /// </summary>
-    /// <param name="enemy"></param>
-	public void AddEnemy(Enemy enemy) 
+	/// Add enemy to the list of active enemies.
+	/// </summary>
+	/// <param name="enemy"></param>
+	public void AddEnemy(Enemy enemy)
 	{
 		enemies.Add(enemy.GetID(), enemy);
 	}
 
 	/// <summary>
-    /// Remove enemy from the list of active enemies.
-    /// </summary>
-    /// <param name="enemyId"></param>
+	/// Remove enemy from the list of active enemies.
+	/// </summary>
+	/// <param name="enemyId"></param>
 	public void RemoveEnemy(int enemyId)
 	{
 		enemies.Remove(enemyId);
 	}
-	
+
 	/// <summary>
-    /// Get player's current HP.
-    /// </summary>
-    /// <returns></returns>
-	public int GetHP() 
+	/// Get player's current HP.
+	/// </summary>
+	/// <returns></returns>
+	public int GetHP()
 	{
-		return HP;	
+		return HP;
 	}
 
 	/// <summary>
@@ -123,14 +125,14 @@ public partial class GameData : Node
 
 		if (amount + HP > MAX_HP)
 			HP = MAX_HP;
-			
+
 		else HP += amount;
 	}
-	
+
 	/// <summary>
-    /// Get player's position.
-    /// </summary>
-    /// <returns></returns>
+	/// Get player's position.
+	/// </summary>
+	/// <returns></returns>
 	public Vector2 GetPlayerXY()
 	{
 		return player.Position;
@@ -146,9 +148,9 @@ public partial class GameData : Node
 	}
 
 	/// <summary>
-    /// Get player's Y position.
-    /// </summary>
-    /// <returns></returns>
+	/// Get player's Y position.
+	/// </summary>
+	/// <returns></returns>
 	public float GetPlayerY()
 	{
 		return player.Position.Y;
@@ -164,10 +166,10 @@ public partial class GameData : Node
 		return player.GlobalPosition;
 	}
 	/// <summary>
-    /// Decrease player's HP by the given amount. Amount must be positive.
-    /// </summary>
-    /// <param name="amount"></param>
-    /// <returns>True if player dies</returns>
+	/// Decrease player's HP by the given amount. Amount must be positive.
+	/// </summary>
+	/// <param name="amount"></param>
+	/// <returns>True if player dies</returns>
 	public bool CauseDamage(int amount)
 	{
 		HP -= amount;
@@ -175,10 +177,10 @@ public partial class GameData : Node
 	}
 
 	/// <summary>
-    /// Signal for updating the UI counter for ammo. 
+	/// Signal for updating the UI counter for ammo. 
 	/// 
 	/// Target: ../scenes/Player/Camera2D/HUD/AmmoValue
-    /// </summary>
+	/// </summary>
 	[Signal]
 	public delegate void UpdateAmmoLabelEventHandler(int plusMinus);
 
@@ -187,21 +189,21 @@ public partial class GameData : Node
 	/// </summary>
 	/// <param name="plusMinus"></param>
 	public void OnUpdateHUDEventHandler(int plusMinus)
-    {
-        EmitSignal(SignalName.UpdateAmmoLabel, plusMinus);
-    }
+	{
+		EmitSignal(SignalName.UpdateAmmoLabel, plusMinus);
+	}
 
 	/// <summary>
-    /// Signal for updating the UI counter for score.
-    /// </summary>
-    /// <param name="plusMinus"></param>
+	/// Signal for updating the UI counter for score.
+	/// </summary>
+	/// <param name="plusMinus"></param>
 	[Signal]
 	public delegate void UpdateScoreLabelEventHandler(int plusMinus);
 
 	/// <summary>
-    /// Signal handler for updating the UI counter for score.
-    /// </summary>
-    /// <param name="plusMinus"></param>
+	/// Signal handler for updating the UI counter for score.
+	/// </summary>
+	/// <param name="plusMinus"></param>
 	public void OnUpdateScoreEventHandler(int plusMinus)
 	{
 		EmitSignal(SignalName.UpdateScoreLabel, plusMinus);
@@ -224,7 +226,7 @@ public partial class GameData : Node
 	{
 		if (activated)
 			GD.Print("OnSignalWaveEnemyDestroyedEventHandler called by Wave.ActivateEnemy");
-		else 
+		else
 			GD.Print("OnSignalWaveEnemyDestroyedEventHandler invoked by SignalWaveEnemyDestroyed Emitted by Enemy.TakeDamage");
 		EmitSignal(SignalName.RemoveEnemyXYFromFormation, X, Y, activated);
 	}
@@ -255,7 +257,7 @@ public partial class GameData : Node
 	/// Signal to instruct GameData
 	/// </summary>
 	/// <param name="bonus">The int representation of bonus points to be awarded</param>
-	public void EmitWaveBownusEventHandlerSignal(int bonus)
+	public void EmitWaveBonusEventHandlerSignal(int bonus)
 	{
 		EmitSignal(SignalName.WaveBonus, bonus);
 	}

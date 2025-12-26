@@ -4,6 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 
+/*
+TODO: Figure out why Wave isn't being garbage collected properly,
+- Check signals to make sure they are not keeping references alive
+*/
+
 namespace Game.Enemies.EnemySpawning
 {
 	/// <summary>
@@ -18,9 +23,11 @@ namespace Game.Enemies.EnemySpawning
 		private EnemyActivationTimer enemyActivationTimer;
 
 		private const int FREQUENCY = 3;
+		
 		public override void _Ready()
 		{
 			gameData = GameData.Get();
+			gameData.WaveNumber++;
 			gameData.WaveDestroyed += EnemyDestroyedSignalHandler;
 			enemyActivationTimer = GetNode<EnemyActivationTimer>("EnemyActivationTimer");
 			enemyActivationTimer.Start(FREQUENCY);
@@ -35,6 +42,8 @@ namespace Game.Enemies.EnemySpawning
 			// 
 			// Don't forget - you're planning multiple types of waves to be spawnable!
 			gameData.PauseSpawning = true;
+			currentWave = null;
+			GD.Print($"Residual Entities remaining: {gameData.Entities}");
 			if (gameData.Entities == 0)
 			    gameData.PauseSpawning = false;
 		}
@@ -48,7 +57,12 @@ namespace Game.Enemies.EnemySpawning
 			{
 				GD.Print("Wave cleared! Spawning new wave...");
 				// Temporarily just spawning new default wave, can add logic for different wave types later.
-				currentWave = new Wave();
+				currentWave = null;
+				GC.Collect();
+				GC.WaitForPendingFinalizers();
+				GC.Collect();
+				gameData.WaveNumber++;
+				currentWave = new Wave(gameData.WaveNumber);
 				currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
 				enemyActivationTimer.Start(FREQUENCY);
 			}

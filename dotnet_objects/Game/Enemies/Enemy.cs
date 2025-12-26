@@ -132,11 +132,12 @@ namespace Game.Enemies
             hp -= amount;
             if (hp <= 0)
             {
+                GD.Print($"Enemy {this} destroyed, worth {worth} points.");
                 EmitSignal(nameof(EnemyDestroyed), worth);
 
                 if (inWaveFormation && Activated == false)
                 {
-                    GD.Print("Enemy destroyed by player, emitting SignalWaveEnemyDestroyed");
+                    GD.Print($"Enemy {this} destroyed by player, emitting SignalWaveEnemyDestroyed");
                     EmitSignal(SignalName.SignalWaveEnemyDestroyed, formationX, formationY, false);
                 } else if (!inWaveFormation)
                 {
@@ -146,7 +147,7 @@ namespace Game.Enemies
                 Drop drop = MakeDrop();
 
                 if (drop is not null)
-                    GetParent().AddChild(drop);
+                    CallDeferred(nameof(DeferredAddDrop), drop);
 
                 CallDeferred(nameof(FreeEnemyDeferred));
             }
@@ -157,6 +158,14 @@ namespace Game.Enemies
         private void FreeEnemyDeferred()
         {
             QueueFree();
+        }
+        /// <summary>
+        /// Helper method for deferring the addition of a Drop to the scene tree.
+        /// </summary>
+        /// <param name="drop"></param>
+        private void DeferredAddDrop(Drop drop)
+        {
+            GetParent().AddChild(drop);
         }
         /// <summary>
         /// Creates a Drop upon enemy destruction.
