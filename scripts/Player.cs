@@ -146,18 +146,21 @@ public partial class Player : CharacterBody2D, ICollector
 	
 	public void OnUpdateScoreLabel(int plusMinus)
     {
-		GD.Print($"Before: {score.Text}");
         int scoreVal = int.Parse(score.Text);
 		scoreVal += plusMinus;
 		score.Text = scoreVal.ToString();
-		GD.Print($"After: {score.Text}");
+		gameData.UpdateScore(plusMinus);
     }	
-
-    /// <summary>
-	/// Returns the player's current HP.
-	/// </summary>
 	public int GetHP()
 	{
 		return gameData.GetHP();
+	}
+	/// <summary>
+	/// Returns player score as a String.
+	/// </summary>
+	/// <returns>A String instead of an int (for display purposes)</returns>
+	public String GetScore()
+	{
+		return score.Text;
 	}
 }

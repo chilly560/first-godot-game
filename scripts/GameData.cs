@@ -24,6 +24,10 @@ public partial class GameData : Node
 	/// </summary>
 	private int HP;
 	/// <summary>
+	/// Current player score.
+	/// </summary>
+	public int Score {get; set;} = 0;
+	/// <summary>
 	/// Reference to the player node.
 	/// </summary>
 	private Player player;
@@ -145,6 +149,14 @@ public partial class GameData : Node
 			
 		HP -= amount;
 		return (HP > 0);
+	}
+	/// <summary>
+	/// Update the player's score by the given amount. + for adding, - for subtracting.
+	/// </summary>
+	/// <param name="plusMinus">Amount to add/sub</param>
+	public void UpdateScore(int plusMinus)
+	{
+		Score += plusMinus;
 	}
 	/// <summary>
 	/// Signal for updating the UI counter for ammo. 
