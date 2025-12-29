@@ -55,18 +55,17 @@ offset_right = 72.0
 offset_bottom = -21.0
 text = "Wave:"
 
-[node name="BG" type="Sprite2D" parent="WaveLabel"]
-z_index = -1
-position = Vector2(42, 44)
-scale = Vector2(1.037, 1.23413)
-texture = ExtResource("4_racf3")
-
 [node name="WaveValue" type="Label" parent="."]
 offset_left = 12.0
 offset_top = -43.0
 offset_right = 52.0
 offset_bottom = -20.0
 text = "???"
+
+[node name="BG" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(1.037, 1.23413)
+texture = ExtResource("4_racf3")
 
 [connection signal="pressed" from="Restart" to="Restart" method="OnButtonPressedRestart"]
 [connection signal="pressed" from="Quit" to="Quit" method="OnButtonPressedQuit"]

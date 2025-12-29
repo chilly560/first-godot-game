@@ -32,7 +32,8 @@ public partial class Player : CharacterBody2D, ICollector
 	public override void _Ready()
 	{
 		weaponScene = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
-		gameData = GetNode<GameData>("%GameData");
+		gameData = GameData.Get();
+		gameData.Player = this;
 		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;
 		gameData.UpdateScoreLabel += OnUpdateScoreLabel;
 		gameData.WaveBonus += OnUpdateScoreLabel;
@@ -43,6 +44,7 @@ public partial class Player : CharacterBody2D, ICollector
 		isAlive = true;
 		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();
+
 	}
 
 	/** Handles input from the player.

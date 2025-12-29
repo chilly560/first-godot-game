@@ -61,9 +61,16 @@ namespace Game.Enemies.EnemySpawning
 		public void OnSpawnTimerTimeout()
 		{
 			if ((!gameData.PauseSpawning) && (gameData.Entities < gameData.EntityCap))
-			{
-				SpawnBogey(GlobalPosition);
+			{				
+				GD.Print("---------------------");
+				GD.Print("INCREASING ENTITIES");
+				GD.Print($"Entities ({gameData.Entities})++");
 				gameData.Entities++;
+				GD.Print($"Entities ({gameData.Entities})");
+				GD.Print($"SPAWNING ENEMY");
+				SpawnBogey(GlobalPosition);
+				GD.Print($"Entities after spawn: {gameData.Entities}");
+				GD.Print("---------------------");
 			}
 
 			spawnTimer.Start();

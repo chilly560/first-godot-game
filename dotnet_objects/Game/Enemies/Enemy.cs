@@ -55,6 +55,11 @@ namespace Game.Enemies
         /// </summary>
         public bool Activated { get; set; } = false;
         /// <summary>
+        /// Internal flag to identify whether this enemy is dead. Used to ensure 
+        /// GameData.Entities is only decremented once.
+        /// </summary>
+        private bool isDead = false;
+        /// <summary>
         /// Identifies which cell of the respective matrix this enemy occupies IF this enemy
         /// is part of a wave formation.
         /// 
@@ -132,16 +137,22 @@ namespace Game.Enemies
             hp -= amount;
             if (hp <= 0)
             {
-                GD.Print($"Enemy {this} destroyed, worth {worth} points.");
+                //GD.Print($"Enemy {this} destroyed, worth {worth} points.");
                 EmitSignal(nameof(EnemyDestroyed), worth);
 
                 if (inWaveFormation && Activated == false)
                 {
-                    GD.Print($"Enemy {this} destroyed by player, emitting SignalWaveEnemyDestroyed");
+                    //GD.Print($"Enemy {this} destroyed by player, emitting SignalWaveEnemyDestroyed");
                     EmitSignal(SignalName.SignalWaveEnemyDestroyed, formationX, formationY, false);
-                } else if (!inWaveFormation)
+                } else if (!inWaveFormation && !isDead)
                 {
+				    GD.Print("---------------------");
+                    GD.Print($"Entities: {gameData.Entities} before decrement");
                     gameData.Entities--;
+                    GD.Print($"Entities: {gameData.Entities} after decrement");
+                    GD.Print("---------------------");
+
+                    isDead = true;
                 }
 
                 Drop drop = MakeDrop();

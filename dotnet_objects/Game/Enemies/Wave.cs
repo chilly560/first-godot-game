@@ -165,10 +165,10 @@ namespace Game.Enemies
             {
                 if (lockToPlayer && matrix[x, y] != null)
                 {
-                    GD.Print($"Activating Enemy {matrix[x, y]} at [{x}, {y}] from wave formation.");
+                    //GD.Print($"Activating Enemy {matrix[x, y]} at [{x}, {y}] from wave formation.");
                     matrix[x, y].SetPhysicsOverhauler(WaveEnemyPhysicsOverhaulers.DiveWavePhysicsOverhauler);
                     matrix[x, y].SetPhysicsModifier(WaveEnemyPhysicsModifiers.FindPlayerPhysicsModifier);
-                    GD.Print("Enemy activated from wave formation, Manually Calling OnSignalWaveEnemyDestroyedEventHandler");
+                    //GD.Print("Enemy activated from wave formation, Manually Calling OnSignalWaveEnemyDestroyedEventHandler");
                     GameData.Get().OnSignalWaveEnemyDestroyedEventHandler(x, y, true);
                 }
             }
@@ -184,7 +184,7 @@ namespace Game.Enemies
                         {
                             gameRoot.CallDeferred("add_child", matrix[i, j]);
                             Count++;
-                            GD.Print($"Count: {Count}");
+                            //GD.Print($"Count: {Count}");
                         }
             }
             public Enemy GetEnemyAt(int x, int y)
@@ -273,7 +273,7 @@ namespace Game.Enemies
                 case WavePattern.DEFAULT:
                 default:
                     eMatrix = EnemyMatrixBuilder.BuildDefaultMatrix();
-                    GD.Print(eMatrix.Count);
+                    //GD.Print(eMatrix.Count);
                     break;
             }
         }   
@@ -303,7 +303,7 @@ namespace Game.Enemies
 
             eMatrix.Count--;
                 
-            GD.Print($"Wave ({WaveID}) Enemy Count: {eMatrix.Count}.");
+            //GD.Print($"Wave ({WaveID}) Enemy Count: {eMatrix.Count}.");
 
             if (eMatrix.Count <= 0)
                 Destroy();
@@ -321,7 +321,7 @@ namespace Game.Enemies
         private void Destroy()
         {
             gameData.RemoveEnemyXYFromFormation -= EnemyDestroyedEventHandler;
-            GD.Print($"Wave Complete.");
+            //GD.Print($"Wave Complete.");
             gameData.EmitWaveDestroyedEventHandlerSignal();
             gameData.EmitWaveBonusEventHandlerSignal(BONUS);
         }

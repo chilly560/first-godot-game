@@ -28,14 +28,14 @@ namespace Game.Enemies.EnemySpawning
 		{
 			gameData = GameData.Get();
 			gameData.WaveNumber++;
-			gameData.WaveDestroyed += EnemyDestroyedSignalHandler;
+			gameData.WaveDestroyed += WaveDestroyedSignalHandler;
 			enemyActivationTimer = GetNode<EnemyActivationTimer>("EnemyActivationTimer");
 			enemyActivationTimer.Start(FREQUENCY);
 			currentWave = new Wave();
 			currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
 		}
 
-	    private void EnemyDestroyedSignalHandler()
+	    private void WaveDestroyedSignalHandler()
 		{
 			// TODO: This SignalHandler should pause the Bogey spawner and wait for the 
 			// player to finish clearing enemies - after which a new wave should be spawned.
@@ -44,9 +44,13 @@ namespace Game.Enemies.EnemySpawning
 			gameData.PauseSpawning = true;
 			currentWave = null;
 			GD.Print($"Residual Entities remaining: {gameData.Entities}");
-			if (gameData.Entities == 0)
-			    gameData.PauseSpawning = false;
 		}
+        public override void _Process(double delta)
+        {
+			if (gameData.PauseSpawning && gameData.Entities == 0)
+			    gameData.PauseSpawning = false;
+        }
+
 		public void OnEnemyActivationTimerTimeout()
 		{
 			if (currentWave != null && currentWave.GetCount() > 0)
@@ -55,7 +59,7 @@ namespace Game.Enemies.EnemySpawning
 				enemyActivationTimer.Start(FREQUENCY);
 			} else if (gameData.Entities == 0)
 			{
-				GD.Print("Wave cleared! Spawning new wave...");
+				//GD.Print("Wave cleared! Spawning new wave...");
 				// Temporarily just spawning new default wave, can add logic for different wave types later.
 				currentWave = null;
 				gameData.WaveNumber++;

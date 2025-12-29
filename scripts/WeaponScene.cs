@@ -9,6 +9,8 @@ public partial class WeaponScene : Marker2D
 
 	private IWeapon secondaryWeapon;
 
+	private GameData gameData;
+
 	/// <summary>
     /// Signals the Event-BUS (GameData.cs) to update the ammo count on the HUD
     /// </summary>
@@ -19,6 +21,9 @@ public partial class WeaponScene : Marker2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		gameData = GameData.Get();
+		gameData.WeaponScene = this;
+		UpdateAmmoHUD += gameData.OnUpdateHUDEventHandler;
 		Node2D localRoot = GetParent<Node2D>().GetParent<Node2D>();
 
 		if (localRoot is Player)
@@ -59,7 +64,7 @@ public partial class WeaponScene : Marker2D
 
 	public void Shoot()
 	{
-		currentWeapon.Shoot(this.GlobalPosition);
+		currentWeapon.Shoot(GlobalPosition);
 	}
 
 	public Weapon GetWeapon()
@@ -76,7 +81,7 @@ public partial class WeaponScene : Marker2D
 	{
 		if (secondaryWeapon is not null)
 		{
-			secondaryWeapon.Shoot(this.GlobalPosition);
+			secondaryWeapon.Shoot(GlobalPosition);
 			EmitSignal(SignalName.UpdateAmmoHUD, -1);
 		}
 	}

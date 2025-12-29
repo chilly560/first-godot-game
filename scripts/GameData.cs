@@ -18,7 +18,7 @@ public partial class GameData : Node
 	/// <summary>
 	/// Maximum HP for the player.
 	/// </summary>
-	private const int MAX_HP = 100;
+	private const int MAX_HP = 1000;
 	/// <summary>
 	/// Current HP for the player.
 	/// </summary>
@@ -30,11 +30,11 @@ public partial class GameData : Node
 	/// <summary>
 	/// Reference to the player node.
 	/// </summary>
-	private Player player;
+	public Player Player;
 	/// <summary>
 	/// Reference to the player's weapon scene node.
 	/// </summary>
-	private WeaponScene weaponScene;
+	public WeaponScene WeaponScene;
 	/// <summary>
 	/// Reference to the enemy parent class node.
 	/// </summary>
@@ -72,9 +72,6 @@ public partial class GameData : Node
 		HP = MAX_HP;
 
 		enemies = new Dictionary<int, Enemy>();
-		player = GetNode<Player>("../Player");
-		weaponScene = GetNode<WeaponScene>("../Player/AnimatedSprite2D/WeaponScene");
-		weaponScene.UpdateAmmoHUD += OnUpdateHUDEventHandler;
 	}
 	/// <summary>
 	/// Get the number of active enemies.
@@ -123,7 +120,7 @@ public partial class GameData : Node
 	/// <returns>float representing the player's X position</returns>
 	public float GetPlayerX()
 	{
-		return player.Position.X;
+		return Player.Position.X;
 	}
 	/// <summary>
 	/// Get player's Y position.
@@ -131,11 +128,11 @@ public partial class GameData : Node
 	/// <returns>float representing the player's Y position</returns>
 	public float GetPlayerY()
 	{
-		return player.Position.Y;
+		return Player.Position.Y;
 	}
 	public Vector2 GetPlayerGlobalPosition()
 	{
-		return player.GlobalPosition;
+		return Player.GlobalPosition;
 	}
 	/// <summary>
 	/// Decrease player's HP by the given amount. Amount must be positive.
@@ -206,10 +203,10 @@ public partial class GameData : Node
 	/// </summary>
 	public void OnSignalWaveEnemyDestroyedEventHandler(int X, int Y, bool activated = false)
 	{
-		if (activated)
-			GD.Print("OnSignalWaveEnemyDestroyedEventHandler called by Wave.ActivateEnemy");
-		else
-			GD.Print("OnSignalWaveEnemyDestroyedEventHandler invoked by SignalWaveEnemyDestroyed Emitted by Enemy.TakeDamage");
+		//if (activated)
+		//	GD.Print("OnSignalWaveEnemyDestroyedEventHandler called by Wave.ActivateEnemy");
+		//else
+		//	GD.Print("OnSignalWaveEnemyDestroyedEventHandler invoked by SignalWaveEnemyDestroyed Emitted by Enemy.TakeDamage");
 		EmitSignal(SignalName.RemoveEnemyXYFromFormation, X, Y, activated);
 	}
 	/// <summary>
@@ -226,7 +223,7 @@ public partial class GameData : Node
 	/// </summary>
 	public void EmitWaveDestroyedEventHandlerSignal()
 	{
-		GD.Print("Emitting WaveDestroyedEventHandler");
+		//GD.Print("Emitting WaveDestroyedEventHandler");
 		EmitSignal(SignalName.WaveDestroyed);
 	}
 	/// <summary>
