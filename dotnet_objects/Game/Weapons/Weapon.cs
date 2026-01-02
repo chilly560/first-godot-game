@@ -17,7 +17,7 @@ namespace Game.Weapons
         /// <summary>
         /// Standard damage for a bullet
         /// </summary>
-        private const int STANDARD_DAMAGE = 20;
+        private const int STANDARD_DAMAGE = 35;
         /// <summary>
         /// Standard speed for a bullet
         /// </summary>

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dc5nnm6e0ov2a"]
+
+[ext_resource type="PackedScene" uid="uid://bj2103ws4vfg3" path="res://scenes/Bogey.tscn" id="1_bpook"]
+[ext_resource type="Script" uid="uid://bkhohwmry4w3g" path="res://dotnet_objects/Game/Enemies/WaveBogey.cs" id="2_8i1ly"]
+
+[node name="Bogey" instance=ExtResource("1_bpook")]
+script = ExtResource("2_8i1ly")
+
+[node name="BogeyTimer" parent="." index="1"]
+script = null
+
+[node name="WaveBogeyTimer" type="Timer" parent="." index="4"]
+
+[connection signal="timeout" from="BogeyTimer" to="." method="OnBogeyTimerTimeout"]
+[connection signal="timeout" from="WaveBogeyTimer" to="." method="OnWaveBogeyTimerTimeout"]

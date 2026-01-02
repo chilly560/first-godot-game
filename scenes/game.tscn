@@ -34,8 +34,8 @@ position = Vector2(1.0132, -2.99135)
 position = Vector2(7, 246)
 
 [node name="BG" type="Sprite2D" parent="."]
-position = Vector2(-1.01318, 233.326)
-scale = Vector2(1.037, 1.23413)
+position = Vector2(-0.56279, 232.558)
+scale = Vector2(0.470574, 0.717351)
 texture = ExtResource("8_gee14")
 
 [node name="Camera2D" type="Camera2D" parent="."]

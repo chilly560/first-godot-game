@@ -24,9 +24,12 @@ namespace Game.Enemies.EnemySpawning
 
 		private const int FREQUENCY = 3;
 		
+		private Random random;
+
 		public override void _Ready()
 		{
 			gameData = GameData.Get();
+			random = new Random();
 			gameData.WaveNumber++;
 			gameData.WaveDestroyed += WaveDestroyedSignalHandler;
 			enemyActivationTimer = GetNode<EnemyActivationTimer>("EnemyActivationTimer");
@@ -45,12 +48,6 @@ namespace Game.Enemies.EnemySpawning
 			currentWave = null;
 			GD.Print($"Residual Entities remaining: {gameData.Entities}");
 		}
-        public override void _Process(double delta)
-        {
-			if (gameData.PauseSpawning && gameData.Entities == 0)
-			    gameData.PauseSpawning = false;
-        }
-
 		public void OnEnemyActivationTimerTimeout()
 		{
 			if (currentWave != null && currentWave.GetCount() > 0)
@@ -63,9 +60,23 @@ namespace Game.Enemies.EnemySpawning
 				// Temporarily just spawning new default wave, can add logic for different wave types later.
 				currentWave = null;
 				gameData.WaveNumber++;
-				currentWave = new Wave(gameData.WaveNumber);
+				int pattern = random.Next(0,2);
+				switch (pattern)
+				{
+					case 0:
+						currentWave = new Wave(gameData.WaveNumber, WavePattern.AGGRESSIVE);
+						break;
+					case 1:
+						currentWave = new Wave(gameData.WaveNumber, WavePattern.AGGRESSIVE);
+						break;
+					// temp unless more patterns are added
+					default:
+						currentWave = new Wave(gameData.WaveNumber, WavePattern.DEFAULT);
+						break;
+				}
 				currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
 				enemyActivationTimer.Start(FREQUENCY);
+				gameData.PauseSpawning = false;
 			}
 		}
 	}

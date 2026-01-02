@@ -1,10 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Game.Weapons;
-using Godot;
 
 namespace Game.Enemies
 {
@@ -92,6 +87,11 @@ namespace Game.Enemies
         protected override void SetWorth()
         {
             worth = 25;
+        }
+
+        public void Shoot()
+        {
+            weaponScene.Shoot();
         }
     }
 }

@@ -18,7 +18,7 @@ public partial class GameData : Node
 	/// <summary>
 	/// Maximum HP for the player.
 	/// </summary>
-	private const int MAX_HP = 1000;
+	private const int MAX_HP = 10000;
 	/// <summary>
 	/// Current HP for the player.
 	/// </summary>
@@ -220,6 +220,8 @@ public partial class GameData : Node
 	/// Emit the signal for informing the spawner that the current wave has been destroyed.
 	/// 
 	/// Implemented since 'Wave.cs' is not a godot node.
+	/// 
+	/// Handler located in WaveSpawner.cs
 	/// </summary>
 	public void EmitWaveDestroyedEventHandlerSignal()
 	{

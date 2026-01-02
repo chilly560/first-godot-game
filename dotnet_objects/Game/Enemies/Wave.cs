@@ -90,6 +90,12 @@ namespace Game.Enemies
                     } else wd.RotateDrone(-1);
                 } else throw new ArgumentException("Invalid Enemy Type (Must be WaveDrone)");
             }
+
+            public static void BogeyShootPhysicsModifier(Enemy d)
+            {
+                if (d is Bogey b && (Math.Abs(b.Position.X - GameData.Get().GetPlayerX()) < 1))
+                    b.Shoot();
+            }
         }
         /// <summary>
         /// Class representing a 2D matrix of enemies for enemy wave formations.
@@ -101,11 +107,11 @@ namespace Game.Enemies
             /// <summary>
             /// Number of rows in the enemy matrix.
             /// </summary>
-            public const int ROWS = 8;
+            public const int COLUMNS = 8;
             /// <summary>
             /// Number of columns in the enemy matrix.
             /// </summary>
-            public const int COLUMNS = 4;
+            public const int ROWS = 4;
             /// <summary>
             /// Number of cells actually populated by an enemy.
             /// </summary>
@@ -114,13 +120,12 @@ namespace Game.Enemies
             /// 2D array representing the enemy formation.
             /// </summary>
             private Enemy[,] matrix;
+            private Random random;
             /// <summary>
             /// Constructor initializes the enemy matrix.
             /// </summary>
-            public EnemyMatrix()
-            {
-                matrix = new Enemy[ROWS, COLUMNS];
-            }       
+            public EnemyMatrix() : this(new Enemy[COLUMNS, ROWS])
+            { }       
             /// <summary>
             /// Constructor with predefined matrix.
             /// </summary>
@@ -128,6 +133,7 @@ namespace Game.Enemies
             public EnemyMatrix(Enemy[,] matrix)
             {
                 this.matrix = matrix;
+                random = new Random();
             }
             /// <summary>
             /// Sets the enemy at the specified coordinates.
@@ -137,16 +143,15 @@ namespace Game.Enemies
             /// <param name="enemy"></param>
             public void PopulateMatrix(int x, int y, Enemy enemy)
             {
-                if (x >= 0 && x < ROWS && y >= 0 && y < COLUMNS)
+                if (x >= 0 && x < COLUMNS && y >= 0 && y < ROWS)
                 {
                     matrix[x, y] = enemy;
                 }
             }  
             public void ActivateRandom(bool lockToPlayer)
             {
-                Random rand = new Random();
-                int x = rand.Next(0, ROWS);
-                int y = rand.Next(0, COLUMNS);
+                int x = random.Next(0, COLUMNS);
+                int y = random.Next(0, ROWS);
 
                 if (matrix[x, y] != null)
                 {
@@ -163,7 +168,7 @@ namespace Game.Enemies
             /// <param name="lockToPlayer">Bool determining whether the enemy should chase the player's position</param>
             public void ActivateEnemy(int x, int y, bool lockToPlayer)
             {
-                if (lockToPlayer && matrix[x, y] != null)
+                if (lockToPlayer && matrix[x, y] != null && matrix[x, y] is WaveDrone)
                 {
                     //GD.Print($"Activating Enemy {matrix[x, y]} at [{x}, {y}] from wave formation.");
                     matrix[x, y].SetPhysicsOverhauler(WaveEnemyPhysicsOverhaulers.DiveWavePhysicsOverhauler);
@@ -178,8 +183,8 @@ namespace Game.Enemies
             /// <param name="gameRoot"></param>
             public void InstiantiateMatrixEntities(GameRoot gameRoot)
             {
-                for (int i = 0; i < ROWS; i++)
-                    for (int j = 0; j < COLUMNS; j++)
+                for (int i = 0; i < COLUMNS; i++)
+                    for (int j = 0; j < ROWS; j++)
                         if (matrix[i, j] != null)
                         {
                             gameRoot.CallDeferred("add_child", matrix[i, j]);
@@ -189,7 +194,7 @@ namespace Game.Enemies
             }
             public Enemy GetEnemyAt(int x, int y)
             {
-                if (x >= 0 && x < ROWS && y >= 0 && y < COLUMNS)
+                if (x >= 0 && x < COLUMNS && y >= 0 && y < ROWS)
                 {
                     if (matrix[x, y] == null)
                         throw new NullReferenceException("No enemy at specified matrix coordinates");
@@ -201,7 +206,7 @@ namespace Game.Enemies
 
             public void RemoveEnemyAt(int x, int y)
             {
-                if (x >= 0 && x < ROWS && y >= 0 && y < COLUMNS)
+                if (x >= 0 && x < COLUMNS && y >= 0 && y < ROWS)
                 {
                     matrix[x, y] = null;
                 }
@@ -225,21 +230,26 @@ namespace Game.Enemies
             /// on screen).
             /// </summary>
             private const int Y_OFFSET = 60;
+
+            private static Vector2 GetEnemyMatrixVector2(int i, int j)
+            {
+                return new Vector2((i * SPACING) + X_OFFSET, (j * SPACING) + Y_OFFSET);
+            }
             /// <summary>
             /// Builds a default enemy matrix formation with all positions filled with Drones.
             /// </summary>
             /// <returns></returns>
             public static EnemyMatrix BuildDefaultMatrix()
             {
-                Enemy[,] defaultMatrix = new Enemy[EnemyMatrix.ROWS, EnemyMatrix.COLUMNS];
+                Enemy[,] defaultMatrix = new Enemy[EnemyMatrix.COLUMNS, EnemyMatrix.ROWS];
                 
-                for (int i = 0; i < EnemyMatrix.ROWS; i++)
-                    for (int j = 0; j < EnemyMatrix.COLUMNS; j++)
+                for (int i = 0; i < EnemyMatrix.COLUMNS; i++)
+                    for (int j = 0; j < EnemyMatrix.ROWS; j++)
                     {
                         // TODO: Tweak actual Vector2 positions later
                         defaultMatrix[i, j] = EnemyFactory.CreateEnemy(
                             EnemyClassification.WAVE_DRONE, 
-                            new Vector2((i * SPACING) + X_OFFSET, (j * SPACING) + Y_OFFSET)
+                            GetEnemyMatrixVector2(i, j)
                         );
 
                         defaultMatrix[i, j].SetFormation(i, j);
@@ -254,6 +264,46 @@ namespace Game.Enemies
                 EnemyMatrix e = new EnemyMatrix(defaultMatrix);
                 //e.Count = EnemyMatrix.ROWS * EnemyMatrix.COLUMNS;
                 return e;
+            }
+
+            public static EnemyMatrix BuildAggressiveMatrix()
+            {
+                Enemy[,] aggressiveMatrix = new Enemy[EnemyMatrix.COLUMNS, EnemyMatrix.ROWS];
+
+                Random rand = new Random();
+
+                for(int i = 0; i < EnemyMatrix.COLUMNS; i++)
+                    for (int j = 0; j < EnemyMatrix.ROWS; j++)
+                    {
+                        if (j == 0 && i % 2 == 0)
+                        {
+                            aggressiveMatrix[i, j] = EnemyFactory.CreateEnemy(
+                                EnemyClassification.WAVE_BOGEY,
+                                GetEnemyMatrixVector2(i, j)
+                            );
+                        }
+
+                        else if (j > 0 && rand.NextDouble() * 5 > 2.5)
+                        {
+                            aggressiveMatrix[i, j] = EnemyFactory.CreateEnemy(
+                                EnemyClassification.WAVE_DRONE,
+                                GetEnemyMatrixVector2(i, j)
+                            );
+
+                            aggressiveMatrix[i, j].Rotate(Mathf.DegToRad(180));
+                        }
+                        
+                        if (aggressiveMatrix[i, j] != null)
+                        {
+                            aggressiveMatrix[i, j].SetFormation(i, j);
+
+                            aggressiveMatrix[i, j].SetPhysicsOverhauler(
+                                WaveEnemyPhysicsOverhaulers.DefaultWavePhysicsOverhauler
+                            );
+                        }
+                    }
+
+                return new EnemyMatrix(aggressiveMatrix);
             }
         }
         /// <summary>
@@ -271,10 +321,13 @@ namespace Game.Enemies
             switch (pattern)
             {
                 case WavePattern.DEFAULT:
-                default:
-                    eMatrix = EnemyMatrixBuilder.BuildDefaultMatrix();
-                    //GD.Print(eMatrix.Count);
+                    eMatrix =  EnemyMatrixBuilder.BuildDefaultMatrix();
                     break;
+                case WavePattern.AGGRESSIVE:
+                    eMatrix = EnemyMatrixBuilder.BuildAggressiveMatrix();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid Wave Pattern");
             }
         }   
         /// <summary>
@@ -303,7 +356,7 @@ namespace Game.Enemies
 
             eMatrix.Count--;
                 
-            //GD.Print($"Wave ({WaveID}) Enemy Count: {eMatrix.Count}.");
+            GD.Print($"Wave ({WaveID}) Enemy Count: {eMatrix.Count}.");
 
             if (eMatrix.Count <= 0)
                 Destroy();
@@ -321,7 +374,7 @@ namespace Game.Enemies
         private void Destroy()
         {
             gameData.RemoveEnemyXYFromFormation -= EnemyDestroyedEventHandler;
-            //GD.Print($"Wave Complete.");
+            // GD.Print($"Wave Complete.");
             gameData.EmitWaveDestroyedEventHandlerSignal();
             gameData.EmitWaveBonusEventHandlerSignal(BONUS);
         }

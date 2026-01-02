@@ -64,7 +64,8 @@ text = "???"
 
 [node name="BG" type="Sprite2D" parent="."]
 z_index = -1
-scale = Vector2(1.037, 1.23413)
+position = Vector2(0.012495, -0.163)
+scale = Vector2(0.231393, 0.360408)
 texture = ExtResource("4_racf3")
 
 [connection signal="pressed" from="Restart" to="Restart" method="OnButtonPressedRestart"]

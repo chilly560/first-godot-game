@@ -56,7 +56,7 @@ namespace Game.Enemies
         public bool Activated { get; set; } = false;
         /// <summary>
         /// Internal flag to identify whether this enemy is dead. Used to ensure 
-        /// GameData.Entities is only decremented once.
+        /// This instance of an Enemy can't decrement the global entity count more than once.
         /// </summary>
         private bool isDead = false;
         /// <summary>

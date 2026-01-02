@@ -4,6 +4,7 @@ namespace Game.Enemies
     {
         DRONE,
         BOGEY,
-        WAVE_DRONE
+        WAVE_DRONE,
+        WAVE_BOGEY
     }
 }

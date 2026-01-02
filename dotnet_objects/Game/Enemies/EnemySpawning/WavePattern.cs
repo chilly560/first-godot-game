@@ -2,6 +2,8 @@ namespace Game.Enemies.EnemySpawning
 {
     public enum WavePattern
     {
-        DEFAULT
+        DEFAULT,
+
+        AGGRESSIVE
     }
 }
