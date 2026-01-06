@@ -29,7 +29,7 @@ namespace Game.Enemies
         /// <summary>
         /// Chance of a drop occurring upon enemy destruction.
         /// </summary>
-        private const float DROP_CHANCE = 0.5f;
+        protected float dropChance = 0.5f;
         /// <summary>
         /// Number of points this enemy is worth.
         /// </summary>
@@ -78,7 +78,7 @@ namespace Game.Enemies
             List<float> chances = new List<float>() { .5f, .5f };
 
             dropFactory = DropFactoryFactory.GetFactoryChance(
-                DROP_CHANCE,
+                dropChance,
                 chances
             );
 

@@ -16,11 +16,11 @@ namespace Game.Enemies
 
 		private float rotation;
 
-
 		public override void _Ready()
 		{
 			base._Ready();
 			rotation = 0;
+            dropChance = .1f;
 		}
         /// <summary>
         /// Rotates in the desired direction IF the WaveDrone has not already been rotated in that direction

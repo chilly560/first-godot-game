@@ -44,7 +44,7 @@ namespace Game.Enemies
             /// <param name="delta">The time elapsed since the last frame</param>
             public static void DiveWavePhysicsOverhauler(Enemy d, double delta)
             {
-                d.Position -= d.Transform.Y * 1f;
+                d.Position += -1 * d.Transform.Y * 150 * (float)delta;
             }
         }
         /// <summary>

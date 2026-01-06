@@ -8,6 +8,12 @@ namespace Game.Enemies
     /// </summary>
 	public partial class Drone : Enemy
 	{
+
+        public override void _Ready()
+        {
+			dropChance = .1f;
+            base._Ready();
+        }
 		protected override void SetWorth()
 		{
 			worth = 5;

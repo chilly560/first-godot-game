@@ -19,6 +19,7 @@ namespace Game.Enemies
 
         public override void _Ready()
         {
+            dropChance = .5f;
             base._Ready();
             // Create a timer that ticks down every x seconds
             // when timer ends, the bogey moves to the player's x position and shooots

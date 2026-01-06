@@ -21,7 +21,7 @@ namespace Game.Drops
 
             public static void DefaultPhysics(Drop d, double delta)
             {
-                d.Position += 1 * d.Transform.Y * DEFAULT_SPEED * (float)delta;
+                d.Position += d.Transform.Y * DEFAULT_SPEED * (float)delta;
             }
         }
 
