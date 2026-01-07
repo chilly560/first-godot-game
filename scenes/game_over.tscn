@@ -1,12 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcip2raht2ynm"]
+[gd_scene load_steps=7 format=3 uid="uid://dcip2raht2ynm"]
 
 [ext_resource type="Script" uid="uid://1ggfybsvw24" path="res://scripts/GameOver.cs" id="1_tbwuq"]
 [ext_resource type="Script" uid="uid://c4i3tjgdvti7j" path="res://scenes/Restart.cs" id="1_wqhvx"]
 [ext_resource type="Script" uid="uid://bt37104qnwoom" path="res://scenes/Quit.cs" id="2_tbwuq"]
-[ext_resource type="Texture2D" uid="uid://cj11oejj8d3ty" path="res://assets/BG.png" id="4_racf3"]
+[ext_resource type="Shader" uid="uid://dn0wph4eamglt" path="res://scenes/game.gdshader" id="4_7m3ot"]
+[ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="5_v3hpu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_irg28"]
+shader = ExtResource("4_7m3ot")
 
 [node name="GameOver" type="Node2D"]
 script = ExtResource("1_tbwuq")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_irg28")
+offset_left = -90.0
+offset_top = -145.0
+offset_right = 934.0
+offset_bottom = 879.0
+scale = Vector2(0.169762, 0.282965)
+texture = ExtResource("5_v3hpu")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -49.0
@@ -61,12 +75,6 @@ offset_top = -43.0
 offset_right = 52.0
 offset_bottom = -20.0
 text = "???"
-
-[node name="BG" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(0.012495, -0.163)
-scale = Vector2(0.231393, 0.360408)
-texture = ExtResource("4_racf3")
 
 [connection signal="pressed" from="Restart" to="Restart" method="OnButtonPressedRestart"]
 [connection signal="pressed" from="Quit" to="Quit" method="OnButtonPressedQuit"]
