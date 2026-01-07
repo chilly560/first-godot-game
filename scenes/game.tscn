@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://chjkhfsdsws7j"]
+[gd_scene load_steps=12 format=4 uid="uid://chjkhfsdsws7j"]
 
 [ext_resource type="Script" uid="uid://bej06gxouydca" path="res://scripts/GameData.cs" id="1_lbhrr"]
 [ext_resource type="Script" uid="uid://b4vfbl26uu676" path="res://scenes/GameRoot.cs" id="1_p57ef"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://n5lbhp4a8odl" path="res://scenes/WaveSpawner.tscn" id="7_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="9_0tnpc"]
 [ext_resource type="Shader" uid="uid://dn0wph4eamglt" path="res://scenes/game.gdshader" id="9_vtaks"]
+[ext_resource type="PackedScene" uid="uid://clatcu1widtu2" path="res://scenes/one_way_blocker.tscn" id="10_vtaks"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
 shader = ExtResource("9_vtaks")
@@ -29,7 +30,6 @@ script = ExtResource("3_p57ef")
 [node name="TileMapLayer" parent="." instance=ExtResource("5_iywne")]
 position = Vector2(16.2112, 342.012)
 tile_map_data = PackedByteArray("AAD7/woAAAANAAMAAAD8/woAAAANAAMAAAD9/woAAAANAAMAAAD+/woAAAANAAMAAAD//woAAAANAAMAAAAAAAoAAAANAAMAAAABAAoAAAANAAMAAAACAAoAAAANAAMAAAD6/woAAAANAAMAAAD5/woAAAANAAMAAAD4/woAAAANAAMAAAD3/woAAAANAAMAAAAFAAoAAAANAAMAAAADAAoAAAANAAMAAAAEAAoAAAANAAMAAAAHAAoAAAANAAMAAAAIAPT/AAAPAAIAAAAIAPX/AAAPAAIAAAAIAPb/AAAPAAEAAAAIAPf/AAAPAAIAAAAIAPj/AAAPAAIAAAAIAPn/AAAPAAIAAAAIAPr/AAAPAAIAAAAIAPv/AAAPAAIAAAAIAPz/AAAPAAIAAAAIAP3/AAAPAAIAAAAIAP7/AAAPAAIAAAAIAP//AAAPAAIAAAAIAAAAAAAPAAIAAAAIAAEAAAAPAAIAAAAIAAIAAAAPAAIAAAAIAAMAAAAPAAIAAAAIAAQAAAAPAAIAAAAIAAUAAAAPAAIAAAAIAAYAAAAPAAIAAAAIAAcAAAAPAAIAAAAIAAgAAAAPAAIAAAAIAAkAAAAPAAIAAAAIAAoAAAAPAAMAAAAGAAoAAAAOAAMAAAAIAPP/AAAPAAEAAAAIAPL/AAAPAAEAAAAIAPH/AAAPAAEAAAAIAPD/AAAPAAEAAAAIAO//AAAPAAEAAAAIAO7/AAAPAAEAAAAIAO3/AAAPAAEAAAD1/woAAAAMAAMAAAD1/+3/AAAMAAIAAAD1/+7/AAAMAAIAAAD1/+//AAAMAAIAAAD1//D/AAAMAAIAAAD1//H/AAAMAAIAAAD1//L/AAAMAAIAAAD1//P/AAAMAAIAAAD1//T/AAAMAAIAAAD1//X/AAAMAAIAAAD1//b/AAAMAAIAAAD1//f/AAAMAAIAAAD1//j/AAAMAAIAAAD1//n/AAAMAAIAAAD1//r/AAAMAAIAAAD1//v/AAAMAAIAAAD1//z/AAAMAAIAAAD1//3/AAAMAAIAAAD1//7/AAAMAAIAAAD1////AAAMAAIAAAD1/wAAAAAMAAIAAAD1/wEAAAAMAAIAAAD1/wIAAAAMAAIAAAD1/wMAAAAMAAIAAAD1/wQAAAAMAAIAAAD1/wUAAAAMAAIAAAD1/wYAAAAMAAIAAAD1/wcAAAAMAAIAAAD1/wgAAAAMAAIAAAD1/wkAAAAMAAIAAAD2/woAAAANAAMAAAD1/+f/AAAMAAEAAAD1/+j/AAAMAAEAAAD1/+n/AAAMAAEAAAD1/+r/AAAMAAEAAAD1/+v/AAAMAAEAAAD1/+z/AAAMAAEAAAAIAOf/AAAPAAEAAAAIAOj/AAAPAAEAAAAIAOn/AAAPAAEAAAAIAOr/AAAPAAEAAAAIAOv/AAAPAAEAAAAIAOz/AAAPAAEAAAA=")
-metadata/_edit_group_ = true
 
 [node name="EnemySpawner2" parent="." instance=ExtResource("6_p57ef")]
 position = Vector2(1.0132, -2.99135)
@@ -40,10 +40,10 @@ position = Vector2(7, 246)
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_kvpfn")
-offset_left = -168.191
-offset_top = -55.8387
-offset_right = 855.809
-offset_bottom = 968.161
+offset_left = -166.165
+offset_top = -58.83
+offset_right = 857.835
+offset_bottom = 965.17
 scale = Vector2(0.325471, 0.564926)
 texture = ExtResource("9_0tnpc")
 
@@ -113,3 +113,6 @@ offset_right = -60.0
 offset_bottom = -226.0
 text = "0"
 metadata/_edit_use_anchors_ = true
+
+[node name="OneWayBlocker" parent="." instance=ExtResource("10_vtaks")]
+position = Vector2(-1.0132, 231.331)

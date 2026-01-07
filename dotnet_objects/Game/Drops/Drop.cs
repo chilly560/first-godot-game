@@ -61,7 +61,9 @@ namespace Game.Drops
             {
                 AddAttribute(player, collectable);
             }
-            CallDeferred("queue_free");
+            
+            if (node is not OneWayBlocker)
+                CallDeferred("queue_free");
         }
 
         public void SetPhysicsModifier(Action<Drop> del)

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://clatcu1widtu2"]
+
+[ext_resource type="Script" uid="uid://bngg6dykdn1ru" path="res://scripts/OneWayBlocker.cs" id="1_aynuy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ovu0l"]
+size = Vector2(281.75, 25)
+
+[node name="OneWayBlocker" type="RigidBody2D"]
+script = ExtResource("1_aynuy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ovu0l")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
