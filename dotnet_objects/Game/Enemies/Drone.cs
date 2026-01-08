@@ -8,10 +8,12 @@ namespace Game.Enemies
     /// </summary>
 	public partial class Drone : Enemy
 	{
+		protected Sprite2D sprite;
 
         public override void _Ready()
         {
 			dropChance = .1f;
+			sprite = GetNode<Sprite2D>("./Sprite2D");
             base._Ready();
         }
 		protected override void SetWorth()

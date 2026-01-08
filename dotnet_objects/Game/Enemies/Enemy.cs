@@ -29,7 +29,7 @@ namespace Game.Enemies
         /// <summary>
         /// Chance of a drop occurring upon enemy destruction.
         /// </summary>
-        protected float dropChance = 0.5f;
+        protected float dropChance;
         /// <summary>
         /// Number of points this enemy is worth.
         /// </summary>
@@ -75,6 +75,7 @@ namespace Game.Enemies
             enemyid = gameData.GetNumberOfEnemies();
             gameData.AddEnemy(this);
             hp = 100;
+
             List<float> chances = new List<float>() { .5f, .5f };
 
             dropFactory = DropFactoryFactory.GetFactoryChance(
@@ -146,11 +147,11 @@ namespace Game.Enemies
                     EmitSignal(SignalName.SignalWaveEnemyDestroyed, formationX, formationY, false);
                 } else if (!inWaveFormation && !isDead)
                 {
-				    GD.Print("---------------------");
-                    GD.Print($"Entities: {gameData.Entities} before decrement");
+				    //GD.Print("---------------------");
+                    //GD.Print($"Entities: {gameData.Entities} before decrement");
                     gameData.Entities--;
-                    GD.Print($"Entities: {gameData.Entities} after decrement");
-                    GD.Print("---------------------");
+                    //GD.Print($"Entities: {gameData.Entities} after decrement");
+                    //GD.Print("---------------------");
 
                     isDead = true;
                 }

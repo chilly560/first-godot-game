@@ -28,10 +28,12 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private Timer autofireTimer;
 
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		weaponScene = GetNode<WeaponScene>("AnimatedSprite2D/WeaponScene");
+		weaponScene = GetNode<WeaponScene>("Sprite2D/WeaponScene");
 		gameData = GameData.Get();
 		gameData.Player = this;
 		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;

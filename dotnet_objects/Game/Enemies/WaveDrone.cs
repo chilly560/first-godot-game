@@ -12,20 +12,47 @@ namespace Game.Enemies
 	/// </summary>
 	public partial class WaveDrone : Drone
 	{
+        /// <summary>
+        /// The max rotation in radians that a WaveDrone can have in either direction (left or right)
+        /// 
+        /// Negative = Right
+        /// Positive = Left
+        /// </summary>
 		private const float THIRTY_DEGREES_RADIANS = .523599f;
 
+        /// <summary>
+        /// 
+        /// </summary>
 		private float rotation;
-
-		public override void _Ready()
+	    public override void _Ready()
 		{
-			base._Ready();
 			rotation = 0;
-            dropChance = .1f;
+            base._Ready();
 		}
+        /// <summary>
+        /// Toggles the "left" or "right" or "center" sprites based on the passed in value
+        /// </summary>
+        /// <param name="positiveNegativeZero">Negative = right turn, Positive = left turn, 0 = center</param>
+        private void ToggleSprite(int positiveNegativeZero)
+        {
+            if (positiveNegativeZero == 0)
+            {
+                sprite.Texture = gameData.SpriteFramesCache.WaveDrone.Center;
+                
+            }
+            else if (positiveNegativeZero > 0)
+            {
+                sprite.Texture = gameData.SpriteFramesCache.WaveDrone.Left;
+            }
+            else
+            {
+                sprite.Texture = gameData.SpriteFramesCache.WaveDrone.Right;
+            }
+        }
         /// <summary>
         /// Rotates in the desired direction IF the WaveDrone has not already been rotated in that direction
         /// </summary>
-        /// <param name="radians">A radian of thirty degrees (negative for right, positive for left)</param>
+        /// <param name="radians">A radian of thirty degrees (negative for right, positive for left) to roatate the drone by. -1 to rotate back to center</param>
         public void RotateDrone(float radians)
         {
             if (radians == -1 && rotation != 0)

@@ -356,7 +356,7 @@ namespace Game.Enemies
 
             eMatrix.Count--;
                 
-            GD.Print($"Wave ({WaveID}) Enemy Count: {eMatrix.Count}.");
+            //GD.Print($"Wave ({WaveID}) Enemy Count: {eMatrix.Count}.");
 
             if (eMatrix.Count <= 0)
                 Destroy();
