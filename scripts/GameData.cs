@@ -73,6 +73,10 @@ public partial class GameData : Node
     /// Implements a cache of alternative SpriteFrames for various game entities. 
 	/// 
 	/// Implemented as readonly and accessed directly. 
+	/// 
+	/// Options:
+	/// - WaveDrone: Left, Right, Center
+	/// - Player: Left, Right, Center
     /// </summary>
 	public class AltSpriteFramesCache
     {
@@ -89,7 +93,9 @@ public partial class GameData : Node
 
 		public class PlayerSpriteCache
 		{
-			//public static readonly SpriteFrames Left = GD.Load<SpriteFrames>("res://assets/Player/")
+			public readonly Texture2D Left = GD.Load<Texture2D>("res://assets/Player/player_b_l1.png");
+			public readonly Texture2D Right = GD.Load<Texture2D>("res://assets/Player/player_b_r2.png");
+			public readonly Texture2D Center = GD.Load<Texture2D>("res://assets/Player/player_b_m.png");
 		}
     }
 	// Called when the node enters the scene tree for the first time.

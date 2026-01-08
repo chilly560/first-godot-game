@@ -28,7 +28,7 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private Timer autofireTimer;
 
-
+	private Sprite2D sprite;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -43,6 +43,7 @@ public partial class Player : CharacterBody2D, ICollector
 		hp = GetNode<Label>("../Camera2D/HUD/HPValue");
 		secondaryAmmo = GetNode<Label>("../Camera2D/HUD/AmmoValue");
 		score = GetNode<Label>("../Camera2D/HUD/ScoreValue");
+		sprite = GetNode<Sprite2D>("./Sprite2D");
 		isAlive = true;
 		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();
@@ -60,6 +61,20 @@ public partial class Player : CharacterBody2D, ICollector
 		else
 		{
 			Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
+			if (inputDirection.X < 0)
+			{
+				sprite.Texture = gameData.SpriteFramesCache.Player.Left;
+			}
+			else if (inputDirection.X > 0)
+			{
+				sprite.Texture = gameData.SpriteFramesCache.Player.Right;
+			}
+			else if (inputDirection.X == 0)
+			{
+				sprite.Texture = gameData.SpriteFramesCache.Player.Center;
+			} else {
+				throw new Exception("Unreachable code in Player.GetInput()");
+			}
 			Velocity = inputDirection * Speed;
 		}
 	}
