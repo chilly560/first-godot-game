@@ -33,7 +33,7 @@ namespace Game.Enemies
         /// Toggles the "left" or "right" or "center" sprites based on the passed in value
         /// </summary>
         /// <param name="positiveNegativeZero">Negative = right turn, Positive = left turn, 0 = center</param>
-        private void ToggleSprite(int positiveNegativeZero)
+        private void ToggleSprite(float positiveNegativeZero)
         {
             if (positiveNegativeZero == 0)
             {
@@ -59,6 +59,7 @@ namespace Game.Enemies
             {
                 Rotate(rotation < 0 ? THIRTY_DEGREES_RADIANS : -THIRTY_DEGREES_RADIANS);
                 rotation = 0;
+                ToggleSprite(0);
             }
             else if (radians != -1)
             {
@@ -71,6 +72,8 @@ namespace Game.Enemies
                     rotation = radians / 2;
                     Rotate(radians / 2);
                 }
+
+                ToggleSprite(radians);
             }
         }       
 	}
