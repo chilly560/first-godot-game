@@ -76,7 +76,7 @@ namespace Game.Enemies
             gameData.AddEnemy(this);
             hp = 100;
 
-            List<float> chances = new List<float>() { .5f, .5f };
+            List<float> chances = new List<float>() { .75f, .25f };
 
             dropFactory = DropFactoryFactory.GetFactoryChance(
                 dropChance,
