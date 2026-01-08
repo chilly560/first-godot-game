@@ -8,6 +8,11 @@ namespace NewGameProject.scripts
 {
     public partial class EnemyBullet : Bullet 
     {
+        public override void _Ready()
+        {
+            Damage = 10;
+            base._Ready();
+        }
         public override void OnAreaEnteredBullet(Node body)
         {
             if (body is Player p)
