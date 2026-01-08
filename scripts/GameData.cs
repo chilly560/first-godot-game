@@ -68,7 +68,7 @@ public partial class GameData : Node
 	/// <summary>
     /// Cache of alternative SpriteFrames for various game entities. Preloaded as part of GameData to improve performance at runtime.
     /// </summary>
-	public AltSpriteFramesCache SpriteFramesCache;
+	public TexturesCache TextureCache;
 	/// <summary>
     /// Implements a cache of alternative SpriteFrames for various game entities. 
 	/// 
@@ -77,17 +77,20 @@ public partial class GameData : Node
 	/// Options:
 	/// - WaveDrone: Left, Right, Center
 	/// - Player: Left, Right, Center
+	/// - Bogey: Left, Right, Center
     /// </summary>
-	public class AltSpriteFramesCache
+	public class TexturesCache
     {
 		public readonly WaveDroneSpriteCache WaveDrone = new WaveDroneSpriteCache();
 
 		public readonly PlayerSpriteCache Player = new PlayerSpriteCache();
 
+		public readonly BogeySpriteCache Bogey = new BogeySpriteCache();
+
         public class WaveDroneSpriteCache
 		{
 			public readonly Texture2D Left = GD.Load<Texture2D>("res://assets/Replacement_Enemy/enemy_2_r_l1.png");
-			public readonly Texture2D Right = GD.Load<Texture2D>("res://assets/Replacement_Enemy/enemy_2_r_l1.png");
+			public readonly Texture2D Right = GD.Load<Texture2D>("res://assets/Replacement_Enemy/enemy_2_r_r2.png");
 			public readonly Texture2D Center = GD.Load<Texture2D>("res://assets/Replacement_Enemy/enemy_2_r_m.png");
 		}
 
@@ -97,6 +100,13 @@ public partial class GameData : Node
 			public readonly Texture2D Right = GD.Load<Texture2D>("res://assets/Player/player_b_r2.png");
 			public readonly Texture2D Center = GD.Load<Texture2D>("res://assets/Player/player_b_m.png");
 		}
+
+		public class BogeySpriteCache
+        {
+            public readonly Texture2D Left = GD.Load<Texture2D>("res://assets/Replacement_Enemy/enemy_1_r_l2.png");
+			public readonly Texture2D Right = GD.Load<Texture2D>("res://assets/Replacement_Enemy/enemy_1_r_r1.png");
+			public readonly Texture2D Center = GD.Load<Texture2D>("res://assets/Replacement_Enemy/enemy_1_r_m.png");
+        }
     }
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -104,7 +114,7 @@ public partial class GameData : Node
 		self = this;
 		HP = MAX_HP;
 		try {
-			SpriteFramesCache = new AltSpriteFramesCache();
+			TextureCache = new TexturesCache();
 		} catch (Exception e) {
 			GD.PrintErr("Error initializing SpriteFramesCache: " + e.Message);
 		}

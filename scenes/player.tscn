@@ -48,7 +48,7 @@ scale = Vector2(0.448459, 0.362345)
 sprite_frames = SubResource("SpriteFrames_tuyoq")
 animation = &"new_animation"
 autoplay = "new_animation"
-frame_progress = 0.812689
+frame_progress = 0.878404
 centered = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

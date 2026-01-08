@@ -68,6 +68,10 @@ namespace Game.Enemies
         /// by the player)
         /// </summary>
         protected int formationX, formationY;
+        /// <summary>
+        /// Allows access to and modifications to the Sprite2D node for this enemy.
+        /// </summary>
+        protected Sprite2D sprite;
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -86,6 +90,7 @@ namespace Game.Enemies
             SetWorth();
             EnemyDestroyed += gameData.OnUpdateScoreEventHandler;
             SignalWaveEnemyDestroyed += gameData.OnSignalWaveEnemyDestroyedEventHandler;
+            sprite = GetNode<Sprite2D>("./Sprite2D");
         }
 
         public override void _Process(double delta)

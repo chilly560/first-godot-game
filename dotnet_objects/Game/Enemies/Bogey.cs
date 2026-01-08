@@ -26,7 +26,7 @@ namespace Game.Enemies
             // This will be done with a godot timer node.
             reposition = true;
             paused = false;
-            weaponScene = GetNode<WeaponScene>("./AnimatedSprite2D/WeaponScene");
+            weaponScene = GetNode<WeaponScene>("./Sprite2D/WeaponScene");
             weaponScene.SetWeapon(
                 WeaponFactory.CreateWeapon(WeaponType.Pistol, this)
             );
@@ -54,13 +54,20 @@ namespace Game.Enemies
                     reposition = false;
                     weaponScene.Shoot();
                     OnBogeyTimerTimeout();
+                    sprite.Texture = gameData.TextureCache.Bogey.Center;
                 }
 
                 else if (Position.X < targetPosition)
+                {
                     Position += Transform.X * 100 * (float)delta;
+                    sprite.Texture = gameData.TextureCache.Bogey.Right;
+                }                   
 
                 else
+                {
                     Position += Transform.X * -100 * (float)delta;
+                    sprite.Texture = gameData.TextureCache.Bogey.Left;
+                }
 
                 targetPosition = gameData.GetPlayerX();
             }

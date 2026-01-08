@@ -37,16 +37,16 @@ namespace Game.Enemies
         {
             if (positiveNegativeZero == 0)
             {
-                sprite.Texture = gameData.SpriteFramesCache.WaveDrone.Center;
+                sprite.Texture = gameData.TextureCache.WaveDrone.Center;
                 
             }
             else if (positiveNegativeZero > 0)
             {
-                sprite.Texture = gameData.SpriteFramesCache.WaveDrone.Left;
+                sprite.Texture = gameData.TextureCache.WaveDrone.Left;
             }
             else
             {
-                sprite.Texture = gameData.SpriteFramesCache.WaveDrone.Right;
+                sprite.Texture = gameData.TextureCache.WaveDrone.Right;
             }
         }
         /// <summary>

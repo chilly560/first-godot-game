@@ -63,15 +63,15 @@ public partial class Player : CharacterBody2D, ICollector
 			Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
 			if (inputDirection.X < 0)
 			{
-				sprite.Texture = gameData.SpriteFramesCache.Player.Left;
+				sprite.Texture = gameData.TextureCache.Player.Left;
 			}
 			else if (inputDirection.X > 0)
 			{
-				sprite.Texture = gameData.SpriteFramesCache.Player.Right;
+				sprite.Texture = gameData.TextureCache.Player.Right;
 			}
 			else if (inputDirection.X == 0)
 			{
-				sprite.Texture = gameData.SpriteFramesCache.Player.Center;
+				sprite.Texture = gameData.TextureCache.Player.Center;
 			} else {
 				throw new Exception("Unreachable code in Player.GetInput()");
 			}

@@ -1,39 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://bj2103ws4vfg3"]
+[gd_scene load_steps=6 format=3 uid="uid://bj2103ws4vfg3"]
 
 [ext_resource type="Script" uid="uid://f6y43g25nfpk" path="res://dotnet_objects/Game/Enemies/Bogey.cs" id="1_h5uv4"]
 [ext_resource type="Texture2D" uid="uid://btkhm63m6v1dl" path="res://assets/Replacement_Enemy/enemy_1_r_m.png" id="2_7k7q8"]
 [ext_resource type="Script" uid="uid://dxwoqhljegj02" path="res://scripts/BogeyTimer.cs" id="3_7k7q8"]
 [ext_resource type="PackedScene" uid="uid://c4i3m8rk703u2" path="res://scenes/WeaponScene.tscn" id="4_u2nkw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u2nkw"]
-atlas = ExtResource("2_7k7q8")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_gdow1"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u2nkw")
-}],
-"loop": true,
-"name": &"new_animation",
-"speed": 5.0
-}]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6acpg"]
 size = Vector2(13, 17)
 
 [node name="Bogey" type="Area2D"]
 script = ExtResource("1_h5uv4")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-0.0624994, 2.84217e-14)
-scale = Vector2(0.404297, 0.417969)
-sprite_frames = SubResource("SpriteFrames_gdow1")
-animation = &"new_animation"
-
-[node name="WeaponScene" parent="AnimatedSprite2D" instance=ExtResource("4_u2nkw")]
-position = Vector2(2, 8)
 
 [node name="BogeyTimer" type="Timer" parent="."]
 script = ExtResource("3_7k7q8")
@@ -42,5 +18,13 @@ script = ExtResource("3_7k7q8")
 shape = SubResource("RectangleShape2D_6acpg")
 
 [node name="BogeyAltTimer" type="Timer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_7k7q8")
+
+[node name="WeaponScene" parent="Sprite2D" instance=ExtResource("4_u2nkw")]
+position = Vector2(0.746095, 3.34375)
+scale = Vector2(0.404297, 0.417969)
 
 [connection signal="timeout" from="BogeyAltTimer" to="." method="OnBogeyAltTimerTimeout"]
