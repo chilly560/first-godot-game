@@ -20,6 +20,7 @@ shape = SubResource("RectangleShape2D_6acpg")
 [node name="BogeyAltTimer" type="Timer" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2.27374e-13)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_7k7q8")
 

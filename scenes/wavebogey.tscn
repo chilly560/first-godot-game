@@ -6,12 +6,13 @@
 [node name="Bogey" instance=ExtResource("1_bpook")]
 script = ExtResource("2_8i1ly")
 
-[node name="BogeyTimer" parent="." index="1"]
+[node name="BogeyTimer" parent="." index="0"]
 script = null
 
-[node name="WaveBogeyTimer" type="Timer" parent="." index="4"]
+[node name="WeaponScene" parent="Sprite2D" index="0"]
+position = Vector2(-5.96046e-08, 2.5)
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="5"]
+[node name="WaveBogeyTimer" type="Timer" parent="." index="4"]
 
 [connection signal="timeout" from="BogeyTimer" to="." method="OnBogeyTimerTimeout"]
 [connection signal="timeout" from="WaveBogeyTimer" to="." method="OnWaveBogeyTimerTimeout"]

@@ -8,8 +8,6 @@ namespace Game.Enemies
     /// </summary>
 	public partial class Drone : Enemy
 	{
-		protected Sprite2D sprite;
-
         public override void _Ready()
         {
 			dropChance = .1f;

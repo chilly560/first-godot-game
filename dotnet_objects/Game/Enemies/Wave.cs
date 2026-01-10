@@ -36,6 +36,62 @@ namespace Game.Enemies
             public static void DefaultWavePhysicsOverhauler(Enemy d, double delta)
             {
                 d.Position = d.Position;
+                
+                if (d is WaveDrone wd )
+                {
+                    if (wd.Down)
+                    {
+                        wd.Position += -1 * wd.Transform.Y * 5 * (float)delta;
+                    }
+                    else 
+                    {
+                        wd.Position += wd.Transform.Y * 5 * (float)delta;
+                    }
+                    
+                    // Take global position of wd and compare it to the previous global position
+                    // of wd, then add the absolute value of that to wd.BobDelta.
+                    Vector2 currentGlobalPos = wd.GlobalPosition;
+                    float positionDelta = (currentGlobalPos - wd.PreviousPosition).Length();
+                    wd.BobDelta += positionDelta;
+
+                    // If wd.BobDelta > 5, set Down (bool) to the opposite of it's current setting 
+                    // and reset BobDelta to zero.
+                    if (wd.BobDelta > 2)
+                    {
+                        wd.Down = !wd.Down;
+                        wd.BobDelta = 0;
+                    }
+
+                    // Update previous position for next frame
+                    wd.PreviousPosition = currentGlobalPos;
+                }
+                else if (d is WaveBogey wb)
+                {
+                    if (wb.Down)
+                    {
+                        wb.Position += -1 * wb.Transform.Y * 5 * (float)delta;
+                    }
+                    else 
+                    {
+                        wb.Position += wb.Transform.Y * 5 * (float)delta;
+                    }
+                    
+                    // Take global position of wd and compare it to the previous global position
+                    // of wd, then add the absolute value of that to wd.BobDelta.
+                    Vector2 currentGlobalPos = wb.GlobalPosition;
+                    float positionDelta = (currentGlobalPos - wb.PreviousPosition).Length();
+                    wb.BobDelta += positionDelta;
+
+                    // If wd.BobDelta > 5, set Down (bool) to the opposite of it's current setting 
+                    // and reset BobDelta to zero.
+                    if (wb.BobDelta > 2)
+                    {
+                        wb.Down = !wb.Down;
+                        wb.BobDelta = 0;
+                    }
+                    // Update previous position for next frame
+                    wb.PreviousPosition = currentGlobalPos;
+                } else throw new ArgumentException("Invalid Enemy Type (Must be WaveDrone)");
             }
             /// <summary>
             /// Makes the enemy dive downwards in a straight line.
@@ -282,7 +338,6 @@ namespace Game.Enemies
                                 GetEnemyMatrixVector2(i, j)
                             );
                         }
-
                         else if (j > 0 && rand.NextDouble() * 5 > 2.5)
                         {
                             aggressiveMatrix[i, j] = EnemyFactory.CreateEnemy(

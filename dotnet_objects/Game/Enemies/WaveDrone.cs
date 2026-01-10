@@ -10,7 +10,7 @@ namespace Game.Enemies
 	/// Special extensino of the Drone class which has an internal tracker for rotations,
 	/// preventing over-rotation (past 90 degrees in either direction)
 	/// </summary>
-	public partial class WaveDrone : Drone
+	public partial class WaveDrone : Drone, IWaveEnemy
 	{
         /// <summary>
         /// The max rotation in radians that a WaveDrone can have in either direction (left or right)
@@ -19,12 +19,22 @@ namespace Game.Enemies
         /// Positive = Left
         /// </summary>
 		private const float THIRTY_DEGREES_RADIANS = .523599f;
-
         /// <summary>
         /// 
         /// </summary>
 		private float rotation;
-	    public override void _Ready()
+        /// <summary>
+        /// Flag for determinging whether the wavedrone should move down as part of the 
+        /// idle animation.
+        /// </summary>
+        public bool Down { get; set; } = false;
+        /// <summary>
+        /// Tracks the previous global position for calculating bobbing delta.
+        /// </summary>
+        public Vector2 PreviousPosition { get; set; }
+        public float BobDelta { get ; set ; } = 0;
+
+        public override void _Ready()
 		{
 			rotation = 0;
             base._Ready();

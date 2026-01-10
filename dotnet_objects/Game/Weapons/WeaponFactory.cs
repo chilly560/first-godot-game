@@ -41,7 +41,7 @@ namespace Game.Weapons
             /// <param name="parent"></param>
             public Pistol(Node2D parent) : base(parent)
             {
-                this.SetBulletType(BulletClassification.Standard);
+                SetBulletType(BulletClassification.Standard);
                 Ammo = -1; // Infinite ammo
                 MaxAmmo = -1; // Infinite ammo
             }

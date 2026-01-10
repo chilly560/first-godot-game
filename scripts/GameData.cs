@@ -113,11 +113,7 @@ public partial class GameData : Node
 	{
 		self = this;
 		HP = MAX_HP;
-		try {
-			TextureCache = new TexturesCache();
-		} catch (Exception e) {
-			GD.PrintErr("Error initializing SpriteFramesCache: " + e.Message);
-		}
+		TextureCache = new TexturesCache();
 		enemies = new Dictionary<int, Enemy>();
 	}
 	/// <summary>
