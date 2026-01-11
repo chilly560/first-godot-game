@@ -3,7 +3,7 @@ using Godot;
 
 namespace Game.Enemies
 {
-    public partial class WaveBogey : Bogey, IWaveEnemy
+    public partial class WaveBogey : Bogey, Bobber
     {
         private Timer waveBogeyTimer;
         public float BobDelta { get ; set ; } = 0;

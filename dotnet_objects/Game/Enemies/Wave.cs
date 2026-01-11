@@ -35,7 +35,7 @@ namespace Game.Enemies
             /// <param name="delta">The time elapsed since the last frame</param>
             public static void DefaultWavePhysicsOverhauler(Enemy d, double delta)
             {
-                if (d is IWaveEnemy we)
+                if (d is Bobber we)
                 {
                     int direction = we.Down ? -1 : 1;
                     we.Position += direction * we.Transform.Y * 5 * (float)delta;

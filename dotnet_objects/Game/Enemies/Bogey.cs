@@ -1,9 +1,10 @@
 using System;
 using Game.Weapons;
+using Godot;
 
 namespace Game.Enemies
 {
-    public partial class Bogey : Enemy
+    public partial class Bogey : Enemy, Bobber
     {
         private Godot.Timer bogeyTimer;
 
@@ -16,6 +17,11 @@ namespace Game.Enemies
         private float targetPosition;
 
         private WeaponScene weaponScene;
+
+        public float BobDelta { get ; set ; }
+        public bool Down { get ; set ; }
+        public Vector2 PreviousPosition { get ; set ; }
+
 
         public override void _Ready()
         {
@@ -44,7 +50,7 @@ namespace Game.Enemies
             if (physicsOverhauler is not null)
                 physicsOverhauler.Invoke(this, delta);   
 
-            else if (reposition  && !paused )
+            if (reposition  && !paused )
             {
                 if (Position.X == targetPosition || Math.Abs(Position.X - targetPosition) < 1)
                 {

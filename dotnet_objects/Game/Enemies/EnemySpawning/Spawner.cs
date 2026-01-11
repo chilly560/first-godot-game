@@ -54,13 +54,12 @@ namespace Game.Enemies.EnemySpawning
         /// <param name="spawnerGlobalPosition"></param>
         public void SpawnBogey(Vector2 spawnerGlobalPosition)
         {
-            GetParent().AddChild(
-                EnemyFactory.CreateEnemy(
-                    //EnemyClassification.DRONE,
-                    EnemyClassification.BOGEY,
-                    spawnerGlobalPosition
-                )
+            Bogey b = (Bogey) EnemyFactory.CreateEnemy(
+                EnemyClassification.BOGEY,
+                spawnerGlobalPosition
             );
+            b.SetPhysicsOverhauler(Wave.WaveEnemyPhysicsOverhaulers.DefaultWavePhysicsOverhauler);
+            GetParent().AddChild(b);
         }
     }
 }

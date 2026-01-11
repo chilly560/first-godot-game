@@ -10,7 +10,7 @@ namespace Game.Enemies
 	/// Special extensino of the Drone class which has an internal tracker for rotations,
 	/// preventing over-rotation (past 90 degrees in either direction)
 	/// </summary>
-	public partial class WaveDrone : Drone, IWaveEnemy
+	public partial class WaveDrone : Drone, Bobber
 	{
         /// <summary>
         /// The max rotation in radians that a WaveDrone can have in either direction (left or right)

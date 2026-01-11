@@ -6,7 +6,7 @@ namespace Game.Enemies
     /// Interface for properties required to 'Bob' the Wave formation up and down during
     /// Idle.
     /// </summary>
-    public interface IWaveEnemy
+    public interface Bobber
     {   
         /// <summary>
         /// Tracks the amount of bobbing (up/down) the Enemy has done as part of its idle animation.
