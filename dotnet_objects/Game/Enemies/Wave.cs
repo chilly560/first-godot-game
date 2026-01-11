@@ -35,64 +35,23 @@ namespace Game.Enemies
             /// <param name="delta">The time elapsed since the last frame</param>
             public static void DefaultWavePhysicsOverhauler(Enemy d, double delta)
             {
-                d.Position = d.Position;
-                
-                if (d is WaveDrone wd )
+                if (d is IWaveEnemy we)
                 {
-                    if (wd.Down)
-                    {
-                        wd.Position += -1 * wd.Transform.Y * 5 * (float)delta;
-                    }
-                    else 
-                    {
-                        wd.Position += wd.Transform.Y * 5 * (float)delta;
-                    }
-                    
-                    // Take global position of wd and compare it to the previous global position
-                    // of wd, then add the absolute value of that to wd.BobDelta.
-                    Vector2 currentGlobalPos = wd.GlobalPosition;
-                    float positionDelta = (currentGlobalPos - wd.PreviousPosition).Length();
-                    wd.BobDelta += positionDelta;
+                    int direction = we.Down ? -1 : 1;
+                    we.Position += direction * we.Transform.Y * 5 * (float)delta;
+                    Vector2 currentGlobalPos = we.GlobalPosition;
+                    we.BobDelta += (currentGlobalPos - we.PreviousPosition).Length();
+                    we.PreviousPosition = currentGlobalPos;
 
-                    // If wd.BobDelta > 5, set Down (bool) to the opposite of it's current setting 
-                    // and reset BobDelta to zero.
-                    if (wd.BobDelta > 2)
+                    if (we.BobDelta > 2)
                     {
-                        wd.Down = !wd.Down;
-                        wd.BobDelta = 0;
+                        we.Down = !we.Down;
+                        we.BobDelta = 0;
                     }
-
-                    // Update previous position for next frame
-                    wd.PreviousPosition = currentGlobalPos;
                 }
-                else if (d is WaveBogey wb)
-                {
-                    if (wb.Down)
-                    {
-                        wb.Position += -1 * wb.Transform.Y * 5 * (float)delta;
-                    }
-                    else 
-                    {
-                        wb.Position += wb.Transform.Y * 5 * (float)delta;
-                    }
-                    
-                    // Take global position of wd and compare it to the previous global position
-                    // of wd, then add the absolute value of that to wd.BobDelta.
-                    Vector2 currentGlobalPos = wb.GlobalPosition;
-                    float positionDelta = (currentGlobalPos - wb.PreviousPosition).Length();
-                    wb.BobDelta += positionDelta;
-
-                    // If wd.BobDelta > 5, set Down (bool) to the opposite of it's current setting 
-                    // and reset BobDelta to zero.
-                    if (wb.BobDelta > 2)
-                    {
-                        wb.Down = !wb.Down;
-                        wb.BobDelta = 0;
-                    }
-                    // Update previous position for next frame
-                    wb.PreviousPosition = currentGlobalPos;
-                } else throw new ArgumentException("Invalid Enemy Type (Must be WaveDrone)");
+                else throw new ArgumentException("Invalid Enemy Type (Must implement IWaveEnemy)");
             }
+
             /// <summary>
             /// Makes the enemy dive downwards in a straight line.
             /// </summary>
@@ -204,6 +163,10 @@ namespace Game.Enemies
                     matrix[x, y] = enemy;
                 }
             }  
+            /// <summary>
+            /// Activates a random enemy in the Enemy matrix
+            /// </summary>
+            /// <param name="lockToPlayer">Bool dictating whether the activated enemy should chase the player.</param>
             public void ActivateRandom(bool lockToPlayer)
             {
                 int x = random.Next(0, COLUMNS);
@@ -229,6 +192,10 @@ namespace Game.Enemies
                     //GD.Print($"Activating Enemy {matrix[x, y]} at [{x}, {y}] from wave formation.");
                     matrix[x, y].SetPhysicsOverhauler(WaveEnemyPhysicsOverhaulers.DiveWavePhysicsOverhauler);
                     matrix[x, y].SetPhysicsModifier(WaveEnemyPhysicsModifiers.FindPlayerPhysicsModifier);
+                    if (matrix[x, y] is WaveDrone wd)
+                    {
+                        wd.PlayAnimation("thruster_animation");
+                    }
                     //GD.Print("Enemy activated from wave formation, Manually Calling OnSignalWaveEnemyDestroyedEventHandler");
                     GameData.Get().OnSignalWaveEnemyDestroyedEventHandler(x, y, true);
                 }

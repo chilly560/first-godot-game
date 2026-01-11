@@ -33,9 +33,11 @@ namespace Game.Enemies
         /// </summary>
         public Vector2 PreviousPosition { get; set; }
         public float BobDelta { get ; set ; } = 0;
-
+        private AnimatedSprite2D animatedSprite2D;
         public override void _Ready()
 		{
+            animatedSprite2D = GetNode<AnimatedSprite2D>("./AnimatedTrail2D");
+            animatedSprite2D.Play("thruster_short_animation");
 			rotation = 0;
             base._Ready();
 		}
@@ -85,6 +87,11 @@ namespace Game.Enemies
 
                 ToggleSprite(radians);
             }
-        }       
+        }   
+
+        public void PlayAnimation(String animation)
+        {
+            animatedSprite2D.Play(animation);
+        }    
 	}
 }

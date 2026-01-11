@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dm65mic4gh3nq"]
 
 [ext_resource type="PackedScene" uid="uid://brgbccp1fvfd4" path="res://scenes/bullet.tscn" id="1_d2qol"]
-[ext_resource type="Script" uid="uid://dsexixh3j8isu" path="res://scripts/EnemyBullet.cs" id="2_qx7rs"]
+[ext_resource type="Script" uid="uid://bto7lst0v53yg" path="res://scripts/EnemyBullet.cs" id="2_qx7rs"]
 
 [node name="EnemyBullet" instance=ExtResource("1_d2qol")]
 script = ExtResource("2_qx7rs")

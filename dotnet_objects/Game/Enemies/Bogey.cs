@@ -21,9 +21,6 @@ namespace Game.Enemies
         {
             dropChance = .5f;
             base._Ready();
-            // Create a timer that ticks down every x seconds
-            // when timer ends, the bogey moves to the player's x position and shooots
-            // This will be done with a godot timer node.
             reposition = true;
             paused = false;
             weaponScene = GetNode<WeaponScene>("./Sprite2D/WeaponScene");

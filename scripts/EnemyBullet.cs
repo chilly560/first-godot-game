@@ -1,25 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Godot;
 
-namespace NewGameProject.scripts
+public partial class EnemyBullet : Bullet 
 {
-    public partial class EnemyBullet : Bullet 
+    public override void _Ready()
     {
-        public override void _Ready()
+        base._Ready();
+    }
+    public override void OnAreaEnteredBullet(Node body)
+    {
+        if (body is Player p)
         {
-            Damage = 10;
-            base._Ready();
-        }
-        public override void OnAreaEnteredBullet(Node body)
-        {
-            if (body is Player p)
-            {
-                p.TakeDamage(Damage);
-                QueueFree();
-            }
+            p.TakeDamage(Damage);
+            QueueFree();
         }
     }
 }

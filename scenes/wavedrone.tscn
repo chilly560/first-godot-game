@@ -1,7 +1,58 @@
-[gd_scene load_steps=3 format=3 uid="uid://m7bwxi086h48"]
+[gd_scene load_steps=10 format=3 uid="uid://m7bwxi086h48"]
 
 [ext_resource type="PackedScene" uid="uid://ti5vqdeovlqr" path="res://scenes/drone.tscn" id="1_bm4pe"]
 [ext_resource type="Script" uid="uid://b2dmwxeat63em" path="res://dotnet_objects/Game/Enemies/WaveDrone.cs" id="2_3t3q4"]
+[ext_resource type="Texture2D" uid="uid://blv5m2s2xmpbq" path="res://assets/trail_v2.png" id="3_adyxw"]
+[ext_resource type="Texture2D" uid="uid://dmy3webgx2ms3" path="res://assets/trail_v1.png" id="4_y1vqf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("3_adyxw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("4_y1vqf")
+region = Rect2(0, 10, 64, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adyxw"]
+atlas = ExtResource("4_y1vqf")
+region = Rect2(0, 18, 64, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1vqf"]
+atlas = ExtResource("3_adyxw")
+region = Rect2(0, 14, 64, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2btw2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}],
+"loop": true,
+"name": &"thruster_animation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adyxw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1vqf")
+}],
+"loop": true,
+"name": &"thruster_short_animation",
+"speed": 5.0
+}]
 
 [node name="Drone" instance=ExtResource("1_bm4pe")]
 script = ExtResource("2_3t3q4")
+
+[node name="AnimatedTrail2D" type="AnimatedSprite2D" parent="." index="0"]
+position = Vector2(-9, 5)
+scale = Vector2(0.28125, 0.21875)
+sprite_frames = SubResource("SpriteFrames_2btw2")
+animation = &"thruster_short_animation"
+frame_progress = 0.821189
+centered = false

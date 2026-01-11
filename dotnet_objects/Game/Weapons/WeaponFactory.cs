@@ -1,12 +1,8 @@
 using Godot;
 using System;
-using System.Threading;
-using System.Timers;
 using System.Collections.Generic;
 using Game.Enemies;
 using Game.Drops;
-using System.ComponentModel;
-using NewGameProject.scripts;
 
 namespace Game.Weapons
 {
@@ -69,11 +65,10 @@ namespace Game.Weapons
                 {
                     EnemyBullet bullet = (EnemyBullet)enemyBulletScene.Instantiate();
                     bullet.GlobalPosition = weaponPosition;
-                    bullet.SetStats(Damage, Speed);
+                    bullet.SetStats(25, Speed);
                     root.AddChild(bullet);
                     SetBulletPhysics(bullet, parent is Player);   
                 }
-                
             }
         }
         /// <summary>

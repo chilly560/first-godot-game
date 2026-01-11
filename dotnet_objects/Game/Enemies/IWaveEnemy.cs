@@ -32,5 +32,27 @@ namespace Game.Enemies
             get;
             set;
         }
+        /// <summary>
+        /// Global Position (Godot)
+        /// </summary>
+        Vector2 GlobalPosition 
+        {
+            get;
+        }
+        /// <summary>
+        /// Transform (Godot)
+        /// </summary>
+        Transform2D Transform
+        {
+            get;
+        }
+        /// <summary>
+        /// Local Position (Godot) 
+        /// </summary>
+        Vector2 Position
+        {
+            get;
+            set;
+        }
     }
 }

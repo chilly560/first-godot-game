@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://coxv56so0e6h8" path="res://scenes/enemy_spawner_2.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://n5lbhp4a8odl" path="res://scenes/WaveSpawner.tscn" id="7_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="9_0tnpc"]
-[ext_resource type="Shader" uid="uid://dn0wph4eamglt" path="res://scenes/game.gdshader" id="9_vtaks"]
+[ext_resource type="Shader" path="res://scenes/game.gdshader" id="9_vtaks"]
 [ext_resource type="PackedScene" uid="uid://clatcu1widtu2" path="res://scenes/one_way_blocker.tscn" id="10_vtaks"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]

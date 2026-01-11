@@ -44,7 +44,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 	{
 		freeRotate = true;
 	}
-
 	/// <summary>
 	/// Called when the node enters the scene tree for the first time.
 	/// </summary>
@@ -53,7 +52,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 		bulletPhysicsModifier = null;
 		bulletPhysicsOverhauler = null;
 	}
-
 	/// <summary>
 	/// Called every frame. Used for non-physics visual updates.
 	/// </summary>
@@ -63,7 +61,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 		if (freeRotate)
 			Rotation += 0.1f;
 	}
-
 	/// <summary>
 	/// Called every physics frame. Moves the bullet according to the
 	/// configured physics delegates or the default straight-line motion.
@@ -78,7 +75,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 
 		bulletPhysicsModifier?.Invoke(this);
 	}
-
 	/// <summary>
 	/// Deprecated. Legacy method used by the shotgun implementation to
 	/// start an internal lifetime timer for the bullet.
@@ -90,7 +86,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 		this.BulletTimer.WaitTime = this.Range;
 		this.BulletTimer.Start();
 	}
-
 	/// <summary>
 	/// Called when this bullet's area collides with another area.
 	/// Applies damage to <see cref="Game.Enemies.Enemy"/> instances and
@@ -105,7 +100,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 			QueueFree();
 		}
 	}
-
 	/// <summary>
 	/// Called when this bullet collides with a physics body.
 	/// Applies damage to <see cref="Player"/> instances and frees the bullet.
@@ -119,7 +113,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 			QueueFree();
 		}
 	}
-
 	/// <summary>
 	/// Sets the bullet's fundamental stats.
 	/// </summary>
@@ -132,7 +125,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 		this.speed = speed;
 		Range = range;
 	}
-
 	/// <summary>
 	/// Assigns a delegate that will be invoked each physics frame after
 	/// the bullet movement step. Use to apply custom per-frame physics changes.
@@ -140,9 +132,8 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 	/// <param name="del">Delegate that receives the current <see cref="Bullet"/> instance.</param>
 	public void SetPhysicsModifier(Action<Bullet> del)
 	{
-		this.bulletPhysicsModifier = del;
-	}
-    
+		bulletPhysicsModifier = del;
+	}  
 	/// <summary>
 	/// Assigns a delegate that fully controls the bullet's physics update.
 	/// If set, it is called instead of the default movement logic.
@@ -150,6 +141,6 @@ public partial class Bullet : Area2D, IDynamic2DPhysicsObject<Bullet>
 	/// <param name="del">Delegate receiving the current <see cref="Bullet"/> and the physics <c>delta</c>.</param>
 	public void SetPhysicsOverhauler(Action<Bullet, double> del)
 	{
-		this.bulletPhysicsOverhauler = del;
+		bulletPhysicsOverhauler = del;
 	}
 }
