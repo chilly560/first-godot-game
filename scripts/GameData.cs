@@ -161,9 +161,14 @@ public partial class GameData : Node
 			return;
 
 		if (amount + HP > MAX_HP)
-			HP = MAX_HP;
-
-		else HP += amount;
+		{
+			HP = MAX_HP;	
+		}
+		else 
+		{
+			HP += amount;
+		}
+		playerHealthbar.SetHealth(HP);
 	}
 	/// <summary>
 	/// Get player's X position.
@@ -196,7 +201,9 @@ public partial class GameData : Node
 			throw new ArgumentException("Damage amount must be positive");
 			
 		HP -= amount;
-		return (HP > 0);
+		playerHealthbar.SetHealth(HP, true);
+
+		return HP > 0;
 	}
 	/// <summary>
 	/// Update the player's score by the given amount. + for adding, - for subtracting.

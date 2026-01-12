@@ -30,35 +30,12 @@ public partial class Healthbar : ProgressBar
 	{
 		MaxValue = hp;
 		Value = hp;
-		
+
 		if (progressBar is null)
 			progressBar = GetNode<ProgressBar>("./ProgressBar");
 
 		progressBar.MaxValue = hp;
 		progressBar.Value = hp;
-	}
-	/// <summary>
-	/// Adds points back to this ProgressBar
-	/// </summary>
-	/// <param name="hp">Health points to add back</param>
-	public void Heal(int hp)
-	{
-		if (hp <= 0)
-			throw new ArgumentOutOfRangeException($"{hp} must be positive");
-
-		Value += hp;
-	}
-	/// <summary>
-	/// Removes points from this ProgressBar
-	/// </summary>
-	/// <param name="hp">Health points to remove</param>
-	public void Damage(int hp)
-	{
-		if (hp >= 0)
-			throw new ArgumentOutOfRangeException($"{hp} msut be negative");
-		
-		Value -= hp;
-		timer.Start();
 	}
 	/// <summary>
 	/// Signal handler for the internal timer that causes the 'delay' effect when
@@ -70,5 +47,17 @@ public partial class Healthbar : ProgressBar
 	public void OnHealthbarTimerTimeout()
 	{
 		progressBar.Value = Value;
+	}
+	/// <summary>
+	/// Sets value of ProgressBar 
+	/// </summary>
+	/// <param name="hp">HP to set Healthbar to</param>
+	/// <param name="startTimer">True if taking damage</param>
+	public void SetHealth(int hp, bool startTimer = false)
+	{
+		Value = hp;
+		if (startTimer)
+		    timer.Start();
+		else progressBar.Value = hp;
 	}
 }

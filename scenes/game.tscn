@@ -36,10 +36,10 @@ position = Vector2(7, 246)
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_kvpfn")
-offset_left = -164.138
-offset_top = -60.8242
-offset_right = 859.862
-offset_bottom = 963.176
+offset_left = -165.151
+offset_top = -57.8329
+offset_right = 858.849
+offset_bottom = 966.167
 scale = Vector2(0.325471, 0.564926)
 texture = ExtResource("9_0tnpc")
 
@@ -131,7 +131,7 @@ text = "1"
 
 [node name="Healthbar" parent="Camera2D/HUD" instance=ExtResource("11_kvpfn")]
 layout_mode = 0
-offset_left = -165.0
-offset_top = 265.0
-offset_right = 166.0
-offset_bottom = 292.0
+offset_left = -149.967
+offset_top = 255.605
+offset_right = 149.033
+offset_bottom = 282.605

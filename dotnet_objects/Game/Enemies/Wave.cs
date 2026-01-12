@@ -22,7 +22,7 @@ namespace Game.Enemies
         /// </summary>
         private GameData gameData;
 
-        public int WaveID { get; private set; } = GameData.Get().WaveNumber;
+        public int WaveID;
         /// <summary>
         /// Main behavioral (physics) instructions for Wave enemies. These are applied at runtime.
         /// </summary>
