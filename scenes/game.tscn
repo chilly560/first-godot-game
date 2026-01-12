@@ -47,6 +47,9 @@ offset_bottom = 965.17
 scale = Vector2(0.325471, 0.564926)
 texture = ExtResource("9_0tnpc")
 
+[node name="OneWayBlocker" parent="." instance=ExtResource("10_vtaks")]
+position = Vector2(-1.0132, 231.331)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 232)
 zoom = Vector2(2, 2)
@@ -114,5 +117,18 @@ offset_bottom = -226.0
 text = "0"
 metadata/_edit_use_anchors_ = true
 
-[node name="OneWayBlocker" parent="." instance=ExtResource("10_vtaks")]
-position = Vector2(-1.0132, 231.331)
+[node name="WaveLabel" type="Label" parent="Camera2D/HUD"]
+layout_mode = 0
+offset_left = 89.1483
+offset_top = -247.939
+offset_right = 176.148
+offset_bottom = -216.939
+text = "Wave:"
+
+[node name="WaveValue" type="Label" parent="Camera2D/HUD"]
+layout_mode = 0
+offset_left = 145.887
+offset_top = -247.939
+offset_right = 185.887
+offset_bottom = -224.939
+text = "1"

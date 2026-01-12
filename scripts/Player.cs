@@ -15,11 +15,7 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private bool isAlive;
 
-	private Label hp, secondaryAmmo, score;
-
-	// Remove
-	private PackedScene bulletScene;
-
+	private Label hp, secondaryAmmo, score, wave;
 	/// <summary>
     /// WeaponScene playerWeapon contains a List<IWeapon> weaponCollection
 	/// responsible for storing the player's collection of weapons.
@@ -43,11 +39,12 @@ public partial class Player : CharacterBody2D, ICollector
 		hp = GetNode<Label>("../Camera2D/HUD/HPValue");
 		secondaryAmmo = GetNode<Label>("../Camera2D/HUD/AmmoValue");
 		score = GetNode<Label>("../Camera2D/HUD/ScoreValue");
+		wave = GetNode<Label>("../Camera2D/HUD/WaveValue");
 		sprite = GetNode<Sprite2D>("./Sprite2D");
 		isAlive = true;
 		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();
-
+		gameData.WaveDestroyed += UpdateWaveLabel;
 	}
 
 	/** Handles input from the player.
@@ -181,5 +178,14 @@ public partial class Player : CharacterBody2D, ICollector
 	public String GetScore()
 	{
 		return score.Text;
+	}
+
+	private void UpdateWaveLabel()
+	{
+		int i;
+		if (int.TryParse(wave.Text, out i))
+		{
+			wave.Text = (++i).ToString();
+		}
 	}
 }

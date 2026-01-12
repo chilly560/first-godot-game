@@ -264,6 +264,8 @@ public partial class GameData : Node
 	/// 
 	/// Implemented since 'Wave.cs' is not a godot node.
 	/// 
+	/// Secondary Signal is emitted to update the player hud.
+	///
 	/// Handler located in WaveSpawner.cs
 	/// </summary>
 	public void EmitWaveDestroyedEventHandlerSignal()
