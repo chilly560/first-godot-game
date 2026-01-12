@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://chjkhfsdsws7j"]
+[gd_scene load_steps=13 format=4 uid="uid://chjkhfsdsws7j"]
 
 [ext_resource type="Script" uid="uid://bej06gxouydca" path="res://scripts/GameData.cs" id="1_lbhrr"]
 [ext_resource type="Script" uid="uid://b4vfbl26uu676" path="res://scenes/GameRoot.cs" id="1_p57ef"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="9_0tnpc"]
 [ext_resource type="Shader" path="res://scenes/game.gdshader" id="9_vtaks"]
 [ext_resource type="PackedScene" uid="uid://clatcu1widtu2" path="res://scenes/one_way_blocker.tscn" id="10_vtaks"]
+[ext_resource type="PackedScene" uid="uid://coj2m0ibpsrqv" path="res://scenes/healthbar.tscn" id="11_kvpfn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
 shader = ExtResource("9_vtaks")
@@ -24,7 +25,7 @@ unique_name_in_owner = true
 script = ExtResource("1_lbhrr")
 
 [node name="Player" parent="." instance=ExtResource("2_iywne")]
-position = Vector2(-2.0264, 45.8674)
+position = Vector2(-2.0264, -40.8819)
 script = ExtResource("3_p57ef")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_iywne")]
@@ -40,10 +41,10 @@ position = Vector2(7, 246)
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_kvpfn")
-offset_left = -166.165
-offset_top = -58.83
-offset_right = 857.835
-offset_bottom = 965.17
+offset_left = -164.138
+offset_top = -60.8242
+offset_right = 859.862
+offset_bottom = 963.176
 scale = Vector2(0.325471, 0.564926)
 texture = ExtResource("9_0tnpc")
 
@@ -132,3 +133,10 @@ offset_top = -247.939
 offset_right = 185.887
 offset_bottom = -224.939
 text = "1"
+
+[node name="Healthbar" parent="Camera2D/HUD" instance=ExtResource("11_kvpfn")]
+layout_mode = 0
+offset_left = -165.0
+offset_top = 265.0
+offset_right = 166.0
+offset_bottom = 292.0

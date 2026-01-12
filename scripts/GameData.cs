@@ -66,6 +66,12 @@ public partial class GameData : Node
 	/// </summary>
 	public int WaveNumber { get; set; } = 0;
 	/// <summary>
+	/// Player healthbar is contained in gamedata as it is a child of the 'Game' scene,
+	/// not the 'Player' scene. This is unique to this healthbar, other healthbars
+	/// are children of the Enemy who's health they represent.
+	/// </summary>
+	private Healthbar playerHealthbar;
+	/// <summary>
     /// Cache of alternative SpriteFrames for various game entities. Preloaded as part of GameData to improve performance at runtime.
     /// </summary>
 	public TexturesCache TextureCache;
@@ -115,6 +121,8 @@ public partial class GameData : Node
 		HP = MAX_HP;
 		TextureCache = new TexturesCache();
 		enemies = new Dictionary<int, Enemy>();
+		playerHealthbar = GetNode<Healthbar>("../GameRoot/Camera2D/HUD/Healthbar");
+		playerHealthbar.Setup(100);
 	}
 	/// <summary>
 	/// Get the number of active enemies.
