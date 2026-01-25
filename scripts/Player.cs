@@ -26,6 +26,13 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private Sprite2D sprite;
 
+	private Timer showHealthbarTimer;
+
+	private Timer deathDelayTimer;
+
+	private AnimatedSprite2D deathExplosion;
+
+	private AnimatedSprite2D trail;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -35,12 +42,18 @@ public partial class Player : CharacterBody2D, ICollector
 		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;
 		gameData.UpdateScoreLabel += OnUpdateScoreLabel;
 		gameData.WaveBonus += OnUpdateScoreLabel;
+		trail = GetNode<AnimatedSprite2D>("./AnimatedTrail2D");
 		autofireTimer = GetNode<Timer>("./AutofireTimer");
 		hp = GetNode<Label>("../Camera2D/HUD/HPValue");
 		secondaryAmmo = GetNode<Label>("../Camera2D/HUD/AmmoValue");
 		score = GetNode<Label>("../Camera2D/HUD/ScoreValue");
 		wave = GetNode<Label>("../Camera2D/HUD/WaveValue");
 		sprite = GetNode<Sprite2D>("./Sprite2D");
+		deathDelayTimer = GetNode<Timer>("./PlayerDeathDelayTimer");
+		deathDelayTimer.WaitTime = 1;
+		deathDelayTimer.OneShot = true;
+		deathExplosion = GetNode<AnimatedSprite2D>("./ExplodeAnimation");
+		deathExplosion.Visible = false;
 		isAlive = true;
 		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();
@@ -94,10 +107,18 @@ public partial class Player : CharacterBody2D, ICollector
 		int hp = gameData.GetHP();
 		if (!this.isAlive)
 		{
-			CallDeferred(nameof(DeferredToGameOverScene));
+			autofireTimer.Stop();
+			SetPhysicsProcess(false);
+			sprite.Visible = false;
+			trail.Visible = false;
+			if (deathDelayTimer.IsStopped())
+			{
+				deathExplosion.Visible = true;
+				deathExplosion.Play();
+				deathDelayTimer.Start();
+			}
 		}
 	}
-
 	/// <summary>
 	/// Heal the player by the specified amount and update HUD.
 	/// </summary>
@@ -167,6 +188,10 @@ public partial class Player : CharacterBody2D, ICollector
 		score.Text = scoreVal.ToString();
 		gameData.UpdateScore(plusMinus);
     }	
+	public void OnAnimationFinished()
+	{
+		deathExplosion.Visible = false;
+	}
 	public int GetHP()
 	{
 		return gameData.GetHP();
@@ -187,5 +212,10 @@ public partial class Player : CharacterBody2D, ICollector
 		{
 			wave.Text = (++i).ToString();
 		}
+	}
+
+	public void OnPlayerDeathDelayTimerTimeout()
+	{
+		CallDeferred(nameof(DeferredToGameOverScene));
 	}
 }

@@ -1,10 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7rqggkyxpph4"]
+[gd_scene load_steps=21 format=3 uid="uid://c7rqggkyxpph4"]
 
 [ext_resource type="Texture2D" uid="uid://c0x4xuh8slnk5" path="res://assets/Player/player_b_m.png" id="1_qhqgy"]
+[ext_resource type="Script" uid="uid://dn7x2ktm4vckw" path="res://scripts/Player.cs" id="1_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://c4i3m8rk703u2" path="res://scenes/WeaponScene.tscn" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://blv5m2s2xmpbq" path="res://assets/trail_v2.png" id="2_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://dmy3webgx2ms3" path="res://assets/trail_v1.png" id="3_dqkch"]
-[ext_resource type="Script" uid="uid://dhokgx236yfvt" path="res://scripts/AutofireTimer.cs" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://1jwt4bbgb4se" path="res://assets/Replacement_FX/Explosions/explosion_3_05.png" id="6_y4r1p"]
+[ext_resource type="Texture2D" uid="uid://byngkgh16nw4k" path="res://assets/Replacement_FX/Explosions/explosion_3_06.png" id="7_d2wvv"]
+[ext_resource type="Texture2D" uid="uid://e631o4a2k8yr" path="res://assets/Replacement_FX/Explosions/explosion_3_07.png" id="8_3v2ag"]
+[ext_resource type="Texture2D" uid="uid://8sh6lilhfeux" path="res://assets/Replacement_FX/Explosions/explosion_3_08.png" id="9_jej6c"]
+[ext_resource type="Texture2D" uid="uid://bsa7cniojrk2u" path="res://assets/Replacement_FX/Explosions/explosion_3_09.png" id="10_f1ej7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t53lx"]
 size = Vector2(23, 18)
@@ -31,16 +36,59 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_oprun"]
+atlas = ExtResource("6_y4r1p")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
+atlas = ExtResource("7_d2wvv")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfm1y"]
+atlas = ExtResource("8_3v2ag")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fulsm"]
+atlas = ExtResource("9_jej6c")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4r5pv"]
+atlas = ExtResource("10_f1ej7")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_60mlk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oprun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8ls1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfm1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fulsm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4r5pv")
+}],
+"loop": false,
+"name": &"default",
+"speed": 14.0
+}]
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 position = Vector2(-1, 0)
+script = ExtResource("1_y4r1p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 444)
 shape = SubResource("RectangleShape2D_t53lx")
 
 [node name="AutofireTimer" type="Timer" parent="."]
-script = ExtResource("3_qhqgy")
 
 [node name="AnimatedTrail2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-14, 446)
@@ -60,4 +108,14 @@ texture = ExtResource("1_qhqgy")
 position = Vector2(-4.76837e-07, -118.333)
 scale = Vector2(0.546875, 0.5)
 
+[node name="ExplodeAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 444)
+sprite_frames = SubResource("SpriteFrames_60mlk")
+frame = 4
+frame_progress = 1.0
+
+[node name="PlayerDeathDelayTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="AutofireTimer" to="." method="OnAutofireTimerTimeout"]
+[connection signal="animation_finished" from="ExplodeAnimation" to="." method="OnAnimationFinished"]
+[connection signal="timeout" from="PlayerDeathDelayTimer" to="." method="OnPlayerDeathDelayTimerTimeout"]

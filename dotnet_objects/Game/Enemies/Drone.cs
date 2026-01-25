@@ -12,6 +12,7 @@ namespace Game.Enemies
 		private Healthbar healthbar;
 
 		private Timer showHealthbarTimer;
+		
         public override void _Ready()
         {
 			dropChance = .1f;

@@ -73,6 +73,11 @@ namespace Game.Enemies
         /// </summary>
         protected Sprite2D sprite;
         // Called when the node enters the scene tree for the first time.
+
+        protected AnimatedSprite2D deathExplosion;
+        protected Healthbar healthbar;
+        protected Timer showHealthbarTimer;
+        protected Timer deathDelayTimer;
         public override void _Ready()
         {
             gameData = GameData.Get();
@@ -91,6 +96,14 @@ namespace Game.Enemies
             EnemyDestroyed += gameData.OnUpdateScoreEventHandler;
             SignalWaveEnemyDestroyed += gameData.OnSignalWaveEnemyDestroyedEventHandler;
             sprite = GetNode<Sprite2D>("./Sprite2D");
+            deathDelayTimer = GetNode<Timer>("./DelayDeathTimer");
+            deathDelayTimer.WaitTime = .3;
+            deathDelayTimer.OneShot = true;
+            deathExplosion = GetNode<AnimatedSprite2D>("./ExplodeAnimation");
+            deathExplosion.Visible = false; 
+            healthbar = GetNode<Healthbar>("./Healthbar");
+            healthbar.SetHealth(100);
+            showHealthbarTimer = GetNode<Timer>("./ShowHealthbarTimer");
         }
 
         public override void _Process(double delta)
@@ -140,33 +153,24 @@ namespace Game.Enemies
         /// <param name="amount">Damage to be taken as an int</param>
         public virtual void TakeDamage(int amount)
         {
+            healthbar.SetHealth(hp - amount, true);
             hp -= amount;
             if (hp <= 0)
             {
                 //GD.Print($"Enemy {this} destroyed, worth {worth} points.");
                 EmitSignal(nameof(EnemyDestroyed), worth);
-
-                if (inWaveFormation && Activated == false)
+                
+                // Show death explosion and play animation
+                SetPhysicsOverhauler((enemy, delta) => enemy.Position = enemy.Position);
+                SetPhysicsModifier(null);
+                sprite.Visible = false;
+                healthbar.Visible = false;
+                deathExplosion.Visible = true;
+                if (deathDelayTimer.IsStopped())
                 {
-                    //GD.Print($"Enemy {this} destroyed by player, emitting SignalWaveEnemyDestroyed");
-                    EmitSignal(SignalName.SignalWaveEnemyDestroyed, formationX, formationY, false);
-                } else if (!inWaveFormation && !isDead)
-                {
-				    //GD.Print("---------------------");
-                    //GD.Print($"Entities: {gameData.Entities} before decrement");
-                    gameData.Entities--;
-                    //GD.Print($"Entities: {gameData.Entities} after decrement");
-                    //GD.Print("---------------------");
-
-                    isDead = true;
+                    deathExplosion.Play();
+                    deathDelayTimer.Start();
                 }
-
-                Drop drop = MakeDrop();
-
-                if (drop is not null)
-                    CallDeferred(nameof(DeferredAddDrop), drop);
-
-                CallDeferred(nameof(FreeEnemyDeferred));
             }
         }
         /// <summary>
@@ -194,8 +198,6 @@ namespace Game.Enemies
         {
             Drop drop;
             int type = dropFactory.GetFactoryType();
-
-            // quick n dirty implementation because it's late
             if (type == 0)
             {
                 drop = dropFactory.MakeDrop((int)WeaponType.Shotgun);
@@ -235,6 +237,36 @@ namespace Game.Enemies
         /// Sets the number of points this enemy is worth.
         /// </summary>
         protected abstract void SetWorth();
+
+        /// <summary>
+        /// Handles QueueFree after a delay to allow death animation to play.
+        /// 
+        /// Called via signal from the DelayDeathTimer node.
+        /// </summary>
+        public virtual void OnDelayDeathTimerTimeout()
+        {
+            if (inWaveFormation && Activated == false)
+            {
+                //GD.Print($"Enemy {this} destroyed by player, emitting SignalWaveEnemyDestroyed");
+                EmitSignal(SignalName.SignalWaveEnemyDestroyed, formationX, formationY, false);
+            } else if (!inWaveFormation && !isDead)
+            {
+                //GD.Print("---------------------");
+                //GD.Print($"Entities: {gameData.Entities} before decrement");
+                gameData.Entities--;
+                //GD.Print($"Entities: {gameData.Entities} after decrement");
+                //GD.Print("---------------------");
+
+                isDead = true;
+            }
+
+            Drop drop = MakeDrop();
+
+            if (drop is not null)
+                CallDeferred(nameof(DeferredAddDrop), drop);
+
+            CallDeferred(nameof(FreeEnemyDeferred));
+        }
         /// <summary>
         /// Sends a signal to the GameData signal bus when this enemy is destroyed.
         /// </summary>

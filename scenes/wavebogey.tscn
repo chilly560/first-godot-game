@@ -1,7 +1,86 @@
-[gd_scene load_steps=3 format=3 uid="uid://dc5nnm6e0ov2a"]
+[gd_scene load_steps=21 format=3 uid="uid://dc5nnm6e0ov2a"]
 
 [ext_resource type="PackedScene" uid="uid://bj2103ws4vfg3" path="res://scenes/Bogey.tscn" id="1_bpook"]
 [ext_resource type="Script" uid="uid://bkhohwmry4w3g" path="res://dotnet_objects/Game/Enemies/WaveBogey.cs" id="2_8i1ly"]
+[ext_resource type="Texture2D" uid="uid://blddbes15rebv" path="res://assets/Replacement_FX/Explosions/explosion_1_01.png" id="3_4xtpc"]
+[ext_resource type="Texture2D" uid="uid://cyanudjjux7hh" path="res://assets/Replacement_FX/Explosions/explosion_1_02.png" id="4_00l22"]
+[ext_resource type="Texture2D" uid="uid://col3eiqnsk2dh" path="res://assets/Replacement_FX/Explosions/explosion_1_03.png" id="5_ys2o0"]
+[ext_resource type="Texture2D" uid="uid://dge6m17c5muq1" path="res://assets/Replacement_FX/Explosions/explosion_1_04.png" id="6_1w5nm"]
+[ext_resource type="Texture2D" uid="uid://dcybakcgoq0qx" path="res://assets/Replacement_FX/Explosions/explosion_1_05.png" id="7_jjwrj"]
+[ext_resource type="Texture2D" uid="uid://cvmpowrnh1p0e" path="res://assets/Replacement_FX/Explosions/explosion_1_06.png" id="8_gkt6c"]
+[ext_resource type="Texture2D" uid="uid://c6ct5nffmprwg" path="res://assets/Replacement_FX/Explosions/explosion_1_07.png" id="9_fg8ls"]
+[ext_resource type="Texture2D" uid="uid://i0tu5kdo1knu" path="res://assets/Replacement_FX/Explosions/explosion_1_08.png" id="10_mdqb8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xtpc"]
+atlas = ExtResource("3_4xtpc")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00l22"]
+atlas = ExtResource("4_00l22")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ys2o0"]
+atlas = ExtResource("5_ys2o0")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1w5nm"]
+atlas = ExtResource("6_1w5nm")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjwrj"]
+atlas = ExtResource("7_jjwrj")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkt6c"]
+atlas = ExtResource("8_gkt6c")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fg8ls"]
+atlas = ExtResource("8_gkt6c")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdqb8"]
+atlas = ExtResource("9_fg8ls")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rha2x"]
+atlas = ExtResource("10_mdqb8")
+region = Rect2(0, 0, 52, 51)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4t6ga"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xtpc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_00l22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ys2o0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1w5nm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjwrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkt6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fg8ls")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdqb8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rha2x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Bogey" instance=ExtResource("1_bpook")]
 script = ExtResource("2_8i1ly")
@@ -14,7 +93,8 @@ position = Vector2(-5.96046e-08, 2.5)
 
 [node name="WaveBogeyTimer" type="Timer" parent="." index="4"]
 
-[node name="ShowHealthbarTimer" type="Timer" parent="." index="6"]
+[node name="ExplodeAnimation" parent="." index="7"]
+sprite_frames = SubResource("SpriteFrames_4t6ga")
 
 [connection signal="timeout" from="BogeyTimer" to="." method="OnBogeyTimerTimeout"]
 [connection signal="timeout" from="WaveBogeyTimer" to="." method="OnWaveBogeyTimerTimeout"]
