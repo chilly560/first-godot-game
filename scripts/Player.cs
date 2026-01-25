@@ -34,6 +34,8 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private AnimatedSprite2D trail;
 	// Called when the node enters the scene tree for the first time.
+
+	private AudioStreamPlayer2D shootSound, powerupSound, deathSound;
 	public override void _Ready()
 	{
 		weaponScene = GetNode<WeaponScene>("Sprite2D/WeaponScene");
@@ -50,7 +52,7 @@ public partial class Player : CharacterBody2D, ICollector
 		wave = GetNode<Label>("../Camera2D/HUD/WaveValue");
 		sprite = GetNode<Sprite2D>("./Sprite2D");
 		deathDelayTimer = GetNode<Timer>("./PlayerDeathDelayTimer");
-		deathDelayTimer.WaitTime = 1;
+		deathDelayTimer.WaitTime = 2.5;
 		deathDelayTimer.OneShot = true;
 		deathExplosion = GetNode<AnimatedSprite2D>("./ExplodeAnimation");
 		deathExplosion.Visible = false;
@@ -58,6 +60,9 @@ public partial class Player : CharacterBody2D, ICollector
 		autofireTimer.WaitTime = 2;
 		autofireTimer.Start();
 		gameData.WaveDestroyed += UpdateWaveLabel;
+		shootSound = GetNode<AudioStreamPlayer2D>("./Shoot");
+		powerupSound = GetNode<AudioStreamPlayer2D>("./PowerUp");
+		deathSound = GetNode<AudioStreamPlayer2D>("./Explosion");
 	}
 
 	/** Handles input from the player.
@@ -114,6 +119,7 @@ public partial class Player : CharacterBody2D, ICollector
 			if (deathDelayTimer.IsStopped())
 			{
 				deathExplosion.Visible = true;
+				deathSound.Play();
 				deathExplosion.Play();
 				deathDelayTimer.Start();
 			}
@@ -144,6 +150,7 @@ public partial class Player : CharacterBody2D, ICollector
 	private void Autofire()
 	{
 		weaponScene.Shoot();
+		shootSound.Play();
 		autofireTimer.Start();
 	}
 
@@ -160,6 +167,8 @@ public partial class Player : CharacterBody2D, ICollector
             }
         }
 		else throw new ArgumentException("ERROR: collectable IS NOT WEAPONSCENE");
+
+		powerupSound.Play();
 	}
 
 	public void OnAutofireTimerTimeout()

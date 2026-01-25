@@ -7,24 +7,17 @@ namespace Game.Enemies
     public partial class Bogey : Enemy, Bobber
     {
         private Godot.Timer bogeyTimer;
-
         private Godot.Timer shootTimer;
-
         private bool reposition;
-
         private bool paused;
-
         private float targetPosition;
-
         private WeaponScene weaponScene;
-
         private Healthbar healthbar;
-
         public float BobDelta { get ; set ; }
         public bool Down { get ; set ; }
         public Vector2 PreviousPosition { get ; set ; }
-
         private Timer showHealthbarTimer;
+        private AudioStreamPlayer2D shootSound;
         public override void _Ready()
         {
             dropChance = .5f;
@@ -47,6 +40,7 @@ namespace Game.Enemies
             shootTimer.WaitTime = 2f;
             bogeyTimer.Start();
             targetPosition = gameData.GetPlayerX();
+            shootSound = GetNode<AudioStreamPlayer2D>("./Shoot");
         }
         /// <summary>
         /// Overrides the standard enemy physics. This is to accomodate the prexisting default behavior of the bogey, whilst allowing
@@ -93,6 +87,7 @@ namespace Game.Enemies
                 targetPosition = gameData.GetPlayerX();
                 reposition = true;
                 paused = true;
+                shootSound.Play();
                 shootTimer.Start();
             }
             bogeyTimer.Start();
@@ -110,15 +105,15 @@ namespace Game.Enemies
 
         public void Shoot()
         {
+            shootSound.Play();
             weaponScene.Shoot();
         }
 
         public override void TakeDamage(int amount)
         {
             healthbar.SetHealth(hp - amount, true);
-            healthbar.Visible = true; // Show healthbar when damage taken
+            healthbar.Visible = true; 
             
-            // Restart timer to hide after 2 seconds
             if (!showHealthbarTimer.IsStopped())
             {
                 showHealthbarTimer.Stop();

@@ -78,6 +78,7 @@ namespace Game.Enemies
         protected Healthbar healthbar;
         protected Timer showHealthbarTimer;
         protected Timer deathDelayTimer;
+        protected AudioStreamPlayer2D explosionSound;
         public override void _Ready()
         {
             gameData = GameData.Get();
@@ -99,6 +100,7 @@ namespace Game.Enemies
             deathDelayTimer = GetNode<Timer>("./DelayDeathTimer");
             deathDelayTimer.WaitTime = .3;
             deathDelayTimer.OneShot = true;
+            explosionSound = GetNode<AudioStreamPlayer2D>("./Explosion");
             deathExplosion = GetNode<AnimatedSprite2D>("./ExplodeAnimation");
             deathExplosion.Visible = false; 
             healthbar = GetNode<Healthbar>("./Healthbar");
@@ -157,10 +159,9 @@ namespace Game.Enemies
             hp -= amount;
             if (hp <= 0)
             {
+
                 //GD.Print($"Enemy {this} destroyed, worth {worth} points.");
                 EmitSignal(nameof(EnemyDestroyed), worth);
-                
-                // Show death explosion and play animation
                 SetPhysicsOverhauler((enemy, delta) => enemy.Position = enemy.Position);
                 SetPhysicsModifier(null);
                 sprite.Visible = false;
@@ -168,6 +169,7 @@ namespace Game.Enemies
                 deathExplosion.Visible = true;
                 if (deathDelayTimer.IsStopped())
                 {
+                    explosionSound.Play();
                     deathExplosion.Play();
                     deathDelayTimer.Start();
                 }

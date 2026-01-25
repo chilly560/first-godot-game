@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://b4vfbl26uu676" path="res://scenes/GameRoot.cs" id="1_p57ef"]
 [ext_resource type="PackedScene" uid="uid://c7rqggkyxpph4" path="res://scenes/player.tscn" id="2_iywne"]
-[ext_resource type="Script" uid="uid://dn7x2ktm4vckw" path="res://scripts/Player.cs" id="3_p57ef"]
 [ext_resource type="PackedScene" uid="uid://dw2s1kdlqxre3" path="res://scenes/tile_map_layer.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://coxv56so0e6h8" path="res://scenes/enemy_spawner_2.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://n5lbhp4a8odl" path="res://scenes/WaveSpawner.tscn" id="7_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="9_0tnpc"]
 [ext_resource type="Shader" path="res://scenes/game.gdshader" id="9_vtaks"]
+[ext_resource type="AudioStream" uid="uid://b6scf6flrnbtc" path="res://assets/SFX/game-music-alien-71795.mp3" id="10_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://clatcu1widtu2" path="res://scenes/one_way_blocker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://coj2m0ibpsrqv" path="res://scenes/healthbar.tscn" id="11_kvpfn"]
 
@@ -21,7 +21,6 @@ script = ExtResource("1_p57ef")
 
 [node name="Player" parent="." instance=ExtResource("2_iywne")]
 position = Vector2(-2.0264, -40.8819)
-script = ExtResource("3_p57ef")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_iywne")]
 position = Vector2(16.2112, 342.012)
@@ -135,3 +134,8 @@ offset_left = -149.967
 offset_top = 255.605
 offset_right = 149.033
 offset_bottom = 282.605
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_kvpfn")
+volume_db = -3.388
+parameters/looping = true

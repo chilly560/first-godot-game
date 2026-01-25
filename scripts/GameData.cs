@@ -1,14 +1,13 @@
+/*
+Asset Credits:
+- Music by veeru5656
+- SFX by Various Artists from pixabay.com
+- Sprites by Various Artists from itch.io
+*/
 using Godot;
 using System;
 using System.Collections.Generic;
 using Game.Enemies;
-using System.ComponentModel.Design;
-using System.Runtime.CompilerServices;
-
-/*
-TODO: Fix Entity cap and spawn pausing.
-*/
-
 /// <summary>
 /// Originally meant to store game data about the current scene (hence the name 'GameData'),
 /// This class has been retrofitted to function as the main Event-BUS for the game.
@@ -75,6 +74,7 @@ public partial class GameData : Node
     /// Cache of alternative SpriteFrames for various game entities. Preloaded as part of GameData to improve performance at runtime.
     /// </summary>
 	public TexturesCache TextureCache;
+	public AudioStreamPlayer2D backgroundMusicPlayer;
 	/// <summary>
     /// Implements a cache of alternative SpriteFrames for various game entities. 
 	/// 
@@ -123,6 +123,8 @@ public partial class GameData : Node
 		enemies = new Dictionary<int, Enemy>();
 		playerHealthbar = GetNode<Healthbar>("../GameRoot/Camera2D/HUD/Healthbar");
 		playerHealthbar.Setup(100);
+		backgroundMusicPlayer = GetNode<AudioStreamPlayer2D>("../GameRoot/Music");
+		backgroundMusicPlayer.Play();
 	}
 	/// <summary>
 	/// Get the number of active enemies.

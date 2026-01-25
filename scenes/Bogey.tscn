@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bj2103ws4vfg3"]
+[gd_scene load_steps=26 format=3 uid="uid://bj2103ws4vfg3"]
 
 [ext_resource type="Script" uid="uid://f6y43g25nfpk" path="res://dotnet_objects/Game/Enemies/Bogey.cs" id="1_h5uv4"]
 [ext_resource type="Texture2D" uid="uid://btkhm63m6v1dl" path="res://assets/Replacement_Enemy/enemy_1_r_m.png" id="2_7k7q8"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://cvmpowrnh1p0e" path="res://assets/Replacement_FX/Explosions/explosion_1_06.png" id="11_qalil"]
 [ext_resource type="Texture2D" uid="uid://c6ct5nffmprwg" path="res://assets/Replacement_FX/Explosions/explosion_1_07.png" id="12_wf2bf"]
 [ext_resource type="Texture2D" uid="uid://i0tu5kdo1knu" path="res://assets/Replacement_FX/Explosions/explosion_1_08.png" id="13_dyati"]
+[ext_resource type="AudioStream" uid="uid://bbaecoma3o7yd" path="res://assets/SFX/laser-shot-ingame-230500.mp3" id="14_7mffb"]
+[ext_resource type="AudioStream" uid="uid://pwfehyvh7bqr" path="res://assets/SFX/enemy_destroyed.mp3" id="15_a71h6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6acpg"]
 size = Vector2(13, 17)
@@ -113,6 +115,15 @@ offset_bottom = -10.0
 sprite_frames = SubResource("SpriteFrames_7ii0j")
 
 [node name="DelayDeathTimer" type="Timer" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_7mffb")
+volume_db = -14.688
+pitch_scale = 0.51
+
+[node name="Explosion" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_a71h6")
+pitch_scale = 1.89
 
 [connection signal="timeout" from="BogeyAltTimer" to="." method="OnBogeyAltTimerTimeout"]
 [connection signal="timeout" from="DelayDeathTimer" to="." method="OnDelayDeathTimerTimeout"]

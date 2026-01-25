@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://m7bwxi086h48"]
+[gd_scene load_steps=12 format=3 uid="uid://m7bwxi086h48"]
 
 [ext_resource type="PackedScene" uid="uid://ti5vqdeovlqr" path="res://scenes/drone.tscn" id="1_bm4pe"]
 [ext_resource type="Script" uid="uid://b2dmwxeat63em" path="res://dotnet_objects/Game/Enemies/WaveDrone.cs" id="2_3t3q4"]
 [ext_resource type="Texture2D" uid="uid://blv5m2s2xmpbq" path="res://assets/trail_v2.png" id="3_adyxw"]
 [ext_resource type="Texture2D" uid="uid://dmy3webgx2ms3" path="res://assets/trail_v1.png" id="4_y1vqf"]
 [ext_resource type="PackedScene" uid="uid://coj2m0ibpsrqv" path="res://scenes/healthbar.tscn" id="5_y1vqf"]
+[ext_resource type="AudioStream" uid="uid://pwfehyvh7bqr" path="res://assets/SFX/enemy_destroyed.mp3" id="6_2btw2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
 atlas = ExtResource("3_adyxw")
@@ -66,5 +67,9 @@ offset_bottom = -6.0
 rotation = 3.14159
 
 [node name="ShowHealthbarTimer" type="Timer" parent="." index="4"]
+
+[node name="Explosion" type="AudioStreamPlayer2D" parent="." index="7"]
+stream = ExtResource("6_2btw2")
+pitch_scale = 1.89
 
 [connection signal="timeout" from="ShowHealthbarTimer" to="." method="OnShowDroneHealthbarTimerTimeout"]
