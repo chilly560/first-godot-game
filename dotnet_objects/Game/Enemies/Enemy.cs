@@ -21,7 +21,7 @@ namespace Game.Enemies
         /// Unique enemy ID assigned at instantiation.
         /// </summary>
         private int enemyid;
-        private int hp;
+        protected int hp;
         /// <summary>
         /// Factory for creating Drops upon enemy destruction.
         /// </summary>
@@ -138,7 +138,7 @@ namespace Game.Enemies
         /// Reduces enemy HP by the specified amount, and handles the 'death case' if HP falls to zero or below.
         /// </summary>
         /// <param name="amount">Damage to be taken as an int</param>
-        public void TakeDamage(int amount)
+        public virtual void TakeDamage(int amount)
         {
             hp -= amount;
             if (hp <= 0)

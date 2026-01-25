@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bj2103ws4vfg3"]
+[gd_scene load_steps=7 format=3 uid="uid://bj2103ws4vfg3"]
 
 [ext_resource type="Script" uid="uid://f6y43g25nfpk" path="res://dotnet_objects/Game/Enemies/Bogey.cs" id="1_h5uv4"]
 [ext_resource type="Texture2D" uid="uid://btkhm63m6v1dl" path="res://assets/Replacement_Enemy/enemy_1_r_m.png" id="2_7k7q8"]
 [ext_resource type="Script" uid="uid://dxwoqhljegj02" path="res://scripts/BogeyTimer.cs" id="3_7k7q8"]
 [ext_resource type="PackedScene" uid="uid://c4i3m8rk703u2" path="res://scenes/WeaponScene.tscn" id="4_u2nkw"]
+[ext_resource type="PackedScene" uid="uid://coj2m0ibpsrqv" path="res://scenes/healthbar.tscn" id="5_u2nkw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6acpg"]
 size = Vector2(13, 17)
@@ -27,5 +28,13 @@ texture = ExtResource("2_7k7q8")
 [node name="WeaponScene" parent="Sprite2D" instance=ExtResource("4_u2nkw")]
 position = Vector2(0.746095, 3.34375)
 scale = Vector2(0.404297, 0.417969)
+
+[node name="Healthbar" parent="." instance=ExtResource("5_u2nkw")]
+offset_left = -9.0
+offset_top = -14.0
+offset_right = 9.0
+offset_bottom = -10.0
+
+[node name="ShowHealthbarTimer" type="Timer" parent="."]
 
 [connection signal="timeout" from="BogeyAltTimer" to="." method="OnBogeyAltTimerTimeout"]

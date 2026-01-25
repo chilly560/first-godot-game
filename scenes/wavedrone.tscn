@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://m7bwxi086h48"]
+[gd_scene load_steps=11 format=3 uid="uid://m7bwxi086h48"]
 
 [ext_resource type="PackedScene" uid="uid://ti5vqdeovlqr" path="res://scenes/drone.tscn" id="1_bm4pe"]
 [ext_resource type="Script" uid="uid://b2dmwxeat63em" path="res://dotnet_objects/Game/Enemies/WaveDrone.cs" id="2_3t3q4"]
 [ext_resource type="Texture2D" uid="uid://blv5m2s2xmpbq" path="res://assets/trail_v2.png" id="3_adyxw"]
 [ext_resource type="Texture2D" uid="uid://dmy3webgx2ms3" path="res://assets/trail_v1.png" id="4_y1vqf"]
+[ext_resource type="PackedScene" uid="uid://coj2m0ibpsrqv" path="res://scenes/healthbar.tscn" id="5_y1vqf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
 atlas = ExtResource("3_adyxw")
@@ -56,3 +57,14 @@ sprite_frames = SubResource("SpriteFrames_2btw2")
 animation = &"thruster_short_animation"
 frame_progress = 0.821189
 centered = false
+
+[node name="Healthbar" parent="." index="3" instance=ExtResource("5_y1vqf")]
+offset_left = 10.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = -6.0
+rotation = 3.14159
+
+[node name="ShowHealthbarTimer" type="Timer" parent="." index="4"]
+
+[connection signal="timeout" from="ShowHealthbarTimer" to="." method="OnShowDroneHealthbarTimerTimeout"]

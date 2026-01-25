@@ -22,7 +22,8 @@ script = ExtResource("1_8wl12")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 z_index = -1
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_right = 1.00368
 anchor_bottom = 1.0
 theme_override_styles/background = SubResource("StyleBoxFlat_y8nn8")

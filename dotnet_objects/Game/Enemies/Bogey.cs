@@ -18,15 +18,23 @@ namespace Game.Enemies
 
         private WeaponScene weaponScene;
 
+        private Healthbar healthbar;
+
         public float BobDelta { get ; set ; }
         public bool Down { get ; set ; }
         public Vector2 PreviousPosition { get ; set ; }
 
-
+        private Timer showHealthbarTimer;
         public override void _Ready()
         {
             dropChance = .5f;
             base._Ready();
+            healthbar = GetNode<Healthbar>("./Healthbar");
+            healthbar.SetHealth(100);
+            healthbar.Visible = false; // Hide healthbar by default
+            showHealthbarTimer = GetNode<Timer>("./ShowHealthbarTimer");
+            showHealthbarTimer.WaitTime = 2.0;
+            showHealthbarTimer.OneShot = true;
             reposition = true;
             paused = false;
             weaponScene = GetNode<WeaponScene>("./Sprite2D/WeaponScene");
@@ -64,7 +72,7 @@ namespace Game.Enemies
                 {
                     Position += Transform.X * 100 * (float)delta;
                     sprite.Texture = gameData.TextureCache.Bogey.Right;
-                }                   
+                }
 
                 else
                 {
@@ -103,6 +111,26 @@ namespace Game.Enemies
         public void Shoot()
         {
             weaponScene.Shoot();
+        }
+
+        public override void TakeDamage(int amount)
+        {
+            healthbar.SetHealth(hp - amount, true);
+            healthbar.Visible = true; // Show healthbar when damage taken
+            
+            // Restart timer to hide after 2 seconds
+            if (!showHealthbarTimer.IsStopped())
+            {
+                showHealthbarTimer.Stop();
+            }
+            showHealthbarTimer.Start();
+            
+            base.TakeDamage(amount);
+        }
+
+        private void OnBogeyShowHealthbarTimerTimeout()
+        {
+            healthbar.Visible = false;
         }
     }
 }
