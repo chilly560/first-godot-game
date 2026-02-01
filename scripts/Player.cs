@@ -10,40 +10,27 @@ public partial class Player : CharacterBody2D, ICollector
 {
 	[Export]
 	private int Speed { get; set; } = 400;
-
 	private GameData gameData;
-
 	private bool isAlive;
-
 	private Label hp, secondaryAmmo, score, wave;
 	/// <summary>
     /// WeaponScene playerWeapon contains a List<IWeapon> weaponCollection
 	/// responsible for storing the player's collection of weapons.
     /// </summary>
 	private WeaponScene weaponScene;
-
 	private Timer autofireTimer;
-
 	private Sprite2D sprite;
-
 	private Timer showHealthbarTimer;
-
 	private Timer deathDelayTimer;
-
 	private AnimatedSprite2D deathExplosion;
-
 	private AnimatedSprite2D trail;
 	// Called when the node enters the scene tree for the first time.
-
 	private AudioStreamPlayer2D shootSound, powerupSound, deathSound;
 	public override void _Ready()
 	{
 		weaponScene = GetNode<WeaponScene>("Sprite2D/WeaponScene");
 		gameData = GameData.Get();
 		gameData.Player = this;
-		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;
-		gameData.UpdateScoreLabel += OnUpdateScoreLabel;
-		gameData.WaveBonus += OnUpdateScoreLabel;
 		trail = GetNode<AnimatedSprite2D>("./AnimatedTrail2D");
 		autofireTimer = GetNode<Timer>("./AutofireTimer");
 		hp = GetNode<Label>("../Camera2D/HUD/HPValue");
@@ -63,7 +50,14 @@ public partial class Player : CharacterBody2D, ICollector
 		shootSound = GetNode<AudioStreamPlayer2D>("./Shoot");
 		powerupSound = GetNode<AudioStreamPlayer2D>("./PowerUp");
 		deathSound = GetNode<AudioStreamPlayer2D>("./Explosion");
+		gameData.UpdateAmmoLabel += OnUpdateAmmoLabel;
+		gameData.UpdateScoreLabel += OnUpdateScoreLabel;
+		gameData.WaveBonus += OnUpdateScoreLabel;
 	}
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+    }
 
 	/** Handles input from the player.
 	*/
@@ -93,13 +87,11 @@ public partial class Player : CharacterBody2D, ICollector
 			Velocity = inputDirection * Speed;
 		}
 	}
-
 	public override void _PhysicsProcess(double delta)
 	{
 		GetInput();
 		MoveAndSlide();
 	}
-
 	/** Applies damage to the player and checks if they are still alive.
 	 * If the player dies, it changes the scene to the game over screen.
 
@@ -138,7 +130,6 @@ public partial class Player : CharacterBody2D, ICollector
 		hp.Text = gameData.GetHP().ToString();
 		isAlive = true;
 	}
-
 	/// <summary>
     /// Required to change scene after player death to avoid undefined/undesired behavior.
     /// </summary>
@@ -146,14 +137,12 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		GetTree().ChangeSceneToFile("res://scenes/game_over.tscn");
 	}
-
 	private void Autofire()
 	{
 		weaponScene.Shoot();
 		shootSound.Play();
 		autofireTimer.Start();
 	}
-
 	public void Collect(ICollectable collectable)
 	{
 		if (collectable is IWeapon w)
@@ -170,14 +159,12 @@ public partial class Player : CharacterBody2D, ICollector
 
 		powerupSound.Play();
 	}
-
 	public void OnAutofireTimerTimeout()
 	{
 		Autofire();
 		autofireTimer.WaitTime = .25;
 		autofireTimer.Start();
 	}
-
 	public void OnUpdateAmmoLabel(int plusMinus)
     {
 		int ammoVal = weaponScene.GetSecondaryWeapon().GetAmmo();
@@ -189,7 +176,6 @@ public partial class Player : CharacterBody2D, ICollector
 			secondaryAmmo.Text = "0";
 		else secondaryAmmo.Text = newTextValue.ToString();
     }
-	
 	public void OnUpdateScoreLabel(int plusMinus)
     {
         int scoreVal = int.Parse(score.Text);
@@ -213,7 +199,6 @@ public partial class Player : CharacterBody2D, ICollector
 	{
 		return score.Text;
 	}
-
 	private void UpdateWaveLabel()
 	{
 		int i;
@@ -222,7 +207,6 @@ public partial class Player : CharacterBody2D, ICollector
 			wave.Text = (++i).ToString();
 		}
 	}
-
 	public void OnPlayerDeathDelayTimerTimeout()
 	{
 		CallDeferred(nameof(DeferredToGameOverScene));

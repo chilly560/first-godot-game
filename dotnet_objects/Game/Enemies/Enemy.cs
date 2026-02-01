@@ -73,7 +73,6 @@ namespace Game.Enemies
         /// </summary>
         protected Sprite2D sprite;
         // Called when the node enters the scene tree for the first time.
-
         protected AnimatedSprite2D deathExplosion;
         protected Healthbar healthbar;
         protected Timer showHealthbarTimer;
@@ -159,7 +158,6 @@ namespace Game.Enemies
             hp -= amount;
             if (hp <= 0)
             {
-
                 //GD.Print($"Enemy {this} destroyed, worth {worth} points.");
                 EmitSignal(nameof(EnemyDestroyed), worth);
                 SetPhysicsOverhauler((enemy, delta) => enemy.Position = enemy.Position);

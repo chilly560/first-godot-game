@@ -10,9 +10,7 @@ namespace Game.Enemies
 	public partial class Drone : Enemy
 	{
 		private Healthbar healthbar;
-
 		private Timer showHealthbarTimer;
-		
         public override void _Ready()
         {
 			dropChance = .1f;
@@ -29,7 +27,6 @@ namespace Game.Enemies
 		{
 			worth = 5;
 		}
-
 		public override void TakeDamage(int amount)
 		{
 			healthbar.SetHealth(hp - amount, true);
@@ -44,7 +41,6 @@ namespace Game.Enemies
 			
 			base.TakeDamage(amount);
 		}
-
 		public void OnShowDroneHealthbarTimerTimeout()
 		{
 			healthbar.Visible = false;

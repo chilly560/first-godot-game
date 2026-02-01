@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://chjkhfsdsws7j"]
+[gd_scene load_steps=13 format=4 uid="uid://chjkhfsdsws7j"]
 
 [ext_resource type="Script" uid="uid://b4vfbl26uu676" path="res://scenes/GameRoot.cs" id="1_p57ef"]
 [ext_resource type="PackedScene" uid="uid://c7rqggkyxpph4" path="res://scenes/player.tscn" id="2_iywne"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://coxv56so0e6h8" path="res://scenes/enemy_spawner_2.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://n5lbhp4a8odl" path="res://scenes/WaveSpawner.tscn" id="7_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="9_0tnpc"]
+[ext_resource type="Script" uid="uid://cn2qy5tysrco8" path="res://scripts/ScoreLabel.cs" id="9_kvpfn"]
 [ext_resource type="Shader" path="res://scenes/game.gdshader" id="9_vtaks"]
 [ext_resource type="AudioStream" uid="uid://b6scf6flrnbtc" path="res://assets/SFX/game-music-alien-71795.mp3" id="10_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://clatcu1widtu2" path="res://scenes/one_way_blocker.tscn" id="10_vtaks"]
@@ -101,6 +102,7 @@ offset_top = -249.0
 offset_right = -100.0
 offset_bottom = -226.0
 text = "Score: "
+script = ExtResource("9_kvpfn")
 metadata/_edit_use_anchors_ = true
 
 [node name="ScoreValue" type="Label" parent="Camera2D/HUD"]

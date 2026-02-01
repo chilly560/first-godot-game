@@ -74,7 +74,7 @@ public partial class GameData : Node
     /// Cache of alternative SpriteFrames for various game entities. Preloaded as part of GameData to improve performance at runtime.
     /// </summary>
 	public TexturesCache TextureCache;
-	public AudioStreamPlayer2D backgroundMusicPlayer;
+	//public AudioStreamPlayer2D backgroundMusicPlayer;
 	/// <summary>
     /// Implements a cache of alternative SpriteFrames for various game entities. 
 	/// 
@@ -117,14 +117,28 @@ public partial class GameData : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		self = this;
 		HP = MAX_HP;
 		TextureCache = new TexturesCache();
 		enemies = new Dictionary<int, Enemy>();
 		playerHealthbar = GetNode<Healthbar>("../GameRoot/Camera2D/HUD/Healthbar");
 		playerHealthbar.Setup(100);
-		backgroundMusicPlayer = GetNode<AudioStreamPlayer2D>("../GameRoot/Music");
-		backgroundMusicPlayer.Play();
+		self = this;
+		//backgroundMusicPlayer = GetNode<AudioStreamPlayer2D>("../GameRoot/Music");
+		//backgroundMusicPlayer.Play();
+	}
+	/// <summary>
+	/// Reset all game data fields when restarting the game.
+	/// </summary>
+	public void Flush()
+	{
+		HP = MAX_HP;
+		enemies = new Dictionary<int, Enemy>();
+		playerHealthbar = GetNode<Healthbar>("../GameRoot/Camera2D/HUD/Healthbar");
+		playerHealthbar.Setup(100);
+		Score = 0;
+		WaveNumber = 0;
+		Entities = 0;
+		PauseSpawning = false;
 	}
 	/// <summary>
 	/// Get the number of active enemies.
@@ -172,6 +186,10 @@ public partial class GameData : Node
 		}
 		playerHealthbar.SetHealth(HP);
 	}
+	public Player GetPlayer()
+	{
+		return Player;
+	}
 	/// <summary>
 	/// Get player's X position.
 	/// </summary>
@@ -201,8 +219,12 @@ public partial class GameData : Node
 	{
 		if (amount < 0)
 			throw new ArgumentException("Damage amount must be positive");
-			
-		HP -= amount;
+		
+		if (HP - amount < 0)
+			HP = 0;
+		else
+			HP -= amount;
+
 		playerHealthbar.SetHealth(HP, true);
 
 		return HP > 0;
@@ -313,6 +335,8 @@ public partial class GameData : Node
 	/// <returns></returns>
 	public static GameData Get()
 	{
+		if (self == null)
+			throw new Exception("GameData instance is null");
 		return self;
 	}
 }
