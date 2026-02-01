@@ -16,7 +16,7 @@
 shader = ExtResource("9_vtaks")
 
 [node name="GameRoot" type="Node2D"]
-position = Vector2(1, 32)
+position = Vector2(2, 32)
 scale = Vector2(0.986973, 1.00289)
 script = ExtResource("1_p57ef")
 

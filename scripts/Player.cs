@@ -57,6 +57,9 @@ public partial class Player : CharacterBody2D, ICollector
     public override void _ExitTree()
     {
         base._ExitTree();
+		gameData.WaveBonus -= OnUpdateScoreLabel;
+		gameData.UpdateScoreLabel -= OnUpdateScoreLabel;
+		gameData.UpdateAmmoLabel -= OnUpdateAmmoLabel;
     }
 
 	/** Handles input from the player.
