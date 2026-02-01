@@ -48,6 +48,12 @@ namespace Game.Enemies.EnemySpawning
 			currentWave = null;
 			GD.Print($"Residual Entities remaining: {gameData.Entities}");
 		}
+		public override void _ExitTree()
+		{
+			// Disconnect signals BEFORE calling base._ExitTree()
+			gameData.WaveDestroyed -= WaveDestroyedSignalHandler;
+			base._ExitTree();
+		}
 		public void OnEnemyActivationTimerTimeout()
 		{
 			if (currentWave != null && currentWave.GetCount() > 0)

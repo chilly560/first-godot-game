@@ -243,6 +243,11 @@ namespace Game.Enemies
         /// 
         /// Called via signal from the DelayDeathTimer node.
         /// </summary>
+        public override void _ExitTree()
+        {
+            base._ExitTree();
+        }
+
         public virtual void OnDelayDeathTimerTimeout()
         {
             if (inWaveFormation && Activated == false)

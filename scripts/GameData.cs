@@ -139,6 +139,13 @@ public partial class GameData : Node
 		WaveNumber = 0;
 		Entities = 0;
 		PauseSpawning = false;
+		
+		// Clear all event handler subscriptions to prevent old disposed nodes from being signaled
+		//UpdateAmmoLabel;
+		//UpdateScoreLabel = null;
+		//RemoveEnemyXYFromFormation = null;
+		//WaveDestroyed = null;
+		//WaveBonus = null;
 	}
 	/// <summary>
 	/// Get the number of active enemies.

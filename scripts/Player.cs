@@ -56,10 +56,12 @@ public partial class Player : CharacterBody2D, ICollector
 	}
     public override void _ExitTree()
     {
+        // Disconnect signals BEFORE calling base._ExitTree()
+        gameData.UpdateAmmoLabel -= OnUpdateAmmoLabel;
+        gameData.UpdateScoreLabel -= OnUpdateScoreLabel;
+        gameData.WaveBonus -= OnUpdateScoreLabel;
+        gameData.WaveDestroyed -= UpdateWaveLabel;
         base._ExitTree();
-		gameData.WaveBonus -= OnUpdateScoreLabel;
-		gameData.UpdateScoreLabel -= OnUpdateScoreLabel;
-		gameData.UpdateAmmoLabel -= OnUpdateAmmoLabel;
     }
 
 	/** Handles input from the player.

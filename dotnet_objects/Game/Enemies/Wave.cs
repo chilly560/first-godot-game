@@ -395,7 +395,7 @@ namespace Game.Enemies
 
         private void Destroy()
         {
-            gameData.RemoveEnemyXYFromFormation -= EnemyDestroyedEventHandler;
+            //gameData.RemoveEnemyXYFromFormation -= EnemyDestroyedEventHandler;
             // GD.Print($"Wave Complete.");
             gameData.EmitWaveDestroyedEventHandlerSignal();
             gameData.EmitWaveBonusEventHandlerSignal(BONUS);
