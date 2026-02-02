@@ -63,7 +63,7 @@ public partial class GameData : Node
 	/// <summary>
 	/// Current iteration of waves.
 	/// </summary>
-	public int WaveNumber { get; set; } = 0;
+	public int WaveNumber { get; set; } = 1;
 	/// <summary>
 	/// Player healthbar is contained in gamedata as it is a child of the 'Game' scene,
 	/// not the 'Player' scene. This is unique to this healthbar, other healthbars

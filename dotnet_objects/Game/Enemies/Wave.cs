@@ -21,8 +21,11 @@ namespace Game.Enemies
         /// GameData event bus singleton.
         /// </summary>
         private GameData gameData;
-
         public int WaveID;
+        /// <summary>
+        /// Instance of the EnemyMatrix representing this wave formation.
+        /// </summary>
+        private EnemyMatrix eMatrix;
         /// <summary>
         /// Main behavioral (physics) instructions for Wave enemies. These are applied at runtime.
         /// </summary>
@@ -329,17 +332,17 @@ namespace Game.Enemies
             }
         }
         /// <summary>
-        /// Instance of the EnemyMatrix representing this wave formation.
-        /// </summary>
-        private EnemyMatrix eMatrix;
-        /// <summary>
         /// Constructor initializes the wave with a default enemy matrix formation.
         /// </summary>
         public Wave(WavePattern pattern = WavePattern.DEFAULT)
         {
             gameData = GameData.Get();  
             gameData.RemoveEnemyXYFromFormation += EnemyDestroyedEventHandler;
-            
+
+            WaveID = (new Random()).Next(1000, 9999);
+
+            GD.Print("WaveID:" + WaveID);
+
             switch (pattern)
             {
                 case WavePattern.DEFAULT:
@@ -352,14 +355,6 @@ namespace Game.Enemies
                     throw new ArgumentException("Invalid Wave Pattern");
             }
         }   
-        /// <summary>
-        /// Constructor called for subsequent waves after the first wave. 
-        /// </summary>
-        /// <param name="WaveID">Chronological by wave iterations.</param>
-        public Wave(int WaveID, WavePattern pattern = WavePattern.DEFAULT) : this(pattern)
-        {
-            this.WaveID = WaveID;
-        }
         /// <summary>
         /// Adds each enemy as a child node to the provided GameRoot.
         /// </summary>
@@ -399,6 +394,7 @@ namespace Game.Enemies
             // GD.Print($"Wave Complete.");
             gameData.EmitWaveDestroyedEventHandlerSignal();
             gameData.EmitWaveBonusEventHandlerSignal(BONUS);
+            FreeSig();
         }
         /// <summary>
         /// Number of Enemies remaining in the current wave.
@@ -406,6 +402,21 @@ namespace Game.Enemies
         public int GetCount()
         {
             return eMatrix.Count;
+        }
+        /// <summary>
+        /// Cleans up event subscriptions.
+        /// 
+        /// Must be called when the wave is destroyed to prevent a memory Leak, and
+        /// to prevent the old wave from responding to future EnemyDestroyed events.
+        /// 
+        /// Lesson learned, do not subscribe to Godot signals in a non-Node class.
+        /// </summary>
+        public void FreeSig()
+        {
+            gameData.RemoveEnemyXYFromFormation -= EnemyDestroyedEventHandler;
+            GD.Print($"Wave {WaveID}: Disconnected RemoveEnemyXYFromFormation");
+            eMatrix = null;
+            GD.Print($"Wave {WaveID} fully freed from memory");
         }
     }
 }

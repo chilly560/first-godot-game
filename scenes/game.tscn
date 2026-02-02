@@ -31,7 +31,7 @@ tile_map_data = PackedByteArray("AAD3/wcAAAANAAMAAAAIAPT/AAAPAAIAAAAIAPX/AAAPAAI
 position = Vector2(1.0132, -2.99135)
 
 [node name="WaveSpawner" parent="." instance=ExtResource("7_u5sy4")]
-position = Vector2(7, 246)
+position = Vector2(7.09239, 256.259)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_repeat = 2

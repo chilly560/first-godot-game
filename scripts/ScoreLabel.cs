@@ -11,6 +11,6 @@ public partial class ScoreLabel : Label
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		GD.Print(this);
+		//GD.Print(this);
 	}
 }

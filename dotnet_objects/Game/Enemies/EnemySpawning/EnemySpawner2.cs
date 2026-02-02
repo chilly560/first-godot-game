@@ -60,7 +60,7 @@ namespace Game.Enemies.EnemySpawning
         /// </summary>
 		public void OnSpawnTimerTimeout()
 		{
-			GD.Print($"Paused: {gameData.PauseSpawning}");
+			//GD.Print($"Paused: {gameData.PauseSpawning}");
 			if ((!gameData.PauseSpawning) && (gameData.Entities < gameData.EntityCap))
 			{				
 				//GD.Print("---------------------");

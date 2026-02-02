@@ -17,20 +17,14 @@ namespace Game.Enemies.EnemySpawning
 	public partial class WaveSpawner : Spawner
 	{
 		private GameData gameData;
-
 		private Wave currentWave;
-
 		private EnemyActivationTimer enemyActivationTimer;
-
 		private const int FREQUENCY = 3;
-		
 		private Random random;
-
 		public override void _Ready()
 		{
 			gameData = GameData.Get();
 			random = new Random();
-			gameData.WaveNumber++;
 			gameData.WaveDestroyed += WaveDestroyedSignalHandler;
 			enemyActivationTimer = GetNode<EnemyActivationTimer>("EnemyActivationTimer");
 			enemyActivationTimer.Start(FREQUENCY);
@@ -46,13 +40,14 @@ namespace Game.Enemies.EnemySpawning
 			// Don't forget - you're planning multiple types of waves to be spawnable!
 			gameData.PauseSpawning = true;
 			currentWave = null;
-			GD.Print($"Residual Entities remaining: {gameData.Entities}");
+			//GD.Print($"Residual Entities remaining: {gameData.Entities}");
 		}
 		public override void _ExitTree()
 		{
-			// Disconnect signals BEFORE calling base._ExitTree()
-			gameData.WaveDestroyed -= WaveDestroyedSignalHandler;
 			base._ExitTree();
+			currentWave.FreeSig();
+			currentWave = null;
+			gameData.WaveDestroyed -= WaveDestroyedSignalHandler;
 		}
 		public void OnEnemyActivationTimerTimeout()
 		{
@@ -70,14 +65,12 @@ namespace Game.Enemies.EnemySpawning
 				switch (pattern)
 				{
 					case 0:
-						currentWave = new Wave(gameData.WaveNumber, WavePattern.AGGRESSIVE);
-						break;
 					case 1:
-						currentWave = new Wave(gameData.WaveNumber, WavePattern.AGGRESSIVE);
+						currentWave = new Wave(WavePattern.AGGRESSIVE);
 						break;
 					// temp unless more patterns are added
 					default:
-						currentWave = new Wave(gameData.WaveNumber, WavePattern.DEFAULT);
+						currentWave = new Wave(WavePattern.DEFAULT);
 						break;
 				}
 				currentWave.InstantiateWaveEntitites(GetParent<GameRoot>());
