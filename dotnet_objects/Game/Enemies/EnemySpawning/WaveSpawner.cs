@@ -61,11 +61,12 @@ namespace Game.Enemies.EnemySpawning
 				// Temporarily just spawning new default wave, can add logic for different wave types later.
 				currentWave = null;
 				gameData.WaveNumber++;
-				int pattern = random.Next(0,4);
+				int pattern = random.Next(0,5);
 				switch (pattern)
 				{
 					case 0:
 					case 1:
+					case 2:
 						currentWave = new Wave(WavePattern.AGGRESSIVE);
 						break;
 					// temp unless more patterns are added

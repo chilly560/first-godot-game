@@ -79,7 +79,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 25.0
 }]
 
 [node name="Bogey" instance=ExtResource("1_bpook")]
@@ -95,6 +95,7 @@ position = Vector2(-5.96046e-08, 2.5)
 
 [node name="ExplodeAnimation" parent="." index="7"]
 sprite_frames = SubResource("SpriteFrames_4t6ga")
+frame_progress = 0.511071
 
 [connection signal="timeout" from="BogeyTimer" to="." method="OnBogeyTimerTimeout"]
 [connection signal="timeout" from="WaveBogeyTimer" to="." method="OnWaveBogeyTimerTimeout"]
