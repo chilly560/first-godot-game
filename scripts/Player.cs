@@ -144,7 +144,8 @@ public partial class Player : CharacterBody2D, ICollector
 
 	private void OnTap()
 	{
-		weaponScene.AltShoot();
+		if (isAlive)
+			weaponScene.AltShoot();
 	}
 	/** Handles input from the player.
 	*/
@@ -230,19 +231,22 @@ public partial class Player : CharacterBody2D, ICollector
 	}
 	public void Collect(ICollectable collectable)
 	{
-		if (collectable is IWeapon w)
-			weaponScene.AddNewWeapon(w);
-			
-		else if (collectable is IStatusModifier sm)
-        {
-            if (sm is HealthModifier hm)
-            {
-                Heal(hm.GetHealAmount());
-            }
-        }
-		else throw new ArgumentException("ERROR: collectable IS NOT WEAPONSCENE");
+		if (isAlive)
+		{
+			if (collectable is IWeapon w)
+				weaponScene.AddNewWeapon(w);
+				
+			else if (collectable is IStatusModifier sm)
+			{
+				if (sm is HealthModifier hm)
+				{
+					Heal(hm.GetHealAmount());
+				}
+			}
+			else throw new ArgumentException("ERROR: collectable IS NOT WEAPONSCENE");
 
-		powerupSound.Play();
+			powerupSound.Play();
+		}
 	}
 	public void OnAutofireTimerTimeout()
 	{

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://1ggfybsvw24" path="res://scripts/GameOver.cs" id="1_tbwuq"]
 [ext_resource type="Shader" path="res://scenes/game.gdshader" id="4_7m3ot"]
-[ext_resource type="PackedScene" path="res://scenes/game_buttons.tscn" id="4_racf3"]
+[ext_resource type="PackedScene" uid="uid://cmepnnvyy3e6k" path="res://scenes/game_buttons.tscn" id="4_racf3"]
 [ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="5_v3hpu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_irg28"]
