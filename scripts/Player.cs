@@ -9,7 +9,7 @@ using Godot;
 public partial class Player : CharacterBody2D, ICollector
 {
 	[Export]
-	private int Speed { get; set; } = 400;
+	private int Speed { get; set; } = 600;
 	private GameData gameData;
 	private bool isAlive;
 	private Label hp, secondaryAmmo, score, wave;
@@ -26,6 +26,7 @@ public partial class Player : CharacterBody2D, ICollector
 	private AnimatedSprite2D trail;
 	// Called when the node enters the scene tree for the first time.
 	private AudioStreamPlayer2D shootSound, powerupSound, deathSound;
+	private CanvasLayer controlsLayer;
 	public override void _Ready()
 	{
 		weaponScene = GetNode<WeaponScene>("Sprite2D/WeaponScene");
@@ -68,29 +69,29 @@ public partial class Player : CharacterBody2D, ICollector
 	*/
 	public void GetInput()
 	{
+		// Handle shooting independently (can happen while moving)
 		if (Input.IsActionJustPressed("click"))
 		{
 			weaponScene.AltShoot();
-		} 
-		else
-		{
-			Vector2 inputDirection = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-			if (inputDirection.X < 0)
-			{
-				sprite.Texture = gameData.TextureCache.Player.Left;
-			}
-			else if (inputDirection.X > 0)
-			{
-				sprite.Texture = gameData.TextureCache.Player.Right;
-			}
-			else if (inputDirection.X == 0)
-			{
-				sprite.Texture = gameData.TextureCache.Player.Center;
-			} else {
-				throw new Exception("Unreachable code in Player.GetInput()");
-			}
-			Velocity = inputDirection * Speed;
 		}
+		
+		// Handle movement independently (can happen while shooting)
+		Vector2 inputDirection = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		if (inputDirection.X < 0)
+		{
+			sprite.Texture = gameData.TextureCache.Player.Left;
+		}
+		else if (inputDirection.X > 0)
+		{
+			sprite.Texture = gameData.TextureCache.Player.Right;
+		}
+		else if (inputDirection.X == 0)
+		{
+			sprite.Texture = gameData.TextureCache.Player.Center;
+		} else {
+			throw new Exception("Unreachable code in Player.GetInput()");
+		}
+		Velocity = inputDirection * Speed;
 	}
 	public override void _PhysicsProcess(double delta)
 	{

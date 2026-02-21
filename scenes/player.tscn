@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c7rqggkyxpph4"]
+[gd_scene load_steps=25 format=3 uid="uid://c7rqggkyxpph4"]
 
 [ext_resource type="Texture2D" uid="uid://c0x4xuh8slnk5" path="res://assets/Player/player_b_m.png" id="1_qhqgy"]
 [ext_resource type="Script" uid="uid://dn7x2ktm4vckw" path="res://scripts/Player.cs" id="1_y4r1p"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://cybu1khx0w73c" path="res://assets/SFX/8-bit-video-game-points-version-1-145826-TRIM.mp3" id="11_3v2ag"]
 [ext_resource type="AudioStream" uid="uid://bbaecoma3o7yd" path="res://assets/SFX/laser-shot-ingame-230500.mp3" id="11_d2wvv"]
 [ext_resource type="AudioStream" uid="uid://bqjypae1aojh7" path="res://assets/SFX/explosion-fx-343683.mp3" id="13_jej6c"]
+[ext_resource type="PackedScene" uid="uid://dywndy1moyaqv" path="res://scenes/canvas_layer.tscn" id="14_f1ej7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t53lx"]
 size = Vector2(23, 18)
@@ -129,6 +130,14 @@ pitch_scale = 6.03
 
 [node name="Explosion" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_jej6c")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasLayer" parent="Control" instance=ExtResource("14_f1ej7")]
 
 [connection signal="timeout" from="AutofireTimer" to="." method="OnAutofireTimerTimeout"]
 [connection signal="animation_finished" from="ExplodeAnimation" to="." method="OnAnimationFinished"]

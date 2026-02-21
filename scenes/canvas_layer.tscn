@@ -1,15 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://dywndy1moyaqv"]
+[gd_scene load_steps=3 format=3 uid="uid://dywndy1moyaqv"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_c4rma"]
+[ext_resource type="Texture2D" uid="uid://cmd41i7x8cp08" path="res://assets/Sprite-00021.png" id="2_ghj5q"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="Virtual Joystick" parent="." instance=ExtResource("1_c4rma")]
 modulate = Color(1, 1, 1, 0.352941)
 self_modulate = Color(1, 1, 1, 0.403922)
-offset_left = -11.0
-offset_top = -448.0
-offset_right = 289.0
-offset_bottom = -148.0
+offset_left = 8.0
+offset_top = -383.0
+offset_right = 308.0
+offset_bottom = -83.0
 scale = Vector2(0.8, 0.787)
 pressed_color = Color(0.745098, 0.745098, 0.745098, 0.286275)
+deadzone_size = 0.0
+clampzone_size = 162.0
+
+[node name="Shoot" type="TouchScreenButton" parent="."]
+scale = Vector2(5.8, 12)
+texture_normal = ExtResource("2_ghj5q")
+action = "click"

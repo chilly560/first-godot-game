@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://chjkhfsdsws7j"]
+[gd_scene load_steps=13 format=4 uid="uid://chjkhfsdsws7j"]
 
 [ext_resource type="Script" uid="uid://b4vfbl26uu676" path="res://scenes/GameRoot.cs" id="1_p57ef"]
 [ext_resource type="PackedScene" uid="uid://c7rqggkyxpph4" path="res://scenes/player.tscn" id="2_iywne"]
@@ -11,7 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://b6scf6flrnbtc" path="res://assets/SFX/game-music-alien-71795.mp3" id="10_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://clatcu1widtu2" path="res://scenes/one_way_blocker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://coj2m0ibpsrqv" path="res://scenes/healthbar.tscn" id="11_kvpfn"]
-[ext_resource type="PackedScene" uid="uid://dywndy1moyaqv" path="res://scenes/canvas_layer.tscn" id="12_dinhu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
 shader = ExtResource("9_vtaks")
@@ -142,11 +141,3 @@ offset_bottom = 282.605
 stream = ExtResource("10_kvpfn")
 volume_db = -3.388
 parameters/looping = true
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="CanvasLayer" parent="Control" instance=ExtResource("12_dinhu")]
