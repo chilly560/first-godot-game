@@ -26,7 +26,24 @@ public partial class Player : CharacterBody2D, ICollector
 	private AnimatedSprite2D trail;
 	// Called when the node enters the scene tree for the first time.
 	private AudioStreamPlayer2D shootSound, powerupSound, deathSound;
-	private CanvasLayer controlsLayer;
+	/// <summary>
+	/// Maps touch index to current position for handling multi-touch input. 
+	/// 
+	/// Used to determine if a tap or drag occurred based on the movement and duration of each touch.
+	/// </summary>
+	private Dictionary<long, Vector2> activeTouches = new Dictionary<long, Vector2>(); // Maps touch index to current position
+	/// <summary>
+	/// Pixels a finger can move and still count as a tap
+	/// </summary>
+	private const float TAP_MAX_MOVEMENT = 10f; 
+	/// <summary>
+	/// Maximum duration for a touch to be considered a tap.
+	/// </summary>
+	private const float TAP_MAX_DURATION = 0.2f; 
+	/// <summary>
+	/// Maps touch index to the starting position and time of the touch for tap detection.
+	/// </summary>
+	private Dictionary<long, (Vector2 startPos, double startTime)> touchStartInfo = new Dictionary<long, (Vector2 startPos, double startTime)>();
 	public override void _Ready()
 	{
 		weaponScene = GetNode<WeaponScene>("Sprite2D/WeaponScene");
@@ -57,25 +74,87 @@ public partial class Player : CharacterBody2D, ICollector
 	}
     public override void _ExitTree()
     {
-        // Disconnect signals BEFORE calling base._ExitTree()
         gameData.UpdateAmmoLabel -= OnUpdateAmmoLabel;
         gameData.UpdateScoreLabel -= OnUpdateScoreLabel;
         gameData.WaveBonus -= OnUpdateScoreLabel;
         gameData.WaveDestroyed -= UpdateWaveLabel;
         base._ExitTree();
     }
+	
+	/// <summary>
+	/// Override of the _Input method to handle touch input for both taps and drags.
+	/// 
+	/// Detects taps and drags based on the movement of the input and the duration of the input (See TAP_MAX_MOVEMENT and TAP_MAX_DURATION). 
+	/// If an input is less than 10 pixels across and persists for less than .2 seconds, it is a tap and the weapon is fired.
+	/// 
+	/// Otherwise, the player's position is updated based on the drag input.
+	/// </summary>
+	/// <param name="event">InputEvent for evaluation. Only processed if it is alos an InputEventScreenTouch</param>
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventScreenTouch touchEvent)
+		{
+			if (touchEvent.Pressed)
+			{
+				activeTouches[touchEvent.Index] = touchEvent.Position;
+				touchStartInfo[touchEvent.Index] = (touchEvent.Position, Time.GetTicksMsec() / 1000.0);
+			}
+			else
+			{
+				if (touchStartInfo.TryGetValue(touchEvent.Index, out var info))
+				{
+					double duration = (Time.GetTicksMsec() / 1000.0) - info.startTime;
+					float distance = touchEvent.Position.DistanceTo(info.startPos);
 
+					if (duration <= TAP_MAX_DURATION && distance <= TAP_MAX_MOVEMENT)
+					{
+						OnTap();
+					}
+
+					touchStartInfo.Remove(touchEvent.Index);
+				}
+
+				activeTouches.Remove(touchEvent.Index);
+			}
+		}
+		else if (@event is InputEventScreenDrag dragEvent)
+		{
+			if (activeTouches.ContainsKey(dragEvent.Index))
+			{
+				activeTouches[dragEvent.Index] = dragEvent.Position;
+			}
+
+			OnDrag(dragEvent.Relative);
+		}
+
+		base._Input(@event);
+	}
+
+	private void OnDrag(Vector2 delta)
+	{
+		Position += delta * .6f;
+
+		if (delta.X < 0)
+			sprite.Texture = gameData.TextureCache.Player.Left;
+		else if (delta.X > 0)
+			sprite.Texture = gameData.TextureCache.Player.Right;
+		else
+			sprite.Texture = gameData.TextureCache.Player.Center;
+	}
+
+	private void OnTap()
+	{
+		weaponScene.AltShoot();
+	}
 	/** Handles input from the player.
 	*/
 	public void GetInput()
 	{
-		// Handle shooting independently (can happen while moving)
 		if (Input.IsActionJustPressed("click"))
 		{
 			weaponScene.AltShoot();
 		}
 		
-		// Handle movement independently (can happen while shooting)
 		Vector2 inputDirection = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
 		if (inputDirection.X < 0)
 		{
@@ -95,7 +174,7 @@ public partial class Player : CharacterBody2D, ICollector
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		GetInput();
+		//GetInput();
 		MoveAndSlide();
 	}
 	/** Applies damage to the player and checks if they are still alive.
