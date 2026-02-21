@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcip2raht2ynm"]
+[gd_scene load_steps=6 format=3 uid="uid://dcip2raht2ynm"]
 
 [ext_resource type="Script" uid="uid://1ggfybsvw24" path="res://scripts/GameOver.cs" id="1_tbwuq"]
-[ext_resource type="Script" uid="uid://c4i3tjgdvti7j" path="res://scenes/Restart.cs" id="1_wqhvx"]
-[ext_resource type="Script" uid="uid://bt37104qnwoom" path="res://scenes/Quit.cs" id="2_tbwuq"]
 [ext_resource type="Shader" path="res://scenes/game.gdshader" id="4_7m3ot"]
+[ext_resource type="PackedScene" uid="uid://cmepnnvyy3e6k" path="res://scenes/game_buttons.tscn" id="4_racf3"]
 [ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="5_v3hpu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_irg28"]
@@ -32,21 +31,19 @@ text = "Game Over..."
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 
-[node name="Restart" type="Button" parent="."]
-offset_left = -75.0
-offset_top = 37.0
-offset_right = -10.0
-offset_bottom = 68.0
+[node name="Restart1" type="Button" parent="."]
+offset_left = -72.0
+offset_top = 29.0
+offset_right = -7.0
+offset_bottom = 60.0
 text = "Restart"
-script = ExtResource("1_wqhvx")
 
-[node name="Quit" type="Button" parent="."]
-offset_left = 8.0
-offset_top = 37.0
-offset_right = 73.0
-offset_bottom = 68.0
+[node name="Quit1" type="Button" parent="."]
+offset_left = 12.0
+offset_top = 27.0
+offset_right = 77.0
+offset_bottom = 58.0
 text = "Quit"
-script = ExtResource("2_tbwuq")
 
 [node name="ScoreLabel" type="Label" parent="."]
 offset_left = -42.0
@@ -76,5 +73,15 @@ offset_right = 52.0
 offset_bottom = -20.0
 text = "???"
 
-[connection signal="pressed" from="Restart" to="Restart" method="OnButtonPressedRestart"]
-[connection signal="pressed" from="Quit" to="Quit" method="OnButtonPressedQuit"]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 12.0
+offset_top = -45.0
+offset_right = 52.0
+offset_bottom = -5.0
+
+[node name="GameButtons" parent="Control" instance=ExtResource("4_racf3")]
+
+[connection signal="pressed" from="Restart1" to="Restart1" method="OnButtonPressedRestart"]
+[connection signal="pressed" from="Quit1" to="Quit1" method="OnButtonPressedQuit"]

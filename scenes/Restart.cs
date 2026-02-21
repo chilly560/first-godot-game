@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Restart : Button
+public partial class Restart : TouchScreenButton
 {
 	public void OnButtonPressedRestart()
 	{

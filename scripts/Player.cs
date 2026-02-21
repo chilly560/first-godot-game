@@ -74,7 +74,7 @@ public partial class Player : CharacterBody2D, ICollector
 		} 
 		else
 		{
-			Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
+			Vector2 inputDirection = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
 			if (inputDirection.X < 0)
 			{
 				sprite.Texture = gameData.TextureCache.Player.Left;

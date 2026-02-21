@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="SpaceShooter"
 run/main_scene="uid://chjkhfsdsws7j"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
@@ -24,10 +24,15 @@ GameData="res://scripts/GameData.cs"
 window/size/viewport_width=648
 window/size/viewport_height=1152
 window/stretch/mode="viewport"
+window/handheld/orientation=1
 
 [dotnet]
 
 project/assembly_name="New Game Project"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg")
 
 [input]
 
@@ -97,6 +102,11 @@ right_click={
 "deadzone": 0.2,
 "events": []
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+pointing/emulate_mouse_from_touch=false
 
 [physics]
 
