@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://n5lbhp4a8odl" path="res://scenes/WaveSpawner.tscn" id="7_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://dvne3jcxjhp11" path="res://assets/Starfield 2 - 1024x1024.png" id="9_0tnpc"]
 [ext_resource type="Script" uid="uid://cn2qy5tysrco8" path="res://scripts/ScoreLabel.cs" id="9_kvpfn"]
-[ext_resource type="Shader" path="res://scenes/game.gdshader" id="9_vtaks"]
+[ext_resource type="Shader" uid="uid://dn0wph4eamglt" path="res://scenes/game.gdshader" id="9_vtaks"]
 [ext_resource type="AudioStream" uid="uid://b6scf6flrnbtc" path="res://assets/SFX/game-music-alien-71795.mp3" id="10_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://clatcu1widtu2" path="res://scenes/one_way_blocker.tscn" id="10_vtaks"]
 [ext_resource type="PackedScene" uid="uid://coj2m0ibpsrqv" path="res://scenes/healthbar.tscn" id="11_kvpfn"]
