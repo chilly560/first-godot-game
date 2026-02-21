@@ -115,6 +115,7 @@ public partial class Player : CharacterBody2D, ICollector
 				}
 
 				activeTouches.Remove(touchEvent.Index);
+				sprite.Texture = gameData.TextureCache.Player.Center;
 			}
 		}
 		else if (@event is InputEventScreenDrag dragEvent)
