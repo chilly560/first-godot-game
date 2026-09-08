@@ -9,7 +9,7 @@
         
         <!-- Environment variables available to tests -->
         <EnvironmentVariables>
-            <GODOT_BIN>/usr/local/bin/GodotSharp</GODOT_BIN>
+            <GODOT_BIN>/usr/local/bin/godot</GODOT_BIN>
         </EnvironmentVariables>
     </RunConfiguration>
 
