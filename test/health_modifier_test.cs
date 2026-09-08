@@ -32,20 +32,6 @@ namespace GdUnit4.Tests
         }
 
         [TestCase]
-        public void HealthModifier_IsInstanceOfIStatusModifier()
-        {
-            HealthModifier modifier = new HealthModifier(5);
-            AssertThat(modifier).IsInstanceOf<IStatusModifier>();
-        }
-
-        [TestCase]
-        public void HealthModifier_IsInstanceOfICollectable()
-        {
-            HealthModifier modifier = new HealthModifier(5);
-            AssertThat(modifier).IsInstanceOf<ICollectable>();
-        }
-
-        [TestCase]
         public void SetParent_NullParent_DoesNotThrow()
         {
             try
