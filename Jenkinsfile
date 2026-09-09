@@ -3,13 +3,13 @@ pipeline {
         node {
             label 'docker-godot-agent'
             }
-      }
+    }
     stages {
         stage('Build') {
             steps {
                 echo "Skipping Building"
                 //echo "Building.."
-                //sh 'git clone https://github.com/chilly560/first-godot-game.git'
+                sh 'git clone https://github.com/chilly560/first-godot-game.git'
             }
         }
         stage('Test') {
