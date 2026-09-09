@@ -19,6 +19,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'github_access', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
                         sh 'git clone https://$GIT_USER:$GIT_TOKEN@github.com/chilly560/first-godot-game_.runsettings.git'
                     }
+                    sh 'ls -a'
                     sh 'dotnet test --settings "first-godot-game_.runsettings/.runsettings" --logger "trx;LogFileName=test-result.trx" --results-directory "TestResults"'                }
                 always {
                     // Publish results using the MSTest plugin
